@@ -1,0 +1,161 @@
+{
+  "lessons": [
+    {
+      "id": 1,
+      "title": "Basics 1",
+      "titleLT": "Pagrindai 1",
+      "description": "Learn basic greetings and introductions",
+      "descriptionLT": "Išmok pagrindinių pasisveikinimų",
+      "difficulty": "beginner",
+      "xp": 10,
+      "vocabulary": [
+        {
+          "lithuanian": "labas",
+          "english": "hello",
+          "pronunciation": "lah-bahs",
+          "audio": "audio/pronunciation/labas.mp3",
+          "type": "greeting"
+        },
+        {
+          "lithuanian": "ačiū",
+          "english": "thank you",
+          "pronunciation": "ah-choo",
+          "audio": "audio/pronunciation/aciu.mp3",
+          "type": "phrase"
+        },
+        {
+          "lithuanian": "taip",
+          "english": "yes",
+          "pronunciation": "tayp",
+          "audio": "audio/pronunciation/taip.mp3",
+          "type": "word"
+        },
+        {
+          "lithuanian": "ne",
+          "english": "no",
+          "pronunciation": "neh",
+          "audio": "audio/pronunciation/ne.mp3",
+          "type": "word"
+        },
+        {
+          "lithuanian": "gerai",
+          "english": "okay/good",
+          "pronunciation": "geh-rai",
+          "audio": "audio/pronunciation/gerai.mp3",
+          "type": "word"
+        }
+      ],
+      "exercises": [
+        {
+          "type": "translation",
+          "question": "How do you say 'hello' in Lithuanian?",
+          "answer": "labas",
+          "options": ["labas", "ačiū", "viso gero", "gerai"]
+        },
+        {
+          "type": "listening",
+          "audio": "audio/pronunciation/aciu.mp3",
+          "question": "What does this mean?",
+          "answer": "thank you",
+          "options": ["hello", "goodbye", "thank you", "please"]
+        },
+        {
+          "type": "multiple-choice",
+          "question": "What is 'yes' in Lithuanian?",
+          "questionLT": "Kaip lietuviškai 'yes'?",
+          "answer": "taip",
+          "options": ["ne", "taip", "labas", "gerai"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Numbers 1-10",
+      "titleLT": "Skaičiai 1-10",
+      "description": "Learn numbers from one to ten",
+      "descriptionLT": "Išmok skaičius nuo vieno iki dešimties",
+      "difficulty": "beginner",
+      "xp": 10,
+      "vocabulary": [
+        {
+          "lithuanian": "vienas",
+          "english": "one",
+          "pronunciation": "vien-us",
+          "type": "number",
+          "gender": "masculine"
+        },
+        {
+          "lithuanian": "du",
+          "english": "two",
+          "pronunciation": "doo",
+          "type": "number",
+          "gender": "masculine"
+        },
+        {
+          "lithuanian": "trys",
+          "english": "three",
+          "pronunciation": "trees",
+          "type": "number",
+          "gender": "masculine"
+        },
+        {
+          "lithuanian": "keturi",
+          "english": "four",
+          "pronunciation": "ket-u-ri",
+          "type": "number",
+          "gender": "masculine"
+        },
+        {
+          "lithuanian": "penki",
+          "english": "five",
+          "pronunciation": "pen-ki",
+          "type": "number",
+          "gender": "masculine"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Family",
+      "titleLT": "Šeima",
+      "description": "Learn family member terms",
+      "descriptionLT": "Išmok šeimos narių pavadinimus",
+      "difficulty": "beginner",
+      "xp": 15,
+      "vocabulary": [
+        {
+          "lithuanian": "mama",
+          "english": "mother",
+          "pronunciation": "mah-mah",
+          "type": "noun",
+          "gender": "feminine",
+          "declension": 1
+        },
+        {
+          "lithuanian": "tėvas",
+          "english": "father",
+          "pronunciation": "tay-vahs",
+          "type": "noun",
+          "gender": "masculine",
+          "declension": 1
+        },
+        {
+          "lithuanian": "sesuo",
+          "english": "sister",
+          "pronunciation": "seh-soo-oh",
+          "type": "noun",
+          "gender": "feminine",
+          "declension": 5
+        },
+        {
+          "lithuanian": "brolis",
+          "english": "brother",
+          "pronunciation": "broh-lis",
+          "type": "noun",
+          "gender": "masculine",
+          "declension": 3
+        }
+      ]
+    }
+  ]
+}
