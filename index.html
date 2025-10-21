@@ -659,7 +659,7 @@
         </div>
     </div>
 
-    <script>
+<script>
         // All JavaScript inline to avoid 404 errors
         
         // ============ STORAGE ============
@@ -898,6 +898,7 @@
             },
 
             async startLesson(lessonId) {
+                console.log('Starting lesson:', lessonId);
                 const lessons = await this.loadLessons();
                 this.currentLesson = lessons.find(l => l.id === lessonId);
                 
@@ -949,6 +950,7 @@
             },
 
             selectAnswer(answer, button) {
+                console.log('Answer selected:', answer);
                 document.querySelectorAll('.answer-option').forEach(btn => {
                     btn.classList.remove('selected');
                 });
@@ -960,6 +962,7 @@
             },
 
             checkAnswer() {
+                console.log('Checking answer');
                 const exercise = this.currentLesson.exercises[this.currentExercise];
                 const isCorrect = this.selectedAnswer === exercise.answer;
 
@@ -976,8 +979,7 @@
                 const feedbackMessage = document.getElementById('feedback-message');
 
                 feedbackPanel.classList.remove('hidden');
-                feedbackPanel.classList.add(isCorrect ?
-                                            feedbackPanel.classList.add(isCorrect ? 'correct' : 'incorrect');
+                feedbackPanel.classList.add(isCorrect ? 'correct' : 'incorrect');
 
                 if (isCorrect) {
                     feedbackTitle.textContent = '✓ Correct!';
@@ -998,6 +1000,7 @@
             },
 
             continueLesson() {
+                console.log('Continuing lesson');
                 const feedbackPanel = document.getElementById('feedback-panel');
                 feedbackPanel.classList.add('hidden');
                 feedbackPanel.classList.remove('correct', 'incorrect');
@@ -1012,6 +1015,7 @@
             },
 
             completeLesson() {
+                console.log('Completing lesson');
                 const accuracy = Math.round((this.correctAnswers / this.totalExercises) * 100);
                 const xpEarned = this.currentLesson.xp;
 
@@ -1084,7 +1088,11 @@
                     `;
 
                     if (!isLocked) {
-                        lessonCard.onclick = () => this.startLesson(lesson.id);
+                        lessonCard.style.cursor = 'pointer';
+                        lessonCard.addEventListener('click', () => {
+                            console.log('Lesson card clicked:', lesson.id);
+                            this.startLesson(lesson.id);
+                        });
                     }
 
                     lessonPath.appendChild(lessonCard);
@@ -1101,39 +1109,64 @@
             },
 
             setupEventListeners() {
-                document.getElementById('start-lesson-btn')?.addEventListener('click', () => {
-                    const nextLesson = this.getNextLesson();
-                    if (nextLesson) {
-                        this.startLesson(nextLesson.id);
-                    }
-                });
+                console.log('Setting up event listeners');
 
-                document.getElementById('check-answer-btn')?.addEventListener('click', () => {
-                    LessonManager.checkAnswer();
-                });
+                const startLessonBtn = document.getElementById('start-lesson-btn');
+                if (startLessonBtn) {
+                    startLessonBtn.addEventListener('click', () => {
+                        console.log('Start lesson button clicked');
+                        const nextLesson = this.getNextLesson();
+                        if (nextLesson) {
+                            this.startLesson(nextLesson.id);
+                        }
+                    });
+                }
 
-                document.getElementById('continue-btn')?.addEventListener('click', () => {
-                    LessonManager.continueLesson();
-                });
+                const checkAnswerBtn = document.getElementById('check-answer-btn');
+                if (checkAnswerBtn) {
+                    checkAnswerBtn.addEventListener('click', () => {
+                        console.log('Check answer button clicked');
+                        LessonManager.checkAnswer();
+                    });
+                }
 
-                document.getElementById('continue-learning-btn')?.addEventListener('click', () => {
-                    document.getElementById('results-screen').classList.remove('active');
-                    document.getElementById('home-screen').classList.add('active');
-                    this.userData = Storage.getUserData();
-                    this.displayLessonPath();
-                    this.displayUserStats();
-                });
+                const continueBtn = document.getElementById('continue-btn');
+                if (continueBtn) {
+                    continueBtn.addEventListener('click', () => {
+                        console.log('Continue button clicked');
+                        LessonManager.continueLesson();
+                    });
+                }
 
-                document.getElementById('exit-lesson-btn')?.addEventListener('click', () => {
-                    LessonManager.exitLesson();
-                });
+                const continueLearningBtn = document.getElementById('continue-learning-btn');
+                if (continueLearningBtn) {
+                    continueLearningBtn.addEventListener('click', () => {
+                        console.log('Continue learning button clicked');
+                        document.getElementById('results-screen').classList.remove('active');
+                        document.getElementById('home-screen').classList.add('active');
+                        this.userData = Storage.getUserData();
+                        this.displayLessonPath();
+                        this.displayUserStats();
+                    });
+                }
+
+                const exitLessonBtn = document.getElementById('exit-lesson-btn');
+                if (exitLessonBtn) {
+                    exitLessonBtn.addEventListener('click', () => {
+                        console.log('Exit lesson button clicked');
+                        LessonManager.exitLesson();
+                    });
+                }
 
                 document.querySelectorAll('.nav-item').forEach(item => {
                     item.addEventListener('click', (e) => {
                         const screen = e.currentTarget.dataset.screen;
+                        console.log('Nav item clicked:', screen);
                         this.navigateToScreen(screen);
                     });
                 });
+
+                console.log('Event listeners set up successfully');
             },
 
             getNextLesson() {
@@ -1153,7 +1186,10 @@
                     screen.classList.remove('active');
                 });
 
-                document.getElementById(`${screenName}-screen`)?.classList.add('active');
+                const targetScreen = document.getElementById(`${screenName}-screen`);
+                if (targetScreen) {
+                    targetScreen.classList.add('active');
+                }
             },
 
             setupInstallPrompt() {
@@ -1166,7 +1202,10 @@
                     const installPrompt = document.getElementById('install-prompt');
                     installPrompt.classList.remove('hidden');
 
-                    document.getElementById('install-btn').addEventListener('click', async () => {
+                    const installBtn = document.getElementById('install-btn');
+                    const installDismiss = document.getElementById('install-dismiss');
+
+                    installBtn.addEventListener('click', async () => {
                         installPrompt.classList.add('hidden');
                         deferredPrompt.prompt();
                         const { outcome } = await deferredPrompt.userChoice;
@@ -1174,7 +1213,7 @@
                         deferredPrompt = null;
                     });
 
-                    document.getElementById('install-dismiss').addEventListener('click', () => {
+                    installDismiss.addEventListener('click', () => {
                         installPrompt.classList.add('hidden');
                     });
                 });
@@ -1183,15 +1222,21 @@
 
         // ============ SERVICE WORKER REGISTRATION ============
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(reg => console.log('Service Worker registered', reg))
-                .catch(err => console.log('Service Worker registration failed', err));
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('Service Worker registered', reg))
+                    .catch(err => console.log('Service Worker registration failed', err));
+            });
         }
 
         // Initialize app when DOM is ready
-        document.addEventListener('DOMContentLoaded', () => {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                App.init();
+            });
+        } else {
             App.init();
-        });
+        }
     </script>
 </body>
 </html>
