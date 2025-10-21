@@ -181,3 +181,76 @@ const LessonManager = {
 
     if (isCorrect) {
       feedbackTitle.textContent = '
+feedbackTitle.textContent = '✓ Teisingai!';
+      feedbackMessage.textContent = 'Puiku! Tęsk taip pat.';
+    } else {
+      feedbackTitle.textContent = '✗ Neteisingai';
+      feedbackMessage.textContent = `Teisingas atsakymas: ${correctAnswer}`;
+    }
+
+    // Highlight correct/incorrect answer
+    document.querySelectorAll('.answer-option').forEach(btn => {
+      if (btn.textContent === correctAnswer) {
+        btn.classList.add('correct');
+      } else if (btn.classList.contains('selected') && !isCorrect) {
+        btn.classList.add('incorrect');
+      }
+      btn.disabled = true;
+    });
+  },
+
+  // Continue to next exercise
+  continueLesson() {
+    const feedbackPanel = document.getElementById('feedback-panel');
+    feedbackPanel.classList.add('hidden');
+    feedbackPanel.classList.remove('correct', 'incorrect');
+
+    this.currentExercise++;
+
+    if (this.currentExercise >= this.totalExercises) {
+      this.completeLesson();
+    } else {
+      this.displayExercise();
+    }
+  },
+
+  // Complete lesson
+  completeLesson() {
+    const accuracy = Math.round((this.correctAnswers / this.totalExercises) * 100);
+    const xpEarned = this.currentLesson.xp;
+
+    // Update user data
+    Storage.completeLesson(this.currentLesson.id, accuracy);
+    Storage.addXP(xpEarned);
+    StreakManager.updateStreak();
+
+    // Add vocabulary to learned list
+    this.currentLesson.vocabulary.forEach(word => {
+      Storage.addVocabulary(word.lithuanian);
+    });
+
+    // Show results screen
+    document.getElementById('lesson-screen').classList.remove('active');
+    document.getElementById('results-screen').classList.add('active');
+
+    // Display results
+    document.getElementById('correct-answers').textContent = 
+      `${this.correctAnswers}/${this.totalExercises}`;
+    document.getElementById('xp-earned').textContent = xpEarned;
+    document.getElementById('accuracy').textContent = `${accuracy}%`;
+  },
+
+  // Play audio
+  playAudio(audioPath) {
+    const audio = new Audio(audioPath);
+    audio.play().catch(err => console.log('Audio playback failed:', err));
+  },
+
+  // Exit lesson
+  exitLesson() {
+    if (confirm('Ar tikrai nori išeiti? Pažanga nebus išsaugota.')) {
+      document.getElementById('lesson-screen').classList.remove('active');
+      document.getElementById('home-screen').classList.add('active');
+    }
+  }
+};
