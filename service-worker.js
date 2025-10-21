@@ -1,16 +1,7 @@
 const CACHE_NAME = 'lithuanian-learning-v1';
 const urlsToCache = [
   '/',
-  '/index.html',
-  '/css/styles.css',
-  '/js/app.js',
-  '/js/lessons.js',
-  '/js/streak.js',
-  '/js/storage.js',
-  '/js/notifications.js',
-  '/data/vocabulary.json',
-  '/images/icons/icon-192x192.png',
-  '/images/icons/icon-512x512.png'
+  '/index.html'
 ];
 
 // Install event
@@ -22,6 +13,7 @@ self.addEventListener('install', event => {
         return cache.addAll(urlsToCache);
       })
   );
+  self.skipWaiting();
 });
 
 // Fetch event
@@ -29,7 +21,6 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // Cache hit - return response
         if (response) {
           return response;
         }
@@ -53,4 +44,5 @@ self.addEventListener('activate', event => {
       );
     })
   );
+  self.clients.claim();
 });
