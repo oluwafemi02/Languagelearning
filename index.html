@@ -5,22 +5,541 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#58CC02">
     <meta name="description" content="Learn Lithuanian with daily lessons and streak tracking">
-    <title>Mokykis Lietuvių - Learn Lithuanian</title>
+    <title>Learn Lithuanian - Mokykis Lietuvių</title>
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" type="image/png" href="images/icons/icon-192x192.png">
-    <link rel="apple-touch-icon" href="images/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🇱🇹</text></svg>">
+    <style>
+        /* Inline all CSS to avoid 404 errors */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #58CC02;
+            --primary-dark: #46A302;
+            --secondary-color: #1CB0F6;
+            --danger-color: #FF4B4B;
+            --success-color: #58CC02;
+            --warning-color: #FFC800;
+            --text-dark: #3C3C3C;
+            --text-light: #777777;
+            --bg-light: #F7F7F7;
+            --border-color: #E5E5E5;
+            --white: #FFFFFF;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .app-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .app-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .streak-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .fire-icon {
+            font-size: 28px;
+            animation: flame 1.5s ease-in-out infinite;
+        }
+
+        @keyframes flame {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .streak-label {
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .progress-overview {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .progress-overview h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .xp-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--warning-color);
+        }
+
+        .xp-icon {
+            font-size: 32px;
+        }
+
+        .lesson-path {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .lesson-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            gap: 16px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .lesson-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .lesson-card.completed {
+            border: 2px solid var(--success-color);
+        }
+
+        .lesson-icon {
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lesson-info {
+            flex: 1;
+        }
+
+        .lesson-info h3 {
+            font-size: 18px;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+
+        .lesson-info p {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .lesson-meta {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .xp-badge, .difficulty-badge {
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .xp-badge {
+            background: #FFF7E6;
+            color: var(--warning-color);
+        }
+
+        .difficulty-badge {
+            background: var(--bg-light);
+            color: var(--text-light);
+            text-transform: capitalize;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--white);
+            box-shadow: 0 4px 0 var(--primary-dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--primary-dark);
+        }
+
+        .btn-primary:disabled {
+            background: var(--border-color);
+            color: var(--text-light);
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: var(--white);
+        }
+
+        #start-lesson-btn {
+            margin: 0 auto;
+            display: block;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        #lesson-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 80px;
+            background: var(--white);
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .lesson-header {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            gap: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .btn-icon {
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            color: var(--text-dark);
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 16px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+            width: 0;
+        }
+
+        .lesson-content {
+            padding: 32px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #question-container {
+            margin-bottom: 32px;
+        }
+
+        .question {
+            text-align: center;
+        }
+
+        .question h3 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: var(--text-dark);
+        }
+
+        .audio-btn {
+            background: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 24px;
+        }
+
+        #answer-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .answer-option {
+            background: var(--white);
+            border: 3px solid var(--border-color);
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .answer-option:hover {
+            border-color: var(--text-light);
+            background: var(--bg-light);
+        }
+
+        .answer-option.selected {
+            border-color: var(--secondary-color);
+            background: #E8F5FE;
+        }
+
+        .answer-option.correct {
+            border-color: var(--success-color);
+            background: #E8F7E8;
+        }
+
+        .answer-option.incorrect {
+            border-color: var(--danger-color);
+            background: #FFE8E8;
+        }
+
+        .answer-option:disabled {
+            cursor: not-allowed;
+        }
+
+        .feedback-panel {
+            position: fixed;
+            bottom: 80px;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            padding: 24px;
+            box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .feedback-panel:not(.hidden) {
+            transform: translateY(0);
+        }
+
+        .feedback-panel.correct {
+            background: #E8F7E8;
+            border-top: 4px solid var(--success-color);
+        }
+
+        .feedback-panel.incorrect {
+            background: #FFE8E8;
+            border-top: 4px solid var(--danger-color);
+        }
+
+        .feedback-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #feedback-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        #feedback-message {
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        #results-screen {
+            padding-top: 60px;
+        }
+
+        .results-content {
+            text-align: center;
+        }
+
+        .results-content h2 {
+            font-size: 32px;
+            margin-bottom: 32px;
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 8px 16px;
+            color: var(--text-light);
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+        }
+
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .install-prompt {
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            right: 20px;
+            background: var(--white);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            z-index: 2000;
+        }
+
+        .install-content h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .install-content p {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+
+        .install-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .install-actions .btn {
+            flex: 1;
+            max-width: none;
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--text-dark);
+            border: 2px solid var(--border-color);
+        }
+    </style>
 </head>
 <body>
     <div id="app">
         <!-- Header with Streak -->
         <header class="app-header">
             <div class="container">
-                <h1>🇱🇹 Mokykis Lietuvių</h1>
+                <h1>🇱🇹 Learn Lithuanian</h1>
                 <div class="streak-display">
                     <span class="fire-icon">🔥</span>
                     <span id="streak-count">0</span>
-                    <span class="streak-label">dienų iš eilės</span>
+                    <span class="streak-label">day streak</span>
                 </div>
             </div>
         </header>
@@ -31,7 +550,7 @@
             <section id="home-screen" class="screen active">
                 <div class="container">
                     <div class="progress-overview">
-                        <h2>Tavo pažanga</h2>
+                        <h2>Your Progress</h2>
                         <div class="xp-display">
                             <span class="xp-icon">⭐</span>
                             <span id="total-xp">0</span>
@@ -39,12 +558,12 @@
                         </div>
                     </div>
 
-                    <div class="lesson-path">
+                    <div class="lesson-path" id="lesson-path">
                         <!-- Lessons will be dynamically inserted -->
                     </div>
 
                     <button id="start-lesson-btn" class="btn btn-primary">
-                        Pradėti pamoką
+                        Start Lesson
                     </button>
                 </div>
             </section>
@@ -68,7 +587,7 @@
                             <!-- Answer options dynamically inserted -->
                         </div>
                         <button id="check-answer-btn" class="btn btn-primary" disabled>
-                            Tikrinti
+                            Check
                         </button>
                     </div>
                 </div>
@@ -78,7 +597,7 @@
                         <h3 id="feedback-title"></h3>
                         <p id="feedback-message"></p>
                         <button id="continue-btn" class="btn btn-success">
-                            Tęsti
+                            Continue
                         </button>
                     </div>
                 </div>
@@ -88,23 +607,23 @@
             <section id="results-screen" class="screen">
                 <div class="container">
                     <div class="results-content">
-                        <h2>Pamoka baigta! 🎉</h2>
+                        <h2>Lesson Complete! 🎉</h2>
                         <div class="results-stats">
                             <div class="stat">
                                 <span class="stat-value" id="correct-answers">0</span>
-                                <span class="stat-label">Teisingi atsakymai</span>
+                                <span class="stat-label">Correct</span>
                             </div>
                             <div class="stat">
                                 <span class="stat-value" id="xp-earned">0</span>
-                                <span class="stat-label">XP uždirbta</span>
+                                <span class="stat-label">XP Earned</span>
                             </div>
                             <div class="stat">
                                 <span class="stat-value" id="accuracy">0</span>
-                                <span class="stat-label">Tikslumas</span>
+                                <span class="stat-label">Accuracy</span>
                             </div>
                         </div>
                         <button id="continue-learning-btn" class="btn btn-primary">
-                            Tęsti mokymąsi
+                            Continue Learning
                         </button>
                     </div>
                 </div>
@@ -115,15 +634,15 @@
         <nav class="bottom-nav">
             <button class="nav-item active" data-screen="home">
                 <span class="nav-icon">🏠</span>
-                <span class="nav-label">Namai</span>
+                <span class="nav-label">Home</span>
             </button>
             <button class="nav-item" data-screen="practice">
                 <span class="nav-icon">💪</span>
-                <span class="nav-label">Praktika</span>
+                <span class="nav-label">Practice</span>
             </button>
             <button class="nav-item" data-screen="profile">
                 <span class="nav-icon">👤</span>
-                <span class="nav-label">Profilis</span>
+                <span class="nav-label">Profile</span>
             </button>
         </nav>
     </div>
@@ -131,27 +650,548 @@
     <!-- Install Prompt -->
     <div id="install-prompt" class="install-prompt hidden">
         <div class="install-content">
-            <h3>Įdiegti programėlę?</h3>
-            <p>Pridėk į pradžios ekraną greičiau prieigai!</p>
+            <h3>Install App?</h3>
+            <p>Add to home screen for quick access!</p>
             <div class="install-actions">
-                <button id="install-btn" class="btn btn-primary">Įdiegti</button>
-                <button id="install-dismiss" class="btn btn-secondary">Ne dabar</button>
+                <button id="install-btn" class="btn btn-primary">Install</button>
+                <button id="install-dismiss" class="btn btn-secondary">Not now</button>
             </div>
         </div>
     </div>
 
-    <script src="js/storage.js"></script>
-    <script src="js/streak.js"></script>
-    <script src="js/notifications.js"></script>
-    <script src="js/lessons.js"></script>
-    <script src="js/app.js"></script>
     <script>
-        // Register service worker
+        // All JavaScript inline to avoid 404 errors
+        
+        // ============ STORAGE ============
+        const Storage = {
+            getUserData() {
+                const data = localStorage.getItem('lithuanianLearner');
+                return data ? JSON.parse(data) : this.getDefaultUserData();
+            },
+
+            getDefaultUserData() {
+                return {
+                    streak: 0,
+                    lastStudyDate: null,
+                    totalXP: 0,
+                    lessonsCompleted: [],
+                    currentLesson: 1,
+                    vocabulary: {},
+                    settings: {
+                        dailyGoal: 50,
+                        soundEnabled: true,
+                        notificationsEnabled: true,
+                        reminderTime: '19:00'
+                    }
+                };
+            },
+
+            saveUserData(data) {
+                localStorage.setItem('lithuanianLearner', JSON.stringify(data));
+            },
+
+            updateField(field, value) {
+                const data = this.getUserData();
+                data[field] = value;
+                this.saveUserData(data);
+            },
+
+            addXP(amount) {
+                const data = this.getUserData();
+                data.totalXP += amount;
+                this.saveUserData(data);
+                return data.totalXP;
+            },
+
+            completeLesson(lessonId, score) {
+                const data = this.getUserData();
+                if (!data.lessonsCompleted.find(l => l.id === lessonId)) {
+                    data.lessonsCompleted.push({
+                        id: lessonId,
+                        completedAt: new Date().toISOString(),
+                        score: score
+                    });
+                }
+                this.saveUserData(data);
+            },
+
+            addVocabulary(word, strength = 1) {
+                const data = this.getUserData();
+                data.vocabulary[word] = {
+                    strength: strength,
+                    lastReviewed: new Date().toISOString(),
+                    timesReviewed: 1
+                };
+                this.saveUserData(data);
+            }
+        };
+
+        // ============ STREAK MANAGER ============
+        const StreakManager = {
+            updateStreak() {
+                const data = Storage.getUserData();
+                const today = new Date().toDateString();
+                const lastDate = data.lastStudyDate ? new Date(data.lastStudyDate).toDateString() : null;
+                
+                if (lastDate === today) {
+                    return data.streak;
+                }
+                
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayStr = yesterday.toDateString();
+                
+                if (lastDate === yesterdayStr) {
+                    data.streak += 1;
+                } else if (lastDate === null) {
+                    data.streak = 1;
+                } else {
+                    data.streak = 1;
+                }
+                
+                data.lastStudyDate = new Date().toISOString();
+                Storage.saveUserData(data);
+                
+                this.displayStreak(data.streak);
+                return data.streak;
+            },
+
+            displayStreak(streak) {
+                const streakElement = document.getElementById('streak-count');
+                if (streakElement) {
+                    streakElement.textContent = streak;
+                }
+            },
+
+            init() {
+                const data = Storage.getUserData();
+                this.displayStreak(data.streak);
+            }
+        };
+
+        // ============ LESSONS DATA ============
+        const LESSONS_DATA = {
+            lessons: [
+                {
+                    id: 1,
+                    title: "Basics 1",
+                    titleLT: "Pagrindai 1",
+                    description: "Learn basic greetings and introductions",
+                    difficulty: "beginner",
+                    xp: 10,
+                    vocabulary: [
+                        { lithuanian: "labas", english: "hello", pronunciation: "lah-bahs" },
+                        { lithuanian: "ačiū", english: "thank you", pronunciation: "ah-choo" },
+                        { lithuanian: "taip", english: "yes", pronunciation: "tayp" },
+                        { lithuanian: "ne", english: "no", pronunciation: "neh" },
+                        { lithuanian: "gerai", english: "okay/good", pronunciation: "geh-rai" }
+                    ],
+                    exercises: [
+                        {
+                            type: "translation",
+                            question: "How do you say 'hello' in Lithuanian?",
+                            answer: "labas",
+                            options: ["labas", "ačiū", "viso gero", "gerai"]
+                        },
+                        {
+                            type: "multiple-choice",
+                            question: "What does 'ačiū' mean in English?",
+                            answer: "thank you",
+                            options: ["hello", "goodbye", "thank you", "please"]
+                        },
+                        {
+                            type: "multiple-choice",
+                            question: "What is 'yes' in Lithuanian?",
+                            answer: "taip",
+                            options: ["ne", "taip", "labas", "gerai"]
+                        },
+                        {
+                            type: "translation",
+                            question: "How do you say 'no' in Lithuanian?",
+                            answer: "ne",
+                            options: ["ne", "taip", "ačiū", "labas"]
+                        },
+                        {
+                            type: "multiple-choice",
+                            question: "What does 'gerai' mean?",
+                            answer: "okay/good",
+                            options: ["okay/good", "bad", "hello", "goodbye"]
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "Numbers 1-10",
+                    titleLT: "Skaičiai 1-10",
+                    description: "Learn numbers from one to ten",
+                    difficulty: "beginner",
+                    xp: 10,
+                    vocabulary: [
+                        { lithuanian: "vienas", english: "one", pronunciation: "vien-us" },
+                        { lithuanian: "du", english: "two", pronunciation: "doo" },
+                        { lithuanian: "trys", english: "three", pronunciation: "trees" },
+                        { lithuanian: "keturi", english: "four", pronunciation: "ket-u-ri" },
+                        { lithuanian: "penki", english: "five", pronunciation: "pen-ki" }
+                    ],
+                    exercises: [
+                        {
+                            type: "translation",
+                            question: "How do you say 'one' in Lithuanian?",
+                            answer: "vienas",
+                            options: ["vienas", "du", "trys", "keturi"]
+                        },
+                        {
+                            type: "multiple-choice",
+                            question: "What does 'du' mean?",
+                            answer: "two",
+                            options: ["one", "two", "three", "four"]
+                        },
+                        {
+                            type: "translation",
+                            question: "How do you say 'three' in Lithuanian?",
+                            answer: "trys",
+                            options: ["trys", "keturi", "penki", "vienas"]
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    title: "Family",
+                    titleLT: "Šeima",
+                    description: "Learn family member terms",
+                    difficulty: "beginner",
+                    xp: 15,
+                    vocabulary: [
+                        { lithuanian: "mama", english: "mother", pronunciation: "mah-mah" },
+                        { lithuanian: "tėvas", english: "father", pronunciation: "tay-vahs" },
+                        { lithuanian: "sesuo", english: "sister", pronunciation: "seh-soo-oh" },
+                        { lithuanian: "brolis", english: "brother", pronunciation: "broh-lis" }
+                    ],
+                    exercises: [
+                        {
+                            type: "translation",
+                            question: "How do you say 'mother' in Lithuanian?",
+                            answer: "mama",
+                            options: ["mama", "tėvas", "sesuo", "brolis"]
+                        },
+                        {
+                            type: "multiple-choice",
+                            question: "What does 'brolis' mean?",
+                            answer: "brother",
+                            options: ["sister", "brother", "mother", "father"]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // ============ LESSON MANAGER ============
+        const LessonManager = {
+            currentLesson: null,
+            currentExercise: 0,
+            correctAnswers: 0,
+            totalExercises: 0,
+            selectedAnswer: null,
+
+            async loadLessons() {
+                return LESSONS_DATA.lessons;
+            },
+
+            async startLesson(lessonId) {
+                const lessons = await this.loadLessons();
+                this.currentLesson = lessons.find(l => l.id === lessonId);
+                
+                if (!this.currentLesson) {
+                    console.error('Lesson not found');
+                    return;
+                }
+
+                this.currentExercise = 0;
+                this.correctAnswers = 0;
+                this.totalExercises = this.currentLesson.exercises.length;
+                this.selectedAnswer = null;
+
+                document.getElementById('home-screen').classList.remove('active');
+                document.getElementById('lesson-screen').classList.add('active');
+
+                this.displayExercise();
+            },
+
+            displayExercise() {
+                const exercise = this.currentLesson.exercises[this.currentExercise];
+                const questionContainer = document.getElementById('question-container');
+                const answerOptions = document.getElementById('answer-options');
+                const checkBtn = document.getElementById('check-answer-btn');
+
+                const progress = ((this.currentExercise + 1) / this.totalExercises) * 100;
+                document.getElementById('lesson-progress').style.width = `${progress}%`;
+
+                questionContainer.innerHTML = '';
+                answerOptions.innerHTML = '';
+                this.selectedAnswer = null;
+                checkBtn.disabled = true;
+
+                questionContainer.innerHTML = `
+                    <div class="question">
+                        <h3>${exercise.question}</h3>
+                    </div>
+                `;
+
+                const shuffled = [...exercise.options].sort(() => Math.random() - 0.5);
+
+                shuffled.forEach(option => {
+                    const button = document.createElement('button');
+                    button.className = 'answer-option';
+                    button.textContent = option;
+                    button.onclick = () => this.selectAnswer(option, button);
+                    answerOptions.appendChild(button);
+                });
+            },
+
+            selectAnswer(answer, button) {
+                document.querySelectorAll('.answer-option').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+
+                button.classList.add('selected');
+                this.selectedAnswer = answer;
+
+                document.getElementById('check-answer-btn').disabled = false;
+            },
+
+            checkAnswer() {
+                const exercise = this.currentLesson.exercises[this.currentExercise];
+                const isCorrect = this.selectedAnswer === exercise.answer;
+
+                if (isCorrect) {
+                    this.correctAnswers++;
+                }
+
+                this.showFeedback(isCorrect, exercise.answer);
+            },
+
+            showFeedback(isCorrect, correctAnswer) {
+                const feedbackPanel = document.getElementById('feedback-panel');
+                const feedbackTitle = document.getElementById('feedback-title');
+                const feedbackMessage = document.getElementById('feedback-message');
+
+                feedbackPanel.classList.remove('hidden');
+                feedbackPanel.classList.add(isCorrect ?
+                                            feedbackPanel.classList.add(isCorrect ? 'correct' : 'incorrect');
+
+                if (isCorrect) {
+                    feedbackTitle.textContent = '✓ Correct!';
+                    feedbackMessage.textContent = 'Great job! Keep it up.';
+                } else {
+                    feedbackTitle.textContent = '✗ Incorrect';
+                    feedbackMessage.textContent = `Correct answer: ${correctAnswer}`;
+                }
+
+                document.querySelectorAll('.answer-option').forEach(btn => {
+                    if (btn.textContent === correctAnswer) {
+                        btn.classList.add('correct');
+                    } else if (btn.classList.contains('selected') && !isCorrect) {
+                        btn.classList.add('incorrect');
+                    }
+                    btn.disabled = true;
+                });
+            },
+
+            continueLesson() {
+                const feedbackPanel = document.getElementById('feedback-panel');
+                feedbackPanel.classList.add('hidden');
+                feedbackPanel.classList.remove('correct', 'incorrect');
+
+                this.currentExercise++;
+
+                if (this.currentExercise >= this.totalExercises) {
+                    this.completeLesson();
+                } else {
+                    this.displayExercise();
+                }
+            },
+
+            completeLesson() {
+                const accuracy = Math.round((this.correctAnswers / this.totalExercises) * 100);
+                const xpEarned = this.currentLesson.xp;
+
+                Storage.completeLesson(this.currentLesson.id, accuracy);
+                Storage.addXP(xpEarned);
+                StreakManager.updateStreak();
+
+                this.currentLesson.vocabulary.forEach(word => {
+                    Storage.addVocabulary(word.lithuanian);
+                });
+
+                document.getElementById('lesson-screen').classList.remove('active');
+                document.getElementById('results-screen').classList.add('active');
+
+                document.getElementById('correct-answers').textContent = 
+                    `${this.correctAnswers}/${this.totalExercises}`;
+                document.getElementById('xp-earned').textContent = xpEarned;
+                document.getElementById('accuracy').textContent = `${accuracy}%`;
+            },
+
+            exitLesson() {
+                if (confirm('Are you sure you want to exit? Progress will not be saved.')) {
+                    document.getElementById('lesson-screen').classList.remove('active');
+                    document.getElementById('home-screen').classList.add('active');
+                }
+            }
+        };
+
+        // ============ MAIN APP ============
+        const App = {
+            lessons: [],
+            userData: null,
+
+            async init() {
+                console.log('Initializing Lithuanian Learning App...');
+
+                this.userData = Storage.getUserData();
+                StreakManager.init();
+
+                this.lessons = await LessonManager.loadLessons();
+                this.displayLessonPath();
+                this.displayUserStats();
+                this.setupEventListeners();
+                this.setupInstallPrompt();
+
+                console.log('App initialized successfully');
+            },
+
+            displayLessonPath() {
+                const lessonPath = document.getElementById('lesson-path');
+                lessonPath.innerHTML = '';
+
+                this.lessons.forEach((lesson, index) => {
+                    const isCompleted = this.userData.lessonsCompleted.some(l => l.id === lesson.id);
+                    const isLocked = index > 0 && !this.userData.lessonsCompleted.some(l => l.id === this.lessons[index - 1].id);
+
+                    const lessonCard = document.createElement('div');
+                    lessonCard.className = `lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
+                    
+                    lessonCard.innerHTML = `
+                        <div class="lesson-icon">${isCompleted ? '✓' : isLocked ? '🔒' : '📚'}</div>
+                        <div class="lesson-info">
+                            <h3>${lesson.title}</h3>
+                            <p>${lesson.description}</p>
+                            <div class="lesson-meta">
+                                <span class="xp-badge">+${lesson.xp} XP</span>
+                                <span class="difficulty-badge">${lesson.difficulty}</span>
+                            </div>
+                        </div>
+                    `;
+
+                    if (!isLocked) {
+                        lessonCard.onclick = () => this.startLesson(lesson.id);
+                    }
+
+                    lessonPath.appendChild(lessonCard);
+                });
+            },
+
+            displayUserStats() {
+                document.getElementById('total-xp').textContent = this.userData.totalXP;
+                document.getElementById('streak-count').textContent = this.userData.streak;
+            },
+
+            startLesson(lessonId) {
+                LessonManager.startLesson(lessonId);
+            },
+
+            setupEventListeners() {
+                document.getElementById('start-lesson-btn')?.addEventListener('click', () => {
+                    const nextLesson = this.getNextLesson();
+                    if (nextLesson) {
+                        this.startLesson(nextLesson.id);
+                    }
+                });
+
+                document.getElementById('check-answer-btn')?.addEventListener('click', () => {
+                    LessonManager.checkAnswer();
+                });
+
+                document.getElementById('continue-btn')?.addEventListener('click', () => {
+                    LessonManager.continueLesson();
+                });
+
+                document.getElementById('continue-learning-btn')?.addEventListener('click', () => {
+                    document.getElementById('results-screen').classList.remove('active');
+                    document.getElementById('home-screen').classList.add('active');
+                    this.userData = Storage.getUserData();
+                    this.displayLessonPath();
+                    this.displayUserStats();
+                });
+
+                document.getElementById('exit-lesson-btn')?.addEventListener('click', () => {
+                    LessonManager.exitLesson();
+                });
+
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        const screen = e.currentTarget.dataset.screen;
+                        this.navigateToScreen(screen);
+                    });
+                });
+            },
+
+            getNextLesson() {
+                const lastCompleted = this.userData.lessonsCompleted.length;
+                return this.lessons[lastCompleted] || this.lessons[0];
+            },
+
+            navigateToScreen(screenName) {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.dataset.screen === screenName) {
+                        item.classList.add('active');
+                    }
+                });
+
+                document.querySelectorAll('.screen').forEach(screen => {
+                    screen.classList.remove('active');
+                });
+
+                document.getElementById(`${screenName}-screen`)?.classList.add('active');
+            },
+
+            setupInstallPrompt() {
+                let deferredPrompt;
+
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    deferredPrompt = e;
+
+                    const installPrompt = document.getElementById('install-prompt');
+                    installPrompt.classList.remove('hidden');
+
+                    document.getElementById('install-btn').addEventListener('click', async () => {
+                        installPrompt.classList.add('hidden');
+                        deferredPrompt.prompt();
+                        const { outcome } = await deferredPrompt.userChoice;
+                        console.log(`User response to install prompt: ${outcome}`);
+                        deferredPrompt = null;
+                    });
+
+                    document.getElementById('install-dismiss').addEventListener('click', () => {
+                        installPrompt.classList.add('hidden');
+                    });
+                });
+            }
+        };
+
+        // ============ SERVICE WORKER REGISTRATION ============
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('service-worker.js')
                 .then(reg => console.log('Service Worker registered', reg))
                 .catch(err => console.log('Service Worker registration failed', err));
         }
+
+        // Initialize app when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            App.init();
+        });
     </script>
 </body>
 </html>
