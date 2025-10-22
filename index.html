@@ -1108,6 +1108,81 @@
             { id: 6, name: "XP Hunter", icon: "💎", requirement: 100, type: "xp" }
         ];
 
+// ============ GEMINI AI GENERATOR ============
+        const GeminiAI = {
+            API_KEY: 'AIzaSyDZBrdgDD0y6-v_w_bt197O7PlKGxLYhhM', // API key
+            API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
+            
+            async generateLesson(lessonNumber, userData) {
+                const topics = [
+                    'days of the week and time',
+                    'common verbs (go, come, eat, drink, see)',
+                    'body parts',
+                    'weather and seasons',
+                    'shopping and money',
+                    'asking for directions',
+                    'at a restaurant',
+                    'transportation',
+                    'past tense basics',
+                    'future tense basics'
+                ];
+                
+                const topic = topics[lessonNumber - 6] || 'conversation practice';
+                
+                const prompt = `Create a Lithuanian language lesson in valid JSON format.
+
+Lesson number: ${lessonNumber}
+Topic: ${topic}
+Level: beginner
+
+Create a lesson with exactly this structure:
+{
+  "id": ${lessonNumber},
+  "section": "Basics",
+  "title": "Topic Name",
+  "description": "Short description",
+  "difficulty": "beginner",
+  "xp": 10,
+  "vocabulary": [
+    {"lithuanian": "word1", "english": "translation1", "pronunciation": "phonetic1"},
+    {"lithuanian": "word2", "english": "translation2", "pronunciation": "phonetic2"},
+    {"lithuanian": "word3", "english": "translation3", "pronunciation": "phonetic3"},
+    {"lithuanian": "word4", "english": "translation4", "pronunciation": "phonetic4"},
+    {"lithuanian": "word5", "english": "translation5", "pronunciation": "phonetic5"}
+  ],
+  "exercises": [
+    {"type": "translation", "question": "How do you say 'X' in Lithuanian?", "answer": "word", "options": ["word", "opt2", "opt3", "opt4"]},
+    {"type": "multiple-choice", "question": "What does 'word' mean?", "answer": "meaning", "options": ["meaning", "opt2", "opt3", "opt4"]},
+    {"type": "translation", "question": "How do you say 'Y'?", "answer": "word", "options": ["word", "opt2", "opt3", "opt4"]}
+  ]
+}
+
+IMPORTANT: Return ONLY the JSON, no other text.`;
+
+                try {
+                    const response = await fetch(`${this.API_URL}?key=${this.API_KEY}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }]
+                        })
+                    });
+
+                    const data = await response.json();
+                    const text = data.candidates[0].content.parts[0].text;
+                    const jsonMatch = text.match(/\{[\s\S]*\}/);
+                    
+                    if (jsonMatch) {
+                        return JSON.parse(jsonMatch[0]);
+                    }
+                    return null;
+                } catch (error) {
+                    console.error('Error generating lesson:', error);
+                    return null;
+                }
+            }
+        };
+
         // ============ LESSON MANAGER ============
         const LessonManager = {
             currentLesson: null,
@@ -1335,12 +1410,21 @@
         const App = {
             lessons: [],
             userData: null,
+            isGenerating: false,
 
-            init() {
+            async init() {
                 console.log('Initializing Lithuanian Learning App...');
 
                 this.userData = Storage.getUserData();
                 this.lessons = LESSONS_DATA.lessons;
+                
+                // Load cached AI lessons
+                const cached = localStorage.getItem('aiLessons');
+                if (cached) {
+                    const aiLessons = JSON.parse(cached);
+                    this.lessons = [...LESSONS_DATA.lessons, ...aiLessons];
+                    console.log(`Loaded ${aiLessons.length} AI-generated lessons from cache`);
+                }
                 
                 StreakManager.init();
                 this.displayLessonPath();
@@ -1350,7 +1434,36 @@
                 PracticeManager.updateStats();
                 ProfileManager.updateProfile();
 
+                // Generate next lesson if needed
+                setTimeout(() => this.checkAndGenerateLesson(), 2000);
+
                 console.log('App initialized successfully');
+            },
+
+            async checkAndGenerateLesson() {
+                const completed = this.userData.lessonsCompleted.length;
+                const available = this.lessons.length;
+                
+                // If user is close to running out of lessons
+                if (available - completed <= 1 && !this.isGenerating && available < 15) {
+                    this.isGenerating = true;
+                    console.log('🤖 Generating new lesson...');
+                    
+                    const newLesson = await GeminiAI.generateLesson(available + 1, this.userData);
+                    
+                    if (newLesson) {
+                        this.lessons.push(newLesson);
+                        
+                        // Save to localStorage
+                        const aiLessons = this.lessons.slice(5); // All lessons after the 5 static ones
+                        localStorage.setItem('aiLessons', JSON.stringify(aiLessons));
+                        
+                        this.displayLessonPath();
+                        console.log('✅ New lesson generated:', newLesson.title);
+                    }
+                    
+                    this.isGenerating = false;
+                }
             },
 
             displayLessonPath() {
@@ -1478,6 +1591,9 @@
                 this.displayUserStats();
                 PracticeManager.updateStats();
                 ProfileManager.updateProfile();
+                
+                // Check if we need more lessons
+                this.checkAndGenerateLesson();
             },
 
             navigateToScreen(screenName) {
