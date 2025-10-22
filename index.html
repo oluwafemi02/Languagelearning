@@ -933,20 +933,52 @@
                 this.saveUserData(data);
             },
 
-            addVocabulary(word, strength = 1) {
-                const data = this.getUserData();
-                if (!data.vocabulary[word]) {
-                    data.vocabulary[word] = {
-                        strength: strength,
-                        lastReviewed: new Date().toISOString(),
-                        timesReviewed: 1
-                    };
-                } else {
-                    data.vocabulary[word].timesReviewed += 1;
-                    data.vocabulary[word].lastReviewed = new Date().toISOString();
-                }
-                this.saveUserData(data);
-            }
+            addVocabulary(word, strength = 1, isCorrect = true) {
+    const data = this.getUserData();
+    if (!data.vocabulary[word]) {
+        data.vocabulary[word] = {
+            strength: strength,
+            lastReviewed: new Date().toISOString(),
+            timesReviewed: 1,
+            timesCorrect: isCorrect ? 1 : 0,
+            timesWrong: isCorrect ? 0 : 1
+        };
+    } else {
+        data.vocabulary[word].timesReviewed += 1;
+        data.vocabulary[word].lastReviewed = new Date().toISOString();
+        
+        if (isCorrect) {
+            data.vocabulary[word].timesCorrect += 1;
+            data.vocabulary[word].strength = Math.min(5, data.vocabulary[word].strength + 0.5);
+        } else {
+            data.vocabulary[word].timesWrong += 1;
+            data.vocabulary[word].strength = Math.max(1, data.vocabulary[word].strength - 0.5);
+        }
+    }
+    this.saveUserData(data);
+},
+
+getWeakWords(limit = 10) {
+    const data = this.getUserData();
+    const words = Object.entries(data.vocabulary)
+        .map(([word, stats]) => ({ word, ...stats }))
+        .sort((a, b) => a.strength - b.strength)
+        .slice(0, limit);
+    return words;
+},
+
+getWordsForReview(limit = 10) {
+    const data = this.getUserData();
+    const now = new Date();
+    const words = Object.entries(data.vocabulary)
+        .map(([word, stats]) => {
+            const daysSinceReview = (now - new Date(stats.lastReviewed)) / (1000 * 60 * 60 * 24);
+            return { word, ...stats, daysSinceReview };
+        })
+        .sort((a, b) => b.daysSinceReview - a.daysSinceReview)
+        .slice(0, limit);
+    return words;
+}
         };
 
         // ============ STREAK MANAGER ============
@@ -1299,16 +1331,27 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no code blocks, no explanations.
                 document.getElementById('check-answer-btn').disabled = false;
             },
 
-            checkAnswer() {
-                const exercise = this.currentLesson.exercises[this.currentExercise];
-                const isCorrect = this.selectedAnswer === exercise.answer;
+        checkAnswer() {
+    const exercise = this.currentLesson.exercises[this.currentExercise];
+    const isCorrect = this.selectedAnswer === exercise.answer;
 
-                if (isCorrect) {
-                    this.correctAnswers++;
-                }
+    if (isCorrect) {
+        this.correctAnswers++;
+    }
+    
+    // Track vocabulary performance
+    if (exercise.type === 'translation' || exercise.type === 'multiple-choice') {
+        const vocabWord = this.currentLesson.vocabulary.find(v => 
+            v.lithuanian === exercise.answer || v.english === exercise.answer
+        );
+        
+        if (vocabWord) {
+            Storage.addVocabulary(vocabWord.lithuanian, 1, isCorrect);
+        }
+    }
 
-                this.showFeedback(isCorrect, exercise.answer);
-            },
+    this.showFeedback(isCorrect, exercise.answer);
+},
 
             showFeedback(isCorrect, correctAnswer) {
                 const feedbackPanel = document.getElementById('feedback-panel');
