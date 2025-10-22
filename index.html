@@ -1111,7 +1111,7 @@
 // ============ GEMINI AI GENERATOR ============
 const GeminiAI = {
     API_KEY: 'AIzaSyDZBrdgDD0y6-v_w_bt197O7PlKGxLYhhM',
-    API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
+    API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
     
     async generateLesson(lessonNumber, userData) {
         const topics = [
@@ -1157,10 +1157,10 @@ Create a lesson with exactly this structure:
   ]
 }
 
-IMPORTANT: Return ONLY the JSON object, no markdown formatting, no code blocks, no other text.`;
+IMPORTANT: Return ONLY valid JSON. No markdown, no code blocks, no explanations.`;
 
         try {
-            console.log('📡 Calling Gemini API...');
+            console.log('📡 Calling Gemini 2.0 Flash API...');
             
             const response = await fetch(`${this.API_URL}?key=${this.API_KEY}`, {
                 method: 'POST',
@@ -1173,56 +1173,64 @@ IMPORTANT: Return ONLY the JSON object, no markdown formatting, no code blocks, 
                     }],
                     generationConfig: {
                         temperature: 0.7,
-                        maxOutputTokens: 2048
+                        maxOutputTokens: 2048,
+                        responseMimeType: "application/json"
                     }
                 })
             });
 
             if (!response.ok) {
                 const errorText = await response.text();
-                console.error('API Error Response:', errorText);
+                console.error('❌ API Error:', response.status, errorText);
                 throw new Error(`HTTP ${response.status}: ${errorText}`);
             }
 
             const data = await response.json();
-            console.log('📥 API Response:', data);
+            console.log('📥 API Response received');
             
-            // Check if we have a valid response
             if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
-                console.error('Invalid API response structure:', data);
+                console.error('❌ Invalid response structure:', data);
                 return null;
             }
             
             const text = data.candidates[0].content.parts[0].text;
-            console.log('📝 Generated text:', text);
+            console.log('📝 Generated text length:', text.length);
             
-            // Try to extract JSON from the response
-            let jsonMatch = text.match(/\{[\s\S]*\}/);
-            
-            // If wrapped in code blocks, try to extract
-            if (!jsonMatch) {
-                jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/) || 
-                           text.match(/```\s*([\s\S]*?)\s*```/);
-                if (jsonMatch) {
-                    jsonMatch = [jsonMatch[1]];
-                }
-            }
-            
-            if (jsonMatch) {
-                const lessonData = JSON.parse(jsonMatch[0]);
-                console.log('✅ Parsed lesson:', lessonData);
+            // Try to parse directly (with responseMimeType JSON, it should be clean)
+            try {
+                const lessonData = JSON.parse(text);
+                console.log('✅ Parsed lesson:', lessonData.title);
                 return lessonData;
+            } catch (parseError) {
+                // Fallback: extract JSON from markdown if needed
+                console.log('⚠️ Direct parse failed, trying extraction...');
+                
+                let jsonMatch = text.match(/\{[\s\S]*\}/);
+                
+                if (!jsonMatch) {
+                    jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/) || 
+                               text.match(/```\s*([\s\S]*?)\s*```/);
+                    if (jsonMatch) {
+                        jsonMatch = [jsonMatch[1]];
+                    }
+                }
+                
+                if (jsonMatch) {
+                    const lessonData = JSON.parse(jsonMatch[0]);
+                    console.log('✅ Extracted and parsed lesson:', lessonData.title);
+                    return lessonData;
+                }
+                
+                console.error('❌ Could not extract JSON from response');
+                return null;
             }
             
-            console.error('❌ No valid JSON found in response');
-            return null;
         } catch (error) {
             console.error('❌ Error generating lesson:', error);
             return null;
         }
     }
 };
-
         // ============ LESSON MANAGER ============
         const LessonManager = {
             currentLesson: null,
