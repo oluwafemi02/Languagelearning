@@ -1109,27 +1109,27 @@
         ];
 
 // ============ GEMINI AI GENERATOR ============
-        const GeminiAI = {
-            API_KEY: 'AIzaSyDZBrdgDD0y6-v_w_bt197O7PlKGxLYhhM', // API key
-            API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
-            
-            async generateLesson(lessonNumber, userData) {
-                const topics = [
-                    'days of the week and time',
-                    'common verbs (go, come, eat, drink, see)',
-                    'body parts',
-                    'weather and seasons',
-                    'shopping and money',
-                    'asking for directions',
-                    'at a restaurant',
-                    'transportation',
-                    'past tense basics',
-                    'future tense basics'
-                ];
-                
-                const topic = topics[lessonNumber - 6] || 'conversation practice';
-                
-                const prompt = `Create a Lithuanian language lesson in valid JSON format.
+const GeminiAI = {
+    API_KEY: 'AIzaSyDZBrdgDD0y6-v_w_bt197O7PlKGxLYhhM',
+    API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
+    
+    async generateLesson(lessonNumber, userData) {
+        const topics = [
+            'days of the week and time',
+            'common verbs (go, come, eat, drink, see)',
+            'body parts',
+            'weather and seasons',
+            'shopping and money',
+            'asking for directions',
+            'at a restaurant',
+            'transportation',
+            'past tense basics',
+            'future tense basics'
+        ];
+        
+        const topic = topics[lessonNumber - 6] || 'conversation practice';
+        
+        const prompt = `Create a Lithuanian language lesson in valid JSON format.
 
 Lesson number: ${lessonNumber}
 Topic: ${topic}
@@ -1157,31 +1157,71 @@ Create a lesson with exactly this structure:
   ]
 }
 
-IMPORTANT: Return ONLY the JSON, no other text.`;
+IMPORTANT: Return ONLY the JSON object, no markdown formatting, no code blocks, no other text.`;
 
-                try {
-                    const response = await fetch(`${this.API_URL}?key=${this.API_KEY}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{ parts: [{ text: prompt }] }]
-                        })
-                    });
-
-                    const data = await response.json();
-                    const text = data.candidates[0].content.parts[0].text;
-                    const jsonMatch = text.match(/\{[\s\S]*\}/);
-                    
-                    if (jsonMatch) {
-                        return JSON.parse(jsonMatch[0]);
+        try {
+            console.log('📡 Calling Gemini API...');
+            
+            const response = await fetch(`${this.API_URL}?key=${this.API_KEY}`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    contents: [{ 
+                        parts: [{ text: prompt }] 
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        maxOutputTokens: 2048
                     }
-                    return null;
-                } catch (error) {
-                    console.error('Error generating lesson:', error);
-                    return null;
+                })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('API Error Response:', errorText);
+                throw new Error(`HTTP ${response.status}: ${errorText}`);
+            }
+
+            const data = await response.json();
+            console.log('📥 API Response:', data);
+            
+            // Check if we have a valid response
+            if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
+                console.error('Invalid API response structure:', data);
+                return null;
+            }
+            
+            const text = data.candidates[0].content.parts[0].text;
+            console.log('📝 Generated text:', text);
+            
+            // Try to extract JSON from the response
+            let jsonMatch = text.match(/\{[\s\S]*\}/);
+            
+            // If wrapped in code blocks, try to extract
+            if (!jsonMatch) {
+                jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/) || 
+                           text.match(/```\s*([\s\S]*?)\s*```/);
+                if (jsonMatch) {
+                    jsonMatch = [jsonMatch[1]];
                 }
             }
-        };
+            
+            if (jsonMatch) {
+                const lessonData = JSON.parse(jsonMatch[0]);
+                console.log('✅ Parsed lesson:', lessonData);
+                return lessonData;
+            }
+            
+            console.error('❌ No valid JSON found in response');
+            return null;
+        } catch (error) {
+            console.error('❌ Error generating lesson:', error);
+            return null;
+        }
+    }
+};
 
         // ============ LESSON MANAGER ============
         const LessonManager = {
