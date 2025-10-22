@@ -9,7 +9,6 @@
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🇱🇹</text></svg>">
     <style>
-        /* Inline all CSS to avoid 404 errors */
         * {
             margin: 0;
             padding: 0;
@@ -119,6 +118,28 @@
             margin-bottom: 24px;
         }
 
+        .section-header {
+            background: var(--white);
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header h3 {
+            font-size: 18px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-progress {
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
         .lesson-card {
             background: var(--white);
             border-radius: 16px;
@@ -140,6 +161,11 @@
             cursor: not-allowed;
         }
 
+        .lesson-card.locked:hover {
+            transform: none;
+            box-shadow: var(--shadow);
+        }
+
         .lesson-card.completed {
             border: 2px solid var(--success-color);
         }
@@ -149,6 +175,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            min-width: 50px;
         }
 
         .lesson-info {
@@ -171,6 +198,7 @@
             display: flex;
             gap: 8px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .xp-badge, .difficulty-badge {
@@ -231,6 +259,12 @@
         .btn-success {
             background: var(--success-color);
             color: var(--white);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--text-dark);
+            border: 2px solid var(--border-color);
         }
 
         #start-lesson-btn {
@@ -307,6 +341,13 @@
             font-size: 24px;
             margin-bottom: 24px;
             color: var(--text-dark);
+        }
+
+        .pronunciation-hint {
+            font-size: 16px;
+            color: var(--secondary-color);
+            margin-top: 8px;
+            font-style: italic;
         }
 
         .audio-btn {
@@ -445,6 +486,165 @@
             color: var(--text-light);
         }
 
+        /* Practice Screen */
+        .practice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .practice-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .practice-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .practice-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .practice-card h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .practice-card p {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* Profile Screen */
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 32px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 16px;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .profile-level {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+
+        .stat-card-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .achievements {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+
+        .achievements h3 {
+            margin-bottom: 16px;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 12px;
+        }
+
+        .achievement {
+            text-align: center;
+            padding: 12px;
+            border-radius: 12px;
+            background: var(--bg-light);
+        }
+
+        .achievement.unlocked {
+            background: #FFF7E6;
+        }
+
+        .achievement-icon {
+            font-size: 32px;
+            margin-bottom: 4px;
+        }
+
+        .achievement-name {
+            font-size: 11px;
+            color: var(--text-dark);
+        }
+
+        .settings-section {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .settings-section h3 {
+            margin-bottom: 16px;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -523,16 +723,23 @@
             font-size: 14px;
         }
 
-        .btn-secondary {
-            background: var(--white);
-            color: var(--text-dark);
-            border: 2px solid var(--border-color);
+        @media (max-width: 480px) {
+            .container {
+                padding: 16px;
+            }
+
+            .practice-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div id="app">
-        <!-- Header with Streak -->
         <header class="app-header">
             <div class="container">
                 <h1>🇱🇹 Learn Lithuanian</h1>
@@ -544,7 +751,6 @@
             </div>
         </header>
 
-        <!-- Main Content Area -->
         <main id="main-content">
             <!-- Home Screen -->
             <section id="home-screen" class="screen active">
@@ -568,6 +774,104 @@
                 </div>
             </section>
 
+            <!-- Practice Screen -->
+            <section id="practice-screen" class="screen">
+                <div class="container">
+                    <h2 style="margin-bottom: 24px;">Practice</h2>
+                    
+                    <div class="practice-grid">
+                        <div class="practice-card" id="practice-weak-words">
+                            <div class="practice-icon">🎯</div>
+                            <h3>Weak Words</h3>
+                            <p>Review difficult vocabulary</p>
+                        </div>
+                        
+                        <div class="practice-card" id="practice-review">
+                            <div class="practice-icon">🔄</div>
+                            <h3>Review</h3>
+                            <p>Practice all learned words</p>
+                        </div>
+                        
+                        <div class="practice-card" id="practice-speaking">
+                            <div class="practice-icon">🎤</div>
+                            <h3>Speaking</h3>
+                            <p>Practice pronunciation</p>
+                        </div>
+                        
+                        <div class="practice-card" id="practice-listening">
+                            <div class="practice-icon">👂</div>
+                            <h3>Listening</h3>
+                            <p>Test your comprehension</p>
+                        </div>
+                    </div>
+
+                    <div class="progress-overview">
+                        <h3>Vocabulary Progress</h3>
+                        <div style="margin-top: 16px;">
+                            <p style="color: var(--text-light); margin-bottom: 8px;">
+                                Words Learned: <strong id="vocab-count">0</strong>
+                            </p>
+                            <p style="color: var(--text-light);">
+                                Words to Review: <strong id="review-count">0</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Screen -->
+            <section id="profile-screen" class="screen">
+                <div class="container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">👤</div>
+                        <div class="profile-name">Lithuanian Learner</div>
+                        <div class="profile-level">Level <span id="user-level">1</span></div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="profile-xp">0</div>
+                            <div class="stat-card-label">Total XP</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="profile-streak">0</div>
+                            <div class="stat-card-label">Day Streak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="profile-lessons">0</div>
+                            <div class="stat-card-label">Lessons Completed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="profile-vocab">0</div>
+                            <div class="stat-card-label">Words Learned</div>
+                        </div>
+                    </div>
+
+                    <div class="achievements">
+                        <h3>Achievements</h3>
+                        <div class="achievement-grid" id="achievements-container">
+                            <!-- Achievements will be inserted here -->
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Settings</h3>
+                        <div class="setting-item">
+                            <span>Daily Goal</span>
+                            <span id="daily-goal">50 XP</span>
+                        </div>
+                        <div class="setting-item">
+                            <span>Sound Effects</span>
+                            <span>✓ Enabled</span>
+                        </div>
+                        <div class="setting-item">
+                            <span>Daily Reminder</span>
+                            <span>19:00</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Lesson Screen -->
             <section id="lesson-screen" class="screen">
                 <div class="lesson-header">
@@ -578,14 +882,10 @@
                 </div>
 
                 <div class="lesson-content">
-                    <div id="question-container">
-                        <!-- Question content dynamically inserted -->
-                    </div>
+                    <div id="question-container"></div>
 
                     <div class="answer-section">
-                        <div id="answer-options">
-                            <!-- Answer options dynamically inserted -->
-                        </div>
+                        <div id="answer-options"></div>
                         <button id="check-answer-btn" class="btn btn-primary" disabled>
                             Check
                         </button>
@@ -630,7 +930,6 @@
             </section>
         </main>
 
-        <!-- Navigation -->
         <nav class="bottom-nav">
             <button class="nav-item active" data-screen="home">
                 <span class="nav-icon">🏠</span>
@@ -647,7 +946,6 @@
         </nav>
     </div>
 
-    <!-- Install Prompt -->
     <div id="install-prompt" class="install-prompt hidden">
         <div class="install-content">
             <h3>Install App?</h3>
@@ -659,9 +957,7 @@
         </div>
     </div>
 
-<script>
-        // All JavaScript inline to avoid 404 errors
-        
+    <script>
         // ============ STORAGE ============
         const Storage = {
             getUserData() {
@@ -717,11 +1013,18 @@
 
             addVocabulary(word, strength = 1) {
                 const data = this.getUserData();
-                data.vocabulary[word] = {
-                    strength: strength,
-                    lastReviewed: new Date().toISOString(),
-                    timesReviewed: 1
-                };
+                if (!data.vocabulary[word]) {
+                    data.vocabulary[word] = {
+                        strength: strength,
+                        lastReviewed: new Date().toISOString(),
+                        timesReviewed: 1
+                    };
+                } else {
+                    data.vocabulary[wor
+                        } else {
+                    data.vocabulary[word].timesReviewed += 1;
+                    data.vocabulary[word].lastReviewed = new Date().toISOString();
+                }
                 this.saveUserData(data);
             }
         };
@@ -769,14 +1072,15 @@
             }
         };
 
-        // ============ LESSONS DATA ============
+        // ============ COMPREHENSIVE LESSONS DATA ============
         const LESSONS_DATA = {
             lessons: [
+                // SECTION 1: BASICS (Lessons 1-5)
                 {
                     id: 1,
-                    title: "Basics 1",
-                    titleLT: "Pagrindai 1",
-                    description: "Learn basic greetings and introductions",
+                    section: "Basics",
+                    title: "Greetings & Basics",
+                    description: "Learn essential greetings and basic phrases",
                     difficulty: "beginner",
                     xp: 10,
                     vocabulary: [
@@ -784,45 +1088,43 @@
                         { lithuanian: "ačiū", english: "thank you", pronunciation: "ah-choo" },
                         { lithuanian: "taip", english: "yes", pronunciation: "tayp" },
                         { lithuanian: "ne", english: "no", pronunciation: "neh" },
-                        { lithuanian: "gerai", english: "okay/good", pronunciation: "geh-rai" }
+                        { lithuanian: "gerai", english: "okay/good", pronunciation: "geh-rai" },
+                        { lithuanian: "prašau", english: "please", pronunciation: "prah-show" }
                     ],
                     exercises: [
-                        {
-                            type: "translation",
-                            question: "How do you say 'hello' in Lithuanian?",
-                            answer: "labas",
-                            options: ["labas", "ačiū", "viso gero", "gerai"]
-                        },
-                        {
-                            type: "multiple-choice",
-                            question: "What does 'ačiū' mean in English?",
-                            answer: "thank you",
-                            options: ["hello", "goodbye", "thank you", "please"]
-                        },
-                        {
-                            type: "multiple-choice",
-                            question: "What is 'yes' in Lithuanian?",
-                            answer: "taip",
-                            options: ["ne", "taip", "labas", "gerai"]
-                        },
-                        {
-                            type: "translation",
-                            question: "How do you say 'no' in Lithuanian?",
-                            answer: "ne",
-                            options: ["ne", "taip", "ačiū", "labas"]
-                        },
-                        {
-                            type: "multiple-choice",
-                            question: "What does 'gerai' mean?",
-                            answer: "okay/good",
-                            options: ["okay/good", "bad", "hello", "goodbye"]
-                        }
+                        { type: "translation", question: "How do you say 'hello' in Lithuanian?", answer: "labas", options: ["labas", "ačiū", "viso gero", "gerai"] },
+                        { type: "multiple-choice", question: "What does 'ačiū' mean?", answer: "thank you", options: ["hello", "goodbye", "thank you", "please"] },
+                        { type: "multiple-choice", question: "What is 'yes' in Lithuanian?", answer: "taip", options: ["ne", "taip", "labas", "gerai"] },
+                        { type: "translation", question: "How do you say 'no' in Lithuanian?", answer: "ne", options: ["ne", "taip", "ačiū", "labas"] },
+                        { type: "multiple-choice", question: "What does 'prašau' mean?", answer: "please", options: ["thank you", "please", "sorry", "hello"] }
                     ]
                 },
                 {
                     id: 2,
+                    section: "Basics",
+                    title: "Goodbyes & Courtesy",
+                    description: "Learn how to say goodbye and be polite",
+                    difficulty: "beginner",
+                    xp: 10,
+                    vocabulary: [
+                        { lithuanian: "viso gero", english: "goodbye", pronunciation: "vee-so geh-ro" },
+                        { lithuanian: "iki", english: "see you", pronunciation: "ee-kee" },
+                        { lithuanian: "atsiprašau", english: "sorry/excuse me", pronunciation: "at-see-prah-show" },
+                        { lithuanian: "labas rytas", english: "good morning", pronunciation: "lah-bahs ree-tas" },
+                        { lithuanian: "labanakt", english: "good night", pronunciation: "lah-bah-nakt" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'goodbye' in Lithuanian?", answer: "viso gero", options: ["viso gero", "labas", "ačiū", "iki"] },
+                        { type: "multiple-choice", question: "What does 'atsiprašau' mean?", answer: "sorry/excuse me", options: ["hello", "goodbye", "sorry/excuse me", "thank you"] },
+                        { type: "translation", question: "How do you say 'good morning'?", answer: "labas rytas", options: ["labas rytas", "labanakt", "viso gero", "labas"] },
+                        { type: "multiple-choice", question: "What does 'iki' mean?", answer: "see you", options: ["goodbye", "see you", "hello", "good night"] },
+                        { type: "translation", question: "How do you say 'good night'?", answer: "labanakt", options: ["labanakt", "labas rytas", "viso gero", "iki"] }
+                    ]
+                },
+                {
+                    id: 3,
+                    section: "Basics",
                     title: "Numbers 1-10",
-                    titleLT: "Skaičiai 1-10",
                     description: "Learn numbers from one to ten",
                     difficulty: "beginner",
                     xp: 10,
@@ -831,33 +1133,71 @@
                         { lithuanian: "du", english: "two", pronunciation: "doo" },
                         { lithuanian: "trys", english: "three", pronunciation: "trees" },
                         { lithuanian: "keturi", english: "four", pronunciation: "ket-u-ri" },
-                        { lithuanian: "penki", english: "five", pronunciation: "pen-ki" }
+                        { lithuanian: "penki", english: "five", pronunciation: "pen-ki" },
+                        { lithuanian: "šeši", english: "six", pronunciation: "sheh-shi" },
+                        { lithuanian: "septyni", english: "seven", pronunciation: "sep-ti-ni" },
+                        { lithuanian: "aštuoni", english: "eight", pronunciation: "ash-two-ni" },
+                        { lithuanian: "devyni", english: "nine", pronunciation: "deh-vee-ni" },
+                        { lithuanian: "dešimt", english: "ten", pronunciation: "deh-shimt" }
                     ],
                     exercises: [
-                        {
-                            type: "translation",
-                            question: "How do you say 'one' in Lithuanian?",
-                            answer: "vienas",
-                            options: ["vienas", "du", "trys", "keturi"]
-                        },
-                        {
-                            type: "multiple-choice",
-                            question: "What does 'du' mean?",
-                            answer: "two",
-                            options: ["one", "two", "three", "four"]
-                        },
-                        {
-                            type: "translation",
-                            question: "How do you say 'three' in Lithuanian?",
-                            answer: "trys",
-                            options: ["trys", "keturi", "penki", "vienas"]
-                        }
+                        { type: "translation", question: "How do you say 'one' in Lithuanian?", answer: "vienas", options: ["vienas", "du", "trys", "keturi"] },
+                        { type: "multiple-choice", question: "What does 'du' mean?", answer: "two", options: ["one", "two", "three", "four"] },
+                        { type: "translation", question: "How do you say 'five'?", answer: "penki", options: ["penki", "šeši", "septyni", "keturi"] },
+                        { type: "multiple-choice", question: "What does 'dešimt' mean?", answer: "ten", options: ["eight", "nine", "ten", "seven"] },
+                        { type: "translation", question: "How do you say 'three'?", answer: "trys", options: ["trys", "keturi", "penki", "du"] }
                     ]
                 },
                 {
-                    id: 3,
-                    title: "Family",
-                    titleLT: "Šeima",
+                    id: 4,
+                    section: "Basics",
+                    title: "Colors",
+                    description: "Learn basic color names",
+                    difficulty: "beginner",
+                    xp: 10,
+                    vocabulary: [
+                        { lithuanian: "raudona", english: "red", pronunciation: "row-do-na" },
+                        { lithuanian: "mėlyna", english: "blue", pronunciation: "may-lee-na" },
+                        { lithuanian: "žalia", english: "green", pronunciation: "zha-lee-a" },
+                        { lithuanian: "geltona", english: "yellow", pronunciation: "gel-to-na" },
+                        { lithuanian: "balta", english: "white", pronunciation: "bal-ta" },
+                        { lithuanian: "juoda", english: "black", pronunciation: "you-o-da" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'red' in Lithuanian?", answer: "raudona", options: ["raudona", "mėlyna", "žalia", "geltona"] },
+                        { type: "multiple-choice", question: "What does 'mėlyna' mean?", answer: "blue", options: ["red", "blue", "green", "yellow"] },
+                        { type: "translation", question: "How do you say 'green'?", answer: "žalia", options: ["žalia", "geltona", "balta", "juoda"] },
+                        { type: "multiple-choice", question: "What color is 'juoda'?", answer: "black", options: ["white", "black", "yellow", "red"] }
+                    ]
+                },
+                {
+                    id: 5,
+                    section: "Basics",
+                    title: "Days of the Week",
+                    description: "Learn the days of the week",
+                    difficulty: "beginner",
+                    xp: 15,
+                    vocabulary: [
+                        { lithuanian: "pirmadienis", english: "Monday", pronunciation: "peer-ma-dye-nis" },
+                        { lithuanian: "antradienis", english: "Tuesday", pronunciation: "an-tra-dye-nis" },
+                        { lithuanian: "trečiadienis", english: "Wednesday", pronunciation: "tre-cha-dye-nis" },
+                        { lithuanian: "ketvirtadienis", english: "Thursday", pronunciation: "ket-veer-ta-dye-nis" },
+                        { lithuanian: "penktadienis", english: "Friday", pronunciation: "penk-ta-dye-nis" },
+                        { lithuanian: "šeštadienis", english: "Saturday", pronunciation: "shesh-ta-dye-nis" },
+                        { lithuanian: "sekmadienis", english: "Sunday", pronunciation: "sek-ma-dye-nis" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'Monday'?", answer: "pirmadienis", options: ["pirmadienis", "antradienis", "trečiadienis", "ketvirtadienis"] },
+                        { type: "multiple-choice", question: "What does 'penktadienis' mean?", answer: "Friday", options: ["Thursday", "Friday", "Saturday", "Sunday"] },
+                        { type: "translation", question: "How do you say 'Sunday'?", answer: "sekmadienis", options: ["sekmadienis", "šeštadienis", "penktadienis", "ketvirtadienis"] }
+                    ]
+                },
+
+                // SECTION 2: FAMILY & PEOPLE (Lessons 6-10)
+                {
+                    id: 6,
+                    section: "Family & People",
+                    title: "Family Members",
                     description: "Learn family member terms",
                     difficulty: "beginner",
                     xp: 15,
@@ -865,25 +1205,535 @@
                         { lithuanian: "mama", english: "mother", pronunciation: "mah-mah" },
                         { lithuanian: "tėvas", english: "father", pronunciation: "tay-vahs" },
                         { lithuanian: "sesuo", english: "sister", pronunciation: "seh-soo-oh" },
-                        { lithuanian: "brolis", english: "brother", pronunciation: "broh-lis" }
+                        { lithuanian: "brolis", english: "brother", pronunciation: "broh-lis" },
+                        { lithuanian: "sūnus", english: "son", pronunciation: "soo-nus" },
+                        { lithuanian: "dukra", english: "daughter", pronunciation: "dook-ra" }
                     ],
                     exercises: [
-                        {
-                            type: "translation",
-                            question: "How do you say 'mother' in Lithuanian?",
-                            answer: "mama",
-                            options: ["mama", "tėvas", "sesuo", "brolis"]
-                        },
-                        {
-                            type: "multiple-choice",
-                            question: "What does 'brolis' mean?",
-                            answer: "brother",
-                            options: ["sister", "brother", "mother", "father"]
-                        }
+                        { type: "translation", question: "How do you say 'mother'?", answer: "mama", options: ["mama", "tėvas", "sesuo", "brolis"] },
+                        { type: "multiple-choice", question: "What does 'brolis' mean?", answer: "brother", options: ["sister", "brother", "mother", "father"] },
+                        { type: "translation", question: "How do you say 'daughter'?", answer: "dukra", options: ["dukra", "sūnus", "sesuo", "mama"] },
+                        { type: "multiple-choice", question: "What does 'tėvas' mean?", answer: "father", options: ["mother", "father", "son", "brother"] }
+                    ]
+                },
+                {
+                    id: 7,
+                    section: "Family & People",
+                    title: "Extended Family",
+                    description: "Learn extended family terms",
+                    difficulty: "beginner",
+                    xp: 15,
+                    vocabulary: [
+                        { lithuanian: "senelė", english: "grandmother", pronunciation: "seh-neh-lay" },
+                        { lithuanian: "senelis", english: "grandfather", pronunciation: "seh-neh-lis" },
+                        { lithuanian: "teta", english: "aunt", pronunciation: "teh-ta" },
+                        { lithuanian: "dėdė", english: "uncle", pronunciation: "day-day" },
+                        { lithuanian: "pusbrolis", english: "cousin (male)", pronunciation: "poos-broh-lis" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'grandmother'?", answer: "senelė", options: ["senelė", "senelis", "teta", "dėdė"] },
+                        { type: "multiple-choice", question: "What does 'dėdė' mean?", answer: "uncle", options: ["aunt", "uncle", "grandfather", "cousin"] },
+                        { type: "translation", question: "How do you say 'aunt'?", answer: "teta", options: ["teta", "senelė", "mama", "sesuo"] }
+                    ]
+                },
+                {
+                    id: 8,
+                    section: "Family & People",
+                    title: "Introductions",
+                    description: "Learn how to introduce yourself",
+                    difficulty: "beginner",
+                    xp: 15,
+                    vocabulary: [
+                        { lithuanian: "aš", english: "I", pronunciation: "ash" },
+                        { lithuanian: "tu", english: "you", pronunciation: "too" },
+                        { lithuanian: "vardas", english: "name", pronunciation: "var-das" },
+                        { lithuanian: "mano vardas", english: "my name", pronunciation: "mah-no var-das" },
+                        { lithuanian: "kaip tave vadina?", english: "what's your name?", pronunciation: "kipe tah-veh vah-dee-na" },
+                        { lithuanian: "malonu susipažinti", english: "nice to meet you", pronunciation: "mah-lo-noo soo-see-pa-zhin-tee" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'I' in Lithuanian?", answer: "aš", options: ["aš", "tu", "jis", "mes"] },
+                        { type: "multiple-choice", question: "What does 'mano vardas' mean?", answer: "my name", options: ["your name", "my name", "his name", "her name"] },
+                        { type: "translation", question: "How do you say 'nice to meet you'?", answer: "malonu susipažinti", options: ["malonu susipažinti", "mano vardas", "kaip tave vadina?", "labas"] }
+                    ]
+                },
+                {
+                    id: 9,
+                    section: "Family & People",
+                    title: "Age & Occupation",
+                    description: "Talk about age and jobs",
+                    difficulty: "intermediate",
+                    xp: 20,
+                    vocabulary: [
+                        { lithuanian: "metai", english: "years", pronunciation: "meh-tai" },
+                        { lithuanian: "kiek tau metų?", english: "how old are you?", pronunciation: "kiek tow meh-too" },
+                        { lithuanian: "darbas", english: "work/job", pronunciation: "dar-bas" },
+                        { Lithuania: "studentas", english: "student", pronunciation: "stoo-den-tas" },
+                        { lithuanian: "mokytojas", english: "teacher", pronunciation: "mo-kee-to-yas" }
+                    ],
+                    exercises: [
+                        { type: "multiple-choice", question: "What does 'kiek tau metų?' mean?", answer: "how old are you?", options: ["what's your name?", "how old are you?", "where are you from?", "what do you do?"] },
+                        { type: "translation", question: "How do you say 'teacher'?", answer: "mokytojas", options: ["mokytojas", "studentas", "darbas", "vardas"] },
+                        { type: "multiple-choice", question: "What does 'darbas' mean?", answer: "work/job", options: ["student", "work/job", "teacher", "name"] }
+                    ]
+                },
+                {
+                    id: 10,
+                    section: "Family & People",
+                    title: "Describing People",
+                    description: "Learn adjectives to describe people",
+                    difficulty: "intermediate",
+                    xp: 20,
+                    vocabulary: [
+                        { lithuanian: "didelis", english: "big/tall", pronunciation: "dee-deh-lis" },
+                        { lithuanian: "mažas", english: "small/short", pronunciation: "mah-zhas" },
+                        { lithuanian: "gražus", english: "beautiful/handsome", pronunciation: "grah-zhus" },
+                        { lithuanian: "jaunas", english: "young", pronunciation: "yow-nas" },
+                        { lithuanian: "senas", english: "old", pronunciation: "seh-nas" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'young'?", answer: "jaunas", options: ["jaunas", "senas", "didelis", "mažas"] },
+                        { type: "multiple-choice", question: "What does 'gražus' mean?", answer: "beautiful/handsome", options: ["ugly", "beautiful/handsome", "tall", "short"] },
+                        { type: "translation", question: "How do you say 'small'?", answer: "mažas", options: ["mažas", "didelis", "jaunas", "senas"] }
+                    ]
+                },
+
+                // SECTION 3: FOOD & DRINK (Lessons 11-15)
+                {
+                    id: 11,
+                    section: "Food & Drink",
+                    title: "Basic Foods",
+                    description: "Learn common food items",
+                    difficulty: "beginner",
+                    xp: 15,
+                    vocabulary: [
+                        { lithuanian: "duona", english: "bread", pronunciation: "dwo-na" },
+                        { lithuanian: "pienas", english: "milk", pronunciation: "pee-eh-nas" },
+                        { lithuanian: "vanduo", english: "water", pronunciation: "van-doo-o" },
+                        { lithuanian: "mėsa", english: "meat", pronunciation: "may-sa" },
+                        { lithuanian: "žuvis", english: "fish", pronunciation: "zhoo-vis" },
+                        { lithuanian: "daržovės", english: "vegetables", pronunciation: "dar-zho-vays" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'bread'?", answer: "duona", options: ["duona", "pienas", "vanduo", "mėsa"] },
+                        { type: "multiple-choice", question: "What does 'pienas' mean?", answer: "milk", options: ["water", "milk", "bread", "meat"] },
+                        { type: "translation", question: "How do you say 'water'?", answer: "vanduo", options: ["vanduo", "pienas", "žuvis", "duona"] }
+                    ]
+                },
+                {
+                    id: 12,
+                    section: "Food & Drink",
+                    title: "Fruits",
+                    description: "Learn fruit names",
+                    difficulty: "beginner",
+                    xp: 15,
+                    vocabulary: [
+                        { lithuanian: "obuolys", english: "apple", pronunciation: "o-bwo-lis" },
+                        { lithuanian: "bananas", english: "banana", pronunciation: "ba-na-nas" },
+                        { lithuanian: "apelsinas", english: "orange", pronunciation: "a-pel-see-nas" },
+                        { lithuanian: "kriaušė", english: "pear", pronunciation: "kree-ow-shay" },
+                        { lithuanian: "braškės", english: "strawberries", pronunciation: "brash-kays" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'apple'?", answer: "obuolys", options: ["obuolys", "bananas", "apelsinas", "kriaušė"] },
+                        { type: "multiple-choice", question: "What does 'braškės' mean?", answer: "strawberries", options: ["apple", "banana", "strawberries", "pear"] },
+                        { type: "translation", question: "How do you say 'orange'?", answer: "apelsinas", options: ["apelsinas", "bananas", "obuolys", "kriaušė"] }
+                    ]
+                },
+                {
+                    id: 13,
+                    section: "Food & Drink",
+                    title: "Meals",
+                    description: "Learn about daily meals",
+                    difficulty: "intermediate",
+                    xp: 20,
+                    vocabulary: [
+                        { lithuanian: "pusryčiai", english: "breakfast", pronunciation: "poos-ree-chai" },
+                        { lithuanian: "pietūs", english: "lunch", pronunciation: "pye-toos" },
+                        { lithuanian: "vakarienė", english: "dinner", pronunciation: "va-ka-rye-nay" },
+                        { lithuanian: "valgyti", english: "to eat", pronunciation: "val-gee-tee" },
+                        { lithuanian: "gerti", english: "to drink", pronunciation: "ger-tee" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'breakfast'?", answer: "pusryčiai", options: ["pusryčiai", "pietūs", "vakarienė", "valgyti"] },
+                        { type: "multiple-choice", question: "What does 'valgyti' mean?", answer: "to eat", options: ["to drink", "to eat", "breakfast", "lunch"] },
+                        { type: "translation", question: "How do you say 'dinner'?", answer: "vakarienė", options: ["vakarienė", "pietūs", "pusryčiai", "gerti"] }
+                    ]
+                },
+                {
+                    id: 14,
+                    section: "Food & Drink",
+                    title: "Drinks",
+                    description: "Learn beverage names",
+                    difficulty: "beginner",
+                    xp: 15,
+                    vocabulary: [
+                        { lithuanian: "kava", english: "coffee", pronunciation: "ka-va" },
+                        { lithuanian: "arbata", english: "tea", pronunciation: "ar-ba-ta" },
+                        { lithuanian: "sultys", english: "juice", pronunciation: "sool-tees" },
+                        { lithuanian: "alus", english: "beer", pronunciation: "ah-lus" },
+                        { lithuanian: "vynas", english: "wine", pronunciation: "vee-nas" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'coffee'?", answer: "kava", options: ["kava", "arbata", "sultys", "alus"] },
+                        { type: "multiple-choice", question: "What does 'arbata' mean?", answer: "tea", options: ["coffee", "tea", "juice", "water"] },
+                        { type: "translation", question: "How do you say 'juice'?", answer: "sultys", options: ["sultys", "kava", "vynas", "alus"] }
+                    ]
+                },
+                {
+                    id: 15,
+                    section: "Food & Drink",
+                    title: "At the Restaurant",
+                    description: "Learn restaurant vocabulary",
+                    difficulty: "intermediate",
+                    xp: 20,
+                    vocabulary: [
+                        { lithuanian: "restoranas", english: "restaurant", pronunciation: "res-to-ra-nas" },
+                        { lithuanian: "meniu", english: "menu", pronunciation: "men-yoo" },
+                        { lithuanian: "užsakyti", english: "to order", pronunciation: "oozh-sa-kee-tee" },
+                        { lithuanian: "sąskaita", english: "bill", pronunciation: "sass-kai-ta" },
+                        { lithuanian: "skanus", english: "delicious", pronunciation: "ska-nus" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'menu'?", answer: "meniu", options: ["meniu", "restoranas", "sąskaita", "užsakyti"] },
+                        { type: "multiple-choice", question: "What does 'skanus' mean?", answer: "delicious", options: ["expensive", "delicious", "cold", "hot"] },
+                        { type: "translation", question: "How do you say 'to order'?", answer: "užsakyti", options: ["užsakyti", "valgyti", "gerti", "meniu"] }
+                    ]
+                },
+
+                // SECTION 4: HOME & PLACES (Lessons 16-20)
+                {
+                    id: 16,
+                    section: "Home & Places",
+                    title: "House & Rooms",
+                    description: "Learn parts of the house",
+                    difficulty: "intermediate",
+                    xp: 20,
+                    vocabulary: [
+                        { lithuanian: "namas", english: "house", pronunciation: "na-mas" },
+                        { lithuanian: "kambarys", english: "room", pronunciation: "kam-ba-rees" },
+                        { lithuanian: "virtuvė", english: "kitchen", pronunciation: "veer-too-vay" },
+                        { lithuanian: "miegamasis", english: "bedroom", pronunciation: "mye-ga-ma-sis" },
+                        { lithuanian: "vonios kambarys", english: "bathroom", pronunciation: "vo-nyos kam-ba-rees" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'house'?", answer: "namas", options: ["namas", "kambarys", "virtuvė", "miestas"] },
+                        { type: "multiple-choice", question: "What does 'virtuvė' mean?", answer: "kitchen", options: ["bedroom", "kitchen", "bathroom", "living room"] },
+                        { type: "translation", question: "How do you say 'bedroom'?", answer: "miegamasis", options: ["miegamasis", "vonios kambarys", "virtuvė", "kambarys"] }
+                    ]
+                },
+                {
+                    id: 17,
+                    section: "Home & Places",
+                    title: "Furniture",
+                    description: "Learn furniture vocabulary",
+                    difficulty: "intermediate",
+                    xp: 20,
+                    vocabulary: [
+                        { lithuanian: "stalas", english: "table", pronunciation: "sta-las" },
+                        { lithuanian: "kėdė", english: "chair", pronunciation: "kay-day" },
+                        { lithuanian: "lova", english: "bed", pronunciation: "lo-va" },
+                        { lithuanian: "sofa", english: "sofa", pronunciation: "so-fa" },
+                        { lithuanian: "spinta", english: "wardrobe/closet", pronunciation: "spin-ta" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'table'?", answer: "stalas", options: ["stalas", "kėdė", "lova", "spinta"] },
+                        { type: "multiple-choice", question: "What does 'lova' mean?", answer: "bed", options: ["chair", "bed", "sofa", "table"] },
+                        { type: "translation", question: "How do you say 'chair'?", answer: "kėdė", options: ["kėdė", "stalas", "sofa", "spinta"] }
+                    ]
+                },
+                {
+                    id: 18,
+                    section: "Home & Places",
+                    title: "City Places",
+                    description: "Learn places in the city",
+                    difficulty: "intermediate",
+                    xp: 20,
+                    vocabulary: [
+                        { lithuanian: "miestas", english: "city", pronunciation: "myes-tas" },
+                        { lithuanian: "gatvė", english: "street", pronunciation: "gat-vay" },
+                        { lithuanian: "parduotuvė", english: "shop/store", pronunciation: "par-dwo-too-vay" },
+                        { lithuanian: "bankas", english: "bank", pronunciation: "ban-kas" },
+                        { lithuanian: "ligoninė", english: "hospital", pronunciation: "lee-go-nee-nay" },
+                        { lithuanian: "mokykla", english: "school", pronunciation: "mo-kik-la" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'city'?", answer: "miestas", options: ["miestas", "gatvė", "parduotuvė", "bankas"] },
+                        { type: "multiple-choice", question: "What does 'mokykla' mean?", answer: "school", options: ["hospital", "school", "bank", "shop"] },
+                        { type: "translation", question: "How do you say 'street'?", answer: "gatvė", options: ["gatvė", "miestas", "parduotuvė", "bankas"] }
+                    ]
+                },
+                {
+                    id: 19,
+                    section: "Home & Places",
+                    title: "Transportation",
+                    description: "Learn transportation vocabulary",
+                    difficulty: "intermediate",
+                    xp: 20,
+                    vocabulary: [
+                        { lithuanian: "autobusas", english: "bus", pronunciation: "ow-to-boo-sas" },
+                        { lithuanian: "traukinys", english: "train", pronunciation: "trow-kee-nees" },
+                        { lithuanian: "automobilis", english: "car", pronunciation: "ow-to-mo-bee-lis" },
+                        { lithuanian: "dviratis", english: "bicycle", pronunciation: "dvee-ra-tis" },
+                        { lithuanian: "lėktuvas", english: "airplane", pronunciation: "layk-too-vas" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'bus'?", answer: "autobusas", options: ["autobus
+                                                                                                                 { type: "translation", question: "How do you say 'bus'?", answer: "autobusas", options: ["autobusas", "traukinys", "automobilis", "dviratis"] },
+                        { type: "multiple-choice", question: "What does 'dviratis' mean?", answer: "bicycle", options: ["car", "bicycle", "train", "airplane"] },
+                        { type: "translation", question: "How do you say 'train'?", answer: "traukinys", options: ["traukinys", "autobusas", "lėktuvas", "dviratis"] }
+                    ]
+                },
+                {
+                    id: 20,
+                    section: "Home & Places",
+                    title: "Directions",
+                    description: "Learn to give and ask for directions",
+                    difficulty: "intermediate",
+                    xp: 25,
+                    vocabulary: [
+                        { lithuanian: "kur?", english: "where?", pronunciation: "koor" },
+                        { lithuanian: "čia", english: "here", pronunciation: "cha" },
+                        { lithuanian: "ten", english: "there", pronunciation: "ten" },
+                        { lithuanian: "kairė", english: "left", pronunciation: "kai-ray" },
+                        { lithuanian: "dešinė", english: "right", pronunciation: "deh-shi-nay" },
+                        { lithuanian: "tiesiai", english: "straight", pronunciation: "tye-syai" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'where?'?", answer: "kur?", options: ["kur?", "čia", "ten", "kaip?"] },
+                        { type: "multiple-choice", question: "What does 'kairė' mean?", answer: "left", options: ["right", "left", "straight", "here"] },
+                        { type: "translation", question: "How do you say 'right'?", answer: "dešinė", options: ["dešinė", "kairė", "tiesiai", "ten"] }
+                    ]
+                },
+
+                // SECTION 5: TIME & WEATHER (Lessons 21-25)
+                {
+                    id: 21,
+                    section: "Time & Weather",
+                    title: "Telling Time",
+                    description: "Learn to tell time in Lithuanian",
+                    difficulty: "intermediate",
+                    xp: 25,
+                    vocabulary: [
+                        { lithuanian: "laikas", english: "time", pronunciation: "lai-kas" },
+                        { lithuanian: "valanda", english: "hour", pronunciation: "va-lan-da" },
+                        { lithuanian: "minutė", english: "minute", pronunciation: "mee-noo-tay" },
+                        { lithuanian: "dabar", english: "now", pronunciation: "da-bar" },
+                        { lithuanian: "vėliau", english: "later", pronunciation: "vay-lyow" },
+                        { lithuanian: "anksčiau", english: "earlier", pronunciation: "ank-shchow" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'time'?", answer: "laikas", options: ["laikas", "valanda", "minutė", "dabar"] },
+                        { type: "multiple-choice", question: "What does 'dabar' mean?", answer: "now", options: ["later", "now", "earlier", "hour"] },
+                        { type: "translation", question: "How do you say 'hour'?", answer: "valanda", options: ["valanda", "minutė", "laikas", "dabar"] }
+                    ]
+                },
+                {
+                    id: 22,
+                    section: "Time & Weather",
+                    title: "Seasons",
+                    description: "Learn the four seasons",
+                    difficulty: "beginner",
+                    xp: 15,
+                    vocabulary: [
+                        { lithuanian: "pavasaris", english: "spring", pronunciation: "pa-va-sa-ris" },
+                        { lithuanian: "vasara", english: "summer", pronunciation: "va-sa-ra" },
+                        { lithuanian: "ruduo", english: "autumn/fall", pronunciation: "roo-doo-o" },
+                        { lithuanian: "žiema", english: "winter", pronunciation: "zhye-ma" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'spring'?", answer: "pavasaris", options: ["pavasaris", "vasara", "ruduo", "žiema"] },
+                        { type: "multiple-choice", question: "What does 'žiema' mean?", answer: "winter", options: ["spring", "summer", "autumn", "winter"] },
+                        { type: "translation", question: "How do you say 'summer'?", answer: "vasara", options: ["vasara", "pavasaris", "ruduo", "žiema"] }
+                    ]
+                },
+                {
+                    id: 23,
+                    section: "Time & Weather",
+                    title: "Weather Conditions",
+                    description: "Learn to describe the weather",
+                    difficulty: "intermediate",
+                    xp: 20,
+                    vocabulary: [
+                        { lithuanian: "oras", english: "weather", pronunciation: "o-ras" },
+                        { lithuanian: "saulė", english: "sun", pronunciation: "sow-lay" },
+                        { lithuanian: "lietus", english: "rain", pronunciation: "lye-tus" },
+                        { lithuanian: "sniegas", english: "snow", pronunciation: "snye-gas" },
+                        { lithuanian: "vėjas", english: "wind", pronunciation: "vay-yas" },
+                        { lithuanian: "debesis", english: "cloud", pronunciation: "deh-beh-sis" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'weather'?", answer: "oras", options: ["oras", "saulė", "lietus", "sniegas"] },
+                        { type: "multiple-choice", question: "What does 'sniegas' mean?", answer: "snow", options: ["rain", "snow", "wind", "sun"] },
+                        { type: "translation", question: "How do you say 'rain'?", answer: "lietus", options: ["lietus", "sniegas", "vėjas", "debesis"] }
+                    ]
+                },
+                {
+                    id: 24,
+                    section: "Time & Weather",
+                    title: "Temperature",
+                    description: "Learn to talk about temperature",
+                    difficulty: "intermediate",
+                    xp: 20,
+                    vocabulary: [
+                        { lithuanian: "karšta", english: "hot", pronunciation: "karsh-ta" },
+                        { lithuanian: "šalta", english: "cold", pronunciation: "shal-ta" },
+                        { lithuanian: "šilta", english: "warm", pronunciation: "shil-ta" },
+                        { lithuanian: "vėsu", english: "cool", pronunciation: "vay-soo" },
+                        { lithuanian: "temperatūra", english: "temperature", pronunciation: "tem-pe-ra-too-ra" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'hot'?", answer: "karšta", options: ["karšta", "šalta", "šilta", "vėsu"] },
+                        { type: "multiple-choice", question: "What does 'šalta' mean?", answer: "cold", options: ["hot", "cold", "warm", "cool"] },
+                        { type: "translation", question: "How do you say 'warm'?", answer: "šilta", options: ["šilta", "karšta", "šalta", "vėsu"] }
+                    ]
+                },
+                {
+                    id: 25,
+                    section: "Time & Weather",
+                    title: "Months of the Year",
+                    description: "Learn all 12 months",
+                    difficulty: "intermediate",
+                    xp: 25,
+                    vocabulary: [
+                        { lithuanian: "sausis", english: "January", pronunciation: "sow-sis" },
+                        { lithuanian: "vasaris", english: "February", pronunciation: "va-sa-ris" },
+                        { lithuanian: "kovas", english: "March", pronunciation: "ko-vas" },
+                        { lithuanian: "balandis", english: "April", pronunciation: "ba-lan-dis" },
+                        { lithuanian: "gegužė", english: "May", pronunciation: "geh-goo-zhay" },
+                        { lithuanian: "birželis", english: "June", pronunciation: "beer-zheh-lis" },
+                        { lithuanian: "liepa", english: "July", pronunciation: "lye-pa" },
+                        { lithuanian: "rugpjūtis", english: "August", pronunciation: "roog-pyoo-tis" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'January'?", answer: "sausis", options: ["sausis", "vasaris", "kovas", "balandis"] },
+                        { type: "multiple-choice", question: "What does 'gegužė' mean?", answer: "May", options: ["April", "May", "June", "March"] },
+                        { type: "translation", question: "How do you say 'June'?", answer: "birželis", options: ["birželis", "liepa", "gegužė", "rugpjūtis"] }
+                    ]
+                },
+
+                // SECTION 6: CONVERSATION (Lessons 26-30)
+                {
+                    id: 26,
+                    section: "Conversation",
+                    title: "Question Words",
+                    description: "Learn essential question words",
+                    difficulty: "intermediate",
+                    xp: 20,
+                    vocabulary: [
+                        { lithuanian: "kas?", english: "who?/what?", pronunciation: "kas" },
+                        { lithuanian: "kur?", english: "where?", pronunciation: "koor" },
+                        { lithuanian: "kada?", english: "when?", pronunciation: "ka-da" },
+                        { lithuanian: "kodėl?", english: "why?", pronunciation: "ko-dayl" },
+                        { lithuanian: "kaip?", english: "how?", pronunciation: "kaip" },
+                        { lithuanian: "kiek?", english: "how much/many?", pronunciation: "kyek" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'where?'?", answer: "kur?", options: ["kur?", "kas?", "kada?", "kaip?"] },
+                        { type: "multiple-choice", question: "What does 'kodėl?' mean?", answer: "why?", options: ["what?", "why?", "when?", "how?"] },
+                        { type: "translation", question: "How do you say 'when?'?", answer: "kada?", options: ["kada?", "kur?", "kodėl?", "kiek?"] }
+                    ]
+                },
+                {
+                    id: 27,
+                    section: "Conversation",
+                    title: "Common Verbs 1",
+                    description: "Learn essential action verbs",
+                    difficulty: "intermediate",
+                    xp: 25,
+                    vocabulary: [
+                        { lithuanian: "eiti", english: "to go", pronunciation: "ay-tee" },
+                        { lithuanian: "būti", english: "to be", pronunciation: "boo-tee" },
+                        { lithuanian: "turėti", english: "to have", pronunciation: "too-ray-tee" },
+                        { lithuanian: "daryti", english: "to do/make", pronunciation: "da-ree-tee" },
+                        { lithuanian: "matyti", english: "to see", pronunciation: "ma-tee-tee" },
+                        { lithuanian: "kalbėti", english: "to speak", pronunciation: "kal-bay-tee" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'to go'?", answer: "eiti", options: ["eiti", "būti", "turėti", "daryti"] },
+                        { type: "multiple-choice", question: "What does 'kalbėti' mean?", answer: "to speak", options: ["to see", "to speak", "to have", "to do"] },
+                        { type: "translation", question: "How do you say 'to have'?", answer: "turėti", options: ["turėti", "būti", "eiti", "matyti"] }
+                    ]
+                },
+                {
+                    id: 28,
+                    section: "Conversation",
+                    title: "Common Verbs 2",
+                    description: "Learn more essential verbs",
+                    difficulty: "intermediate",
+                    xp: 25,
+                    vocabulary: [
+                        { lithuanian: "žinoti", english: "to know", pronunciation: "zhee-no-tee" },
+                        { lithuanian: "norėti", english: "to want", pronunciation: "no-ray-tee" },
+                        { lithuanian: "galėti", english: "to be able/can", pronunciation: "ga-lay-tee" },
+                        { lithuanian: "gyventi", english: "to live", pronunciation: "gee-ven-tee" },
+                        { lithuanian: "dirbti", english: "to work", pronunciation: "deerb-tee" },
+                        { lithuanian: "mokytis", english: "to learn", pronunciation: "mo-kee-tis" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'to want'?", answer: "norėti", options: ["norėti", "žinoti", "galėti", "gyventi"] },
+                        { type: "multiple-choice", question: "What does 'mokytis' mean?", answer: "to learn", options: ["to work", "to learn", "to live", "to know"] },
+                        { type: "translation", question: "How do you say 'to work'?", answer: "dirbti", options: ["dirbti", "gyventi", "mokytis", "žinoti"] }
+                    ]
+                },
+                {
+                    id: 29,
+                    section: "Conversation",
+                    title: "Likes & Dislikes",
+                    description: "Express preferences and opinions",
+                    difficulty: "intermediate",
+                    xp: 25,
+                    vocabulary: [
+                        { lithuanian: "patinka", english: "like", pronunciation: "pa-teen-ka" },
+                        { lithuanian: "nepatinka", english: "don't like", pronunciation: "neh-pa-teen-ka" },
+                        { lithuanian: "mėgstu", english: "I love/enjoy", pronunciation: "mayg-stoo" },
+                        { lithuanian: "nemėgstu", english: "I don't love/enjoy", pronunciation: "neh-mayg-stoo" },
+                        { lithuanian: "labai", english: "very much", pronunciation: "la-bai" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'like'?", answer: "patinka", options: ["patinka", "nepatinka", "mėgstu", "nemėgstu"] },
+                        { type: "multiple-choice", question: "What does 'nemėgstu' mean?", answer: "I don't love/enjoy", options: ["I like", "I don't love/enjoy", "I love", "very much"] },
+                        { type: "translation", question: "How do you say 'very much'?", answer: "labai", options: ["labai", "patinka", "mėgstu", "gerai"] }
+                    ]
+                },
+                {
+                    id: 30,
+                    section: "Conversation",
+                    title: "Making Plans",
+                    description: "Learn to make plans and arrangements",
+                    difficulty: "advanced",
+                    xp: 30,
+                    vocabulary: [
+                        { lithuanian: "šiandien", english: "today", pronunciation: "shyan-dyen" },
+                        { lithuanian: "rytoj", english: "tomorrow", pronunciation: "ree-toy" },
+                        { lithuanian: "vakar", english: "yesterday", pronunciation: "va-kar" },
+                        { lithuanian: "susitikti", english: "to meet", pronunciation: "soo-see-teek-tee" },
+                        { lithuanian: "galbūt", english: "maybe/perhaps", pronunciation: "gal-boot" },
+                        { lithuanian: "tikrai", english: "certainly/definitely", pronunciation: "teek-rai" }
+                    ],
+                    exercises: [
+                        { type: "translation", question: "How do you say 'today'?", answer: "šiandien", options: ["šiandien", "rytoj", "vakar", "dabar"] },
+                        { type: "multiple-choice", question: "What does 'susitikti' mean?", answer: "to meet", options: ["to go", "to meet", "to want", "to know"] },
+                        { type: "translation", question: "How do you say 'tomorrow'?", answer: "rytoj", options: ["rytoj", "šiandien", "vakar", "vėliau"] },
+                        { type: "multiple-choice", question: "What does 'tikrai' mean?", answer: "certainly/definitely", options: ["maybe", "certainly/definitely", "never", "always"] }
                     ]
                 }
             ]
         };
+
+        // ============ ACHIEVEMENTS DATA ============
+        const ACHIEVEMENTS = [
+            { id: 1, name: "First Step", icon: "🎯", requirement: 1, type: "lessons", unlocked: false },
+            { id: 2, name: "Getting Started", icon: "🌱", requirement: 5, type: "lessons", unlocked: false },
+            { id: 3, name: "Dedicated", icon: "💪", requirement: 10, type: "lessons", unlocked: false },
+            { id: 4, name: "Committed", icon: "🔥", requirement: 20, type: "lessons", unlocked: false },
+            { id: 5, name: "Scholar", icon: "📚", requirement: 30, type: "lessons", unlocked: false },
+            { id: 6, name: "Week Warrior", icon: "⭐", requirement: 7, type: "streak", unlocked: false },
+            { id: 7, name: "Month Master", icon: "🏆", requirement: 30, type: "streak", unlocked: false },
+            { id: 8, name: "Vocabulary 50", icon: "📖", requirement: 50, type: "vocabulary", unlocked: false },
+            { id: 9, name: "Vocabulary 100", icon: "📕", requirement: 100, type: "vocabulary", unlocked: false },
+            { id: 10, name: "XP Hunter", icon: "💎", requirement: 500, type: "xp", unlocked: false }
+        ];
 
         // ============ LESSON MANAGER ============
         const LessonManager = {
@@ -913,6 +1763,7 @@
                 this.selectedAnswer = null;
 
                 document.getElementById('home-screen').classList.remove('active');
+                document.getElementById('practice-screen').classList.remove('active');
                 document.getElementById('lesson-screen').classList.add('active');
 
                 this.displayExercise();
@@ -1044,6 +1895,83 @@
             }
         };
 
+        // ============ PRACTICE MANAGER ============
+        const PracticeManager = {
+            startWeakWords() {
+                alert('Weak Words practice coming soon! This will help you review difficult vocabulary.');
+            },
+
+            startReview() {
+                alert('Review practice coming soon! This will let you practice all learned words.');
+            },
+
+            startSpeaking() {
+                alert('Speaking practice coming soon! This will help you practice pronunciation.');
+            },
+
+            startListening() {
+                alert('Listening practice coming soon! This will test your comprehension.');
+            },
+
+            updateStats() {
+                const userData = Storage.getUserData();
+                const vocabCount = Object.keys(userData.vocabulary).length;
+                
+                document.getElementById('vocab-count').textContent = vocabCount;
+                document.getElementById('review-count').textContent = Math.max(0, vocabCount - 10);
+            }
+        };
+
+        // ============ PROFILE MANAGER ============
+        const ProfileManager = {
+            updateProfile() {
+                const userData = Storage.getUserData();
+                const vocabCount = Object.keys(userData.vocabulary).length;
+                const level = Math.floor(userData.totalXP / 100) + 1;
+
+                document.getElementById('profile-xp').textContent = userData.totalXP;
+                document.getElementById('profile-streak').textContent = userData.streak;
+                document.getElementById('profile-lessons').textContent = userData.lessonsCompleted.length;
+                document.getElementById('profile-vocab').textContent = vocabCount;
+                document.getElementById('user-level').textContent = level;
+
+                this.updateAchievements();
+            },
+
+            updateAchievements() {
+                const userData = Storage.getUserData();
+                const container = document.getElementById('achievements-container');
+                container.innerHTML = '';
+
+                ACHIEVEMENTS.forEach(achievement => {
+                    let isUnlocked = false;
+                    
+                    switch (achievement.type) {
+                        case 'lessons':
+                            isUnlocked = userData.lessonsCompleted.length >= achievement.requirement;
+                            break;
+                        case 'streak':
+                            isUnlocked = userData.streak >= achievement.requirement;
+                            break;
+                        case 'vocabulary':
+                            isUnlocked = Object.keys(userData.vocabulary).length >= achievement.requirement;
+                            break;
+                        case 'xp':
+                            isUnlocked = userData.totalXP >= achievement.requirement;
+                            break;
+                    }
+
+                    const achievementEl = document.createElement('div');
+                    achievementEl.className = `achievement ${isUnlocked ? 'unlocked' : ''}`;
+                    achievementEl.innerHTML = `
+                        <div class="achievement-icon">${isUnlocked ? achievement.icon : '🔒'}</div>
+                        <div class="achievement-name">${achievement.name}</div>
+                    `;
+                    container.appendChild(achievementEl);
+                });
+            }
+        };
+
         // ============ MAIN APP ============
         const App = {
             lessons: [],
@@ -1061,6 +1989,9 @@
                 this.setupEventListeners();
                 this.setupInstallPrompt();
 
+                PracticeManager.updateStats();
+                ProfileManager.updateProfile();
+
                 console.log('App initialized successfully');
             },
 
@@ -1068,7 +1999,29 @@
                 const lessonPath = document.getElementById('lesson-path');
                 lessonPath.innerHTML = '';
 
+                let currentSection = null;
+
                 this.lessons.forEach((lesson, index) => {
+                    // Add section header if new section
+                    if (lesson.section !== currentSection) {
+                        currentSection = lesson.section;
+                        const sectionHeader = document.createElement('div');
+                        sectionHeader.className = 'section-header';
+                        
+                        const completedInSection = this.userData.lessonsCompleted.filter(l => {
+                            const lessonData = this.lessons.find(les => les.id === l.id);
+                            return lessonData && lessonData.section === currentSection;
+                        }).length;
+                        
+                        const totalInSection = this.lessons.filter(l => l.section === currentSection).length;
+                        
+                        sectionHeader.innerHTML = `
+                            <h3>📂 ${currentSection}</h3>
+                            <div class="section-progress">${completedInSection}/${totalInSection} lessons completed</div>
+                        `;
+                        lessonPath.appendChild(sectionHeader);
+                    }
+
                     const isCompleted = this.userData.lessonsCompleted.some(l => l.id === lesson.id);
                     const isLocked = index > 0 && !this.userData.lessonsCompleted.some(l => l.id === this.lessons[index - 1].id);
 
@@ -1123,7 +2076,7 @@
                 }
 
                 const checkAnswerBtn = document.getElementById('check-answer-btn');
-                if (checkAnswerBtn) {
+                if (checkAnswerBtn) {if (checkAnswerBtn) {
                     checkAnswerBtn.addEventListener('click', () => {
                         console.log('Check answer button clicked');
                         LessonManager.checkAnswer();
@@ -1147,6 +2100,8 @@
                         this.userData = Storage.getUserData();
                         this.displayLessonPath();
                         this.displayUserStats();
+                        PracticeManager.updateStats();
+                        ProfileManager.updateProfile();
                     });
                 }
 
@@ -1158,6 +2113,24 @@
                     });
                 }
 
+                // Practice buttons
+                document.getElementById('practice-weak-words')?.addEventListener('click', () => {
+                    PracticeManager.startWeakWords();
+                });
+
+                document.getElementById('practice-review')?.addEventListener('click', () => {
+                    PracticeManager.startReview();
+                });
+
+                document.getElementById('practice-speaking')?.addEventListener('click', () => {
+                    PracticeManager.startSpeaking();
+                });
+
+                document.getElementById('practice-listening')?.addEventListener('click', () => {
+                    PracticeManager.startListening();
+                });
+
+                // Bottom navigation
                 document.querySelectorAll('.nav-item').forEach(item => {
                     item.addEventListener('click', (e) => {
                         const screen = e.currentTarget.dataset.screen;
@@ -1175,6 +2148,7 @@
             },
 
             navigateToScreen(screenName) {
+                // Update active nav item
                 document.querySelectorAll('.nav-item').forEach(item => {
                     item.classList.remove('active');
                     if (item.dataset.screen === screenName) {
@@ -1182,13 +2156,22 @@
                     }
                 });
 
+                // Hide all screens
                 document.querySelectorAll('.screen').forEach(screen => {
                     screen.classList.remove('active');
                 });
 
+                // Show target screen
                 const targetScreen = document.getElementById(`${screenName}-screen`);
                 if (targetScreen) {
                     targetScreen.classList.add('active');
+                    
+                    // Update screen-specific data
+                    if (screenName === 'practice') {
+                        PracticeManager.updateStats();
+                    } else if (screenName === 'profile') {
+                        ProfileManager.updateProfile();
+                    }
                 }
             },
 
