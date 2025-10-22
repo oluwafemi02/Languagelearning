@@ -1012,21 +1012,19 @@
             },
 
             addVocabulary(word, strength = 1) {
-                const data = this.getUserData();
-                if (!data.vocabulary[word]) {
-                    data.vocabulary[word] = {
-                        strength: strength,
-                        lastReviewed: new Date().toISOString(),
-                        timesReviewed: 1
-                    };
-                } else {
-                    data.vocabulary[word].timesReviewed += 1;
-                        } else {
-                    data.vocabulary[word].timesReviewed += 1;
-                    data.vocabulary[word].lastReviewed = new Date().toISOString();
-                }
-                this.saveUserData(data);
-            }
+    const data = this.getUserData();
+    if (!data.vocabulary[word]) {
+        data.vocabulary[word] = {
+            strength: strength,
+            lastReviewed: new Date().toISOString(),
+            timesReviewed: 1
+        };
+    } else {
+        data.vocabulary[word].timesReviewed += 1;
+        data.vocabulary[word].lastReviewed = new Date().toISOString();
+    }
+    this.saveUserData(data);
+}
         };
 
         // ============ STREAK MANAGER ============
