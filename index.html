@@ -2030,297 +2030,277 @@ const PracticeManager = {
             }
         };
 
-        // ============ MAIN APP ============
-        const App = {
-            lessons: [],
-            userData: null,
-            isGenerating: false,
+  // ============ MAIN APP ============
+const App = {
+    lessons: [],
+    userData: null,
+    isGenerating: false,
 
-            async init() {
-                console.log('Initializing Lithuanian Learning App...');
+    async init() {
+        console.log('🚀 Initializing Lithuanian Learning App...');
 
-                this.userData = Storage.getUserData();
-                this.lessons = LESSONS_DATA.lessons;
-                
-                // Load cached AI lessons
-                const cached = localStorage.getItem('aiLessons');
-                if (cached) {
-                    const aiLessons = JSON.parse(cached);
-                    this.lessons = [...LESSONS_DATA.lessons, ...aiLessons];
-                    console.log(`Loaded ${aiLessons.length} AI-generated lessons from cache`);
-                }
-                
-                StreakManager.init();
-                this.displayLessonPath();
-                this.displayUserStats();
-                this.setupEventListeners();
-                
-                PracticeManager.updateStats();
-                ProfileManager.updateProfile();
-
-                // Generate next lesson if needed
-                setTimeout(() => this.checkAndGenerateLesson(), 2000);
-
-                console.log('App initialized successfully');
-            },
-
-async checkAndGenerateLesson() {
-    const completed = this.userData.lessonsCompleted.length;
-    const available = this.lessons.length;
-    
-    console.log(`📊 Lessons: ${available} available, ${completed} completed`);
-    
-    // If user is close to running out of lessons (keep 2 lessons ahead)
-    if (available - completed <= 2 && !this.isGenerating && available < 15) {
-        this.isGenerating = true;
-        console.log('🤖 Generating new lesson...');
+        this.userData = Storage.getUserData();
+        this.lessons = [...LESSONS_DATA.lessons];
         
-        const nextLessonId = available + 1; // Sequential ID
-        const newLesson = await GeminiAI.generateLesson(nextLessonId, this.userData);
-        
-        if (newLesson) {
-            // Ensure correct ID
-            newLesson.id = nextLessonId;
-            
-            this.lessons.push(newLesson);
-            
-            // Save to localStorage
-            const aiLessons = this.lessons.slice(LESSONS_DATA.lessons.length);
-            localStorage.setItem('aiLessons', JSON.stringify(aiLessons));
-            
-            this.displayLessonPath();
-            console.log(`✅ New lesson generated: Lesson #${newLesson.id} - ${newLesson.title}`);
-        } else {
-            console.error('❌ Failed to generate lesson');
-        }
-        
-        this.isGenerating = false;
-    } else {
-        console.log('✓ Enough lessons available');
-    }
-}
-            },
-
-            displayLessonPath() {
-                const lessonPath = document.getElementById('lesson-path');
-                lessonPath.innerHTML = '';
-
-                let currentSection = null;
-
-                this.lessons.forEach((lesson, index) => {
-                    if (lesson.section !== currentSection) {
-                        currentSection = lesson.section;
-                        const sectionHeader = document.createElement('div');
-                        sectionHeader.className = 'section-header';
-                        
-                        const completedInSection = this.userData.lessonsCompleted.filter(l => {
-                            const lessonData = this.lessons.find(les => les.id === l.id);
-                            return lessonData && lessonData.section === currentSection;
-                        }).length;
-                        
-                        const totalInSection = this.lessons.filter(l => l.section === currentSection).length;
-                        
-                        sectionHeader.innerHTML = `
-                            <h3>📂 ${currentSection}</h3>
-                            <div class="section-progress">${completedInSection}/${totalInSection} lessons completed</div>
-                        `;
-                        lessonPath.appendChild(sectionHeader);
-                    }
-
-                    const isCompleted = this.userData.lessonsCompleted.some(l => l.id === lesson.id);
-                    const isLocked = index > 0 && !this.userData.lessonsCompleted.some(l => l.id === this.lessons[index - 1].id);
-
-                    const lessonCard = document.createElement('div');
-                    lessonCard.className = `lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
-                    
-                    lessonCard.innerHTML = `
-                        <div class="lesson-icon">${isCompleted ? '✓' : isLocked ? '🔒' : '📚'}</div>
-                        <div class="lesson-info">
-                            <h3>${lesson.title}</h3>
-                            <p>${lesson.description}</p>
-                            <div class="lesson-meta">
-                                <span class="xp-badge">+${lesson.xp} XP</span>
-                                <span class="difficulty-badge">${lesson.difficulty}</span>
-                            </div>
-                        </div>
-                    `;
-
-                    if (!isLocked) {
-                        lessonCard.addEventListener('click', () => {
-                            this.startLesson(lesson.id);
-                        });
-                    }
-
-                    lessonPath.appendChild(lessonCard);
+        // Load cached AI lessons
+        const cached = localStorage.getItem('aiLessons');
+        if (cached) {
+            try {
+                const aiLessons = JSON.parse(cached);
+                // Fix lesson IDs to be sequential
+                aiLessons.forEach((lesson, index) => {
+                    lesson.id = LESSONS_DATA.lessons.length + index + 1;
                 });
-            },
-
-            displayUserStats() {
-                document.getElementById('total-xp').textContent = this.userData.totalXP;
-                document.getElementById('streak-count').textContent = this.userData.streak;
-            },
-
-            startLesson(lessonId) {
-                LessonManager.startLesson(lessonId);
-            },
-
-            setupEventListeners() {
-                document.getElementById('start-lesson-btn').addEventListener('click', () => {
-                    const nextLesson = this.getNextLesson();
-                    if (nextLesson) {
-                        this.startLesson(nextLesson.id);
-                    }
-                });
-                // TEMPORARY DEBUG
-document.getElementById('debug-lessons-btn').addEventListener('click', () => {
-    console.log('=== LESSON DEBUG ===');
-    console.log('Total lessons:', this.lessons.length);
-    console.log('Lesson IDs:', this.lessons.map(l => l.id));
-    console.log('Completed lessons:', this.userData.lessonsCompleted.map(l => l.id));
-    console.log('Next lesson:', this.getNextLesson());
-    console.log('Static lessons:', LESSONS_DATA.lessons.length);
-    console.log('All lessons:', this.lessons);
-    alert(`Lessons: ${this.lessons.length}\nCompleted: ${this.userData.lessonsCompleted.length}\nCheck console for details`);
-});
-
-                document.getElementById('check-answer-btn').addEventListener('click', () => {
-                    LessonManager.checkAnswer();
-                });
-
-                document.getElementById('continue-btn').addEventListener('click', () => {
-                    LessonManager.continueLesson();
-                });
-
-                document.getElementById('continue-learning-btn').addEventListener('click', () => {
-                    this.returnToHome();
-                });
-
-                document.getElementById('exit-lesson-btn').addEventListener('click', () => {
-                    LessonManager.exitLesson();
-                });
-
-                document.getElementById('practice-weak-words').addEventListener('click', () => {
-                    PracticeManager.startWeakWords();
-                });
-
-                document.getElementById('practice-review').addEventListener('click', () => {
-                    PracticeManager.startReview();
-                });
-
-                document.getElementById('practice-speaking').addEventListener('click', () => {
-                    PracticeManager.startSpeaking();
-                });
-
-                document.getElementById('practice-listening').addEventListener('click', () => {
-                    PracticeManager.startListening();
-                });
- document.getElementById('practice-check-btn').addEventListener('click', () => {
-    PracticeManager.checkAnswer();
-});
-
-document.getElementById('practice-continue-btn').addEventListener('click', () => {
-    PracticeManager.continuePractice();
-});
-
-document.getElementById('exit-practice-btn').addEventListener('click', () => {
-    if (confirm('Exit practice? Progress will not be saved.')) {
-        App.navigateToScreen('practice');
-    }
-});
-
-document.getElementById('back-to-practice-btn').addEventListener('click', () => {
-    App.navigateToScreen('practice');
-    PracticeManager.updateStats();
-});
-                document.querySelectorAll('.nav-item').forEach(item => {
-                    item.addEventListener('click', (e) => {
-                        const screen = e.currentTarget.dataset.screen;
-                        this.navigateToScreen(screen);
-                    });
-                });
-            },
-
-            getNextLesson() {
-                const lastCompleted = this.userData.lessonsCompleted.length;
-                return this.lessons[lastCompleted] || this.lessons[0];
-            },
-
-            returnToHome() {
-                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-                document.getElementById('home-screen').classList.add('active');
-                
-                this.userData = Storage.getUserData();
-                this.displayLessonPath();
-                this.displayUserStats();
-                PracticeManager.updateStats();
-                ProfileManager.updateProfile();
-                
-                // Check if we need more lessons
-                this.checkAndGenerateLesson();
-            },
-
-            navigateToScreen(screenName) {
-                document.querySelectorAll('.nav-item').forEach(item => {
-                    item.classList.remove('active');
-                    if (item.dataset.screen === screenName) {
-                        item.classList.add('active');
-                    }
-                });
-
-                document.querySelectorAll('.screen').forEach(screen => {
-                    screen.classList.remove('active');
-                });
-
-                const targetScreen = document.getElementById(`${screenName}-screen`);
-                if (targetScreen) {
-                    targetScreen.classList.add('active');
-                    
-                    if (screenName === 'practice') {
-                        PracticeManager.updateStats();
-                    } else if (screenName === 'profile') {
-                        ProfileManager.updateProfile();
-                    }
-                }
+                this.lessons = [...LESSONS_DATA.lessons, ...aiLessons];
+                console.log(`📦 Loaded ${aiLessons.length} AI-generated lessons from cache`);
+            } catch (e) {
+                console.error('Error loading cached lessons:', e);
+                localStorage.removeItem('aiLessons');
             }
-        };
+        }
+        
+        StreakManager.init();
+        this.displayLessonPath();
+        this.displayUserStats();
+        this.setupEventListeners();
+        
+        PracticeManager.updateStats();
+        ProfileManager.updateProfile();
 
-        // Initialize app
-       async init() {
-    console.log('🚀 Initializing Lithuanian Learning App...');
+        // Generate next lesson if needed
+        setTimeout(() => this.checkAndGenerateLesson(), 2000);
 
-    this.userData = Storage.getUserData();
-    this.lessons = [...LESSONS_DATA.lessons];
-    
-    // Load cached AI lessons
-    const cached = localStorage.getItem('aiLessons');
-    if (cached) {
-        try {
-            const aiLessons = JSON.parse(cached);
-            // Fix lesson IDs to be sequential
-            aiLessons.forEach((lesson, index) => {
-                lesson.id = LESSONS_DATA.lessons.length + index + 1;
+        console.log('✅ App initialized successfully');
+        console.log(`📚 Total lessons available: ${this.lessons.length}`);
+    },
+
+    async checkAndGenerateLesson() {
+        const completed = this.userData.lessonsCompleted.length;
+        const available = this.lessons.length;
+        
+        console.log(`📊 Lessons: ${available} available, ${completed} completed`);
+        
+        // If user is close to running out of lessons (keep 2 lessons ahead)
+        if (available - completed <= 2 && !this.isGenerating && available < 15) {
+            this.isGenerating = true;
+            console.log('🤖 Generating new lesson...');
+            
+            const nextLessonId = available + 1;
+            const newLesson = await GeminiAI.generateLesson(nextLessonId, this.userData);
+            
+            if (newLesson) {
+                newLesson.id = nextLessonId;
+                this.lessons.push(newLesson);
+                
+                const aiLessons = this.lessons.slice(LESSONS_DATA.lessons.length);
+                localStorage.setItem('aiLessons', JSON.stringify(aiLessons));
+                
+                this.displayLessonPath();
+                console.log(`✅ New lesson generated: Lesson #${newLesson.id} - ${newLesson.title}`);
+            } else {
+                console.error('❌ Failed to generate lesson');
+            }
+            
+            this.isGenerating = false;
+        } else {
+            console.log('✓ Enough lessons available');
+        }
+    },
+
+    displayLessonPath() {
+        const lessonPath = document.getElementById('lesson-path');
+        lessonPath.innerHTML = '';
+
+        let currentSection = null;
+
+        this.lessons.forEach((lesson, index) => {
+            if (lesson.section !== currentSection) {
+                currentSection = lesson.section;
+                const sectionHeader = document.createElement('div');
+                sectionHeader.className = 'section-header';
+                
+                const completedInSection = this.userData.lessonsCompleted.filter(l => {
+                    const lessonData = this.lessons.find(les => les.id === l.id);
+                    return lessonData && lessonData.section === currentSection;
+                }).length;
+                
+                const totalInSection = this.lessons.filter(l => l.section === currentSection).length;
+                
+                sectionHeader.innerHTML = `
+                    <h3>📂 ${currentSection}</h3>
+                    <div class="section-progress">${completedInSection}/${totalInSection} lessons completed</div>
+                `;
+                lessonPath.appendChild(sectionHeader);
+            }
+
+            const isCompleted = this.userData.lessonsCompleted.some(l => l.id === lesson.id);
+            const isLocked = index > 0 && !this.userData.lessonsCompleted.some(l => l.id === this.lessons[index - 1].id);
+
+            const lessonCard = document.createElement('div');
+            lessonCard.className = `lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
+            
+            lessonCard.innerHTML = `
+                <div class="lesson-icon">${isCompleted ? '✓' : isLocked ? '🔒' : '📚'}</div>
+                <div class="lesson-info">
+                    <h3>${lesson.title}</h3>
+                    <p>${lesson.description}</p>
+                    <div class="lesson-meta">
+                        <span class="xp-badge">+${lesson.xp} XP</span>
+                        <span class="difficulty-badge">${lesson.difficulty}</span>
+                    </div>
+                </div>
+            `;
+
+            if (!isLocked) {
+                lessonCard.addEventListener('click', () => {
+                    this.startLesson(lesson.id);
+                });
+            }
+
+            lessonPath.appendChild(lessonCard);
+        });
+    },
+
+    displayUserStats() {
+        document.getElementById('total-xp').textContent = this.userData.totalXP;
+        document.getElementById('streak-count').textContent = this.userData.streak;
+    },
+
+    startLesson(lessonId) {
+        LessonManager.startLesson(lessonId);
+    },
+
+    setupEventListeners() {
+        document.getElementById('start-lesson-btn').addEventListener('click', () => {
+            const nextLesson = this.getNextLesson();
+            if (nextLesson) {
+                this.startLesson(nextLesson.id);
+            }
+        });
+
+        // Debug button (optional - can remove later)
+        const debugBtn = document.getElementById('debug-lessons-btn');
+        if (debugBtn) {
+            debugBtn.addEventListener('click', () => {
+                console.log('=== LESSON DEBUG ===');
+                console.log('Total lessons:', this.lessons.length);
+                console.log('Lesson IDs:', this.lessons.map(l => l.id));
+                console.log('Completed lessons:', this.userData.lessonsCompleted.map(l => l.id));
+                console.log('Next lesson:', this.getNextLesson());
+                console.log('Static lessons:', LESSONS_DATA.lessons.length);
+                console.log('All lessons:', this.lessons);
+                alert(`Lessons: ${this.lessons.length}\nCompleted: ${this.userData.lessonsCompleted.length}\nCheck console for details`);
             });
-            this.lessons = [...LESSONS_DATA.lessons, ...aiLessons];
-            console.log(`📦 Loaded ${aiLessons.length} AI-generated lessons from cache`);
-        } catch (e) {
-            console.error('Error loading cached lessons:', e);
-            localStorage.removeItem('aiLessons'); // Clear corrupted cache
+        }
+
+        document.getElementById('check-answer-btn').addEventListener('click', () => {
+            LessonManager.checkAnswer();
+        });
+
+        document.getElementById('continue-btn').addEventListener('click', () => {
+            LessonManager.continueLesson();
+        });
+
+        document.getElementById('continue-learning-btn').addEventListener('click', () => {
+            this.returnToHome();
+        });
+
+        document.getElementById('exit-lesson-btn').addEventListener('click', () => {
+            LessonManager.exitLesson();
+        });
+
+        document.getElementById('practice-weak-words').addEventListener('click', () => {
+            PracticeManager.startWeakWords();
+        });
+
+        document.getElementById('practice-review').addEventListener('click', () => {
+            PracticeManager.startReview();
+        });
+
+        document.getElementById('practice-speaking').addEventListener('click', () => {
+            PracticeManager.startSpeaking();
+        });
+
+        document.getElementById('practice-listening').addEventListener('click', () => {
+            PracticeManager.startListening();
+        });
+
+        document.getElementById('practice-check-btn').addEventListener('click', () => {
+            PracticeManager.checkAnswer();
+        });
+
+        document.getElementById('practice-continue-btn').addEventListener('click', () => {
+            PracticeManager.continuePractice();
+        });
+
+        document.getElementById('exit-practice-btn').addEventListener('click', () => {
+            if (confirm('Exit practice? Progress will not be saved.')) {
+                this.navigateToScreen('practice');
+            }
+        });
+
+        document.getElementById('back-to-practice-btn').addEventListener('click', () => {
+            this.navigateToScreen('practice');
+            PracticeManager.updateStats();
+        });
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                const screen = e.currentTarget.dataset.screen;
+                this.navigateToScreen(screen);
+            });
+        });
+    },
+
+    getNextLesson() {
+        const lastCompleted = this.userData.lessonsCompleted.length;
+        return this.lessons[lastCompleted] || this.lessons[0];
+    },
+
+    returnToHome() {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('home-screen').classList.add('active');
+        
+        this.userData = Storage.getUserData();
+        this.displayLessonPath();
+        this.displayUserStats();
+        PracticeManager.updateStats();
+        ProfileManager.updateProfile();
+        
+        // Check if we need more lessons
+        this.checkAndGenerateLesson();
+    },
+
+    navigateToScreen(screenName) {
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+            if (item.dataset.screen === screenName) {
+                item.classList.add('active');
+            }
+        });
+
+        document.querySelectorAll('.screen').forEach(screen => {
+            screen.classList.remove('active');
+        });
+
+        const targetScreen = document.getElementById(`${screenName}-screen`);
+        if (targetScreen) {
+            targetScreen.classList.add('active');
+            
+            if (screenName === 'practice') {
+                PracticeManager.updateStats();
+            } else if (screenName === 'profile') {
+                ProfileManager.updateProfile();
+            }
         }
     }
-    
-    StreakManager.init();
-    this.displayLessonPath();
-    this.displayUserStats();
-    this.setupEventListeners();
-    
-    PracticeManager.updateStats();
-    ProfileManager.updateProfile();
+};
 
-    // Generate next lesson if needed
-    setTimeout(() => this.checkAndGenerateLesson(), 2000);
-
-    console.log('✅ App initialized successfully');
-    console.log(`📚 Total lessons available: ${this.lessons.length}`);
+// Initialize app
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => App.init());
+} else {
+    App.init();
 }
     </script>
 </body>
