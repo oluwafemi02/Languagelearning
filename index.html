@@ -670,6 +670,27 @@
                 grid-template-columns: 1fr;
             }
         }
+        @keyframes slideDown {
+    from {
+        transform: translateX(-50%) translateY(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-50%) translateY(-100px);
+        opacity: 0;
+    }
+}
     </style>
 </head>
 <body>
@@ -811,6 +832,48 @@
         </div>
     </div>
 </section>
+    <!-- Analytics Screen -->
+<section id="analytics-screen" class="screen">
+    <div class="container">
+        <h2 style="margin-bottom: 24px;">📊 Your Progress</h2>
+        
+        <div class="progress-overview">
+            <h3>This Week</h3>
+            <div class="stats-grid" style="margin-top: 16px;">
+                <div class="stat-card">
+                    <div class="stat-card-value" id="week-xp">0</div>
+                    <div class="stat-card-label">XP Earned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="week-lessons">0</div>
+                    <div class="stat-card-label">Lessons</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="week-accuracy">0%</div>
+                    <div class="stat-card-label">Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="week-words">0</div>
+                    <div class="stat-card-label">New Words</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-overview" style="margin-top: 24px;">
+            <h3>Areas to Improve</h3>
+            <div id="weak-areas-list" style="margin-top: 16px;">
+                <!-- Will be populated by JS -->
+            </div>
+        </div>
+
+        <div class="progress-overview" style="margin-top: 24px;">
+            <h3>7-Day Streak</h3>
+            <div id="streak-calendar" style="display: flex; gap: 8px; margin-top: 16px; justify-content: space-around;">
+                <!-- Will be populated by JS -->
+            </div>
+        </div>
+    </div>
+</section>        
             <!-- Profile Screen -->
             <section id="profile-screen" class="screen">
                 <div class="container">
@@ -929,6 +992,10 @@
                 <span class="nav-icon">💪</span>
                 <span class="nav-label">Practice</span>
             </button>
+            <button class="nav-item" data-screen="analytics">
+    <span class="nav-icon">📊</span>
+    <span class="nav-label">Progress</span>
+</button>
             <button class="nav-item" data-screen="profile">
                 <span class="nav-icon">👤</span>
                 <span class="nav-label">Profile</span>
@@ -993,31 +1060,66 @@
                 this.saveUserData(data);
             },
 
-            addVocabulary(word, strength = 1, isCorrect = true) {
+addVocabulary(word, strength = 1, isCorrect = true) {
     const data = this.getUserData();
+    const now = new Date();
+    
     if (!data.vocabulary[word]) {
         data.vocabulary[word] = {
-            strength: strength,
-            lastReviewed: new Date().toISOString(),
-            timesReviewed: 1,
-            timesCorrect: isCorrect ? 1 : 0,
-            timesWrong: isCorrect ? 0 : 1
+            easeFactor: 2.5,
+            interval: 1,
+            repetitions: 0,
+            nextReview: now.toISOString(),
+            lastReviewed: now.toISOString(),
+            timesCorrect: 0,
+            timesWrong: 0,
+            totalReviews: 0
         };
-    } else {
-        data.vocabulary[word].timesReviewed += 1;
-        data.vocabulary[word].lastReviewed = new Date().toISOString();
-        
-        if (isCorrect) {
-            data.vocabulary[word].timesCorrect += 1;
-            data.vocabulary[word].strength = Math.min(5, data.vocabulary[word].strength + 0.5);
-        } else {
-            data.vocabulary[word].timesWrong += 1;
-            data.vocabulary[word].strength = Math.max(1, data.vocabulary[word].strength - 0.5);
-        }
     }
+    
+    const vocab = data.vocabulary[word];
+    vocab.totalReviews++;
+    vocab.lastReviewed = now.toISOString();
+    
+    if (isCorrect) {
+        vocab.timesCorrect++;
+        vocab.repetitions++;
+        
+        // SM-2 Algorithm
+        if (vocab.repetitions === 1) {
+            vocab.interval = 1;
+        } else if (vocab.repetitions === 2) {
+            vocab.interval = 6;
+        } else {
+            vocab.interval = Math.round(vocab.interval * vocab.easeFactor);
+        }
+        
+        // Adjust ease factor
+        vocab.easeFactor = Math.max(1.3, vocab.easeFactor + (0.1 - (5 - 4) * (0.08 + (5 - 4) * 0.02)));
+    } else {
+        vocab.timesWrong++;
+        vocab.repetitions = 0;
+        vocab.interval = 1;
+        vocab.easeFactor = Math.max(1.3, vocab.easeFactor - 0.2);
+    }
+    
+    // Set next review date
+    const nextReviewDate = new Date(now);
+    nextReviewDate.setDate(nextReviewDate.getDate() + vocab.interval);
+    vocab.nextReview = nextReviewDate.toISOString();
+    
     this.saveUserData(data);
 },
-
+getWordsForReview(limit = 10) {
+    const data = this.getUserData();
+    const now = new Date();
+    const words = Object.entries(data.vocabulary)
+        .filter(([word, stats]) => new Date(stats.nextReview) <= now)
+        .map(([word, stats]) => ({ word, ...stats }))
+        .sort((a, b) => new Date(a.nextReview) - new Date(b.nextReview))
+        .slice(0, limit);
+    return words;
+},
 getWeakWords(limit = 10) {
     const data = this.getUserData();
     const words = Object.entries(data.vocabulary)
@@ -1027,19 +1129,6 @@ getWeakWords(limit = 10) {
     return words;
 },
 
-getWordsForReview(limit = 10) {
-    const data = this.getUserData();
-    const now = new Date();
-    const words = Object.entries(data.vocabulary)
-        .map(([word, stats]) => {
-            const daysSinceReview = (now - new Date(stats.lastReviewed)) / (1000 * 60 * 60 * 24);
-            return { word, ...stats, daysSinceReview };
-        })
-        .sort((a, b) => b.daysSinceReview - a.daysSinceReview)
-        .slice(0, limit);
-    return words;
-}
-        };
 
         // ============ STREAK MANAGER ============
         const StreakManager = {
@@ -1083,7 +1172,57 @@ getWordsForReview(limit = 10) {
                 this.displayStreak(data.streak);
             }
         };
+checkDailyReview() {
+    const words = Storage.getWordsForReview(1);
+    if (words.length > 0) {
+        this.showReviewReminder(words.length);
+    }
+},
 
+showReviewReminder(count) {
+    const userData = Storage.getUserData();
+    const today = new Date().toDateString();
+    const lastShown = localStorage.getItem('lastReviewReminder');
+    
+    if (lastShown === today) return; // Don't show multiple times per day
+    
+    const reminderDiv = document.createElement('div');
+    reminderDiv.style.cssText = `
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--warning-color);
+        color: var(--text-dark);
+        padding: 16px 24px;
+        border-radius: 12px;
+        box-shadow: var(--shadow-lg);
+        z-index: 1000;
+        font-weight: 600;
+        cursor: pointer;
+        animation: slideDown 0.3s ease;
+    `;
+    reminderDiv.innerHTML = `
+        📚 ${count} word${count > 1 ? 's' : ''} ready for review!
+        <span style="display: block; font-size: 12px; margin-top: 4px; opacity: 0.8;">Tap to practice</span>
+    `;
+    
+    reminderDiv.onclick = () => {
+        document.body.removeChild(reminderDiv);
+        App.navigateToScreen('practice');
+        setTimeout(() => PracticeManager.startReview(), 300);
+    };
+    
+    document.body.appendChild(reminderDiv);
+    localStorage.setItem('lastReviewReminder', today);
+    
+    setTimeout(() => {
+        if (document.body.contains(reminderDiv)) {
+            reminderDiv.style.animation = 'slideUp 0.3s ease';
+            setTimeout(() => document.body.removeChild(reminderDiv), 300);
+        }
+    }, 5000);
+},
         // ============ LESSONS DATA ============
         const LESSONS_DATA = {
             lessons: [
@@ -1221,11 +1360,13 @@ async generateLesson(lessonNumber, userData) {
     
     const topic = topics[lessonNumber - 6] || 'conversation practice';
     
-    const prompt = `Create a Lithuanian language lesson in valid JSON format.
+const prompt = `Create a Lithuanian language lesson in valid JSON format.
 
 Lesson number: ${lessonNumber}
 Topic: ${topic}
 Level: beginner
+
+IMPORTANT: Focus on PRACTICAL COMMUNICATION. Include full sentences, not just isolated words.
 
 Create a lesson with exactly this structure (ID must be ${lessonNumber}):
 {
@@ -1234,22 +1375,46 @@ Create a lesson with exactly this structure (ID must be ${lessonNumber}):
   "title": "Topic Name",
   "description": "Short description",
   "difficulty": "beginner",
-  "xp": 10,
+  "xp": 15,
+  "grammarFocus": "One specific grammar point explained simply",
+  "culturalNote": "Brief interesting fact about Lithuania (optional)",
   "vocabulary": [
-    {"lithuanian": "word1", "english": "translation1", "pronunciation": "phonetic1"},
-    {"lithuanian": "word2", "english": "translation2", "pronunciation": "phonetic2"},
-    {"lithuanian": "word3", "english": "translation3", "pronunciation": "phonetic3"},
-    {"lithuanian": "word4", "english": "translation4", "pronunciation": "phonetic4"},
-    {"lithuanian": "word5", "english": "translation5", "pronunciation": "phonetic5"}
+    {
+      "lithuanian": "word1", 
+      "english": "translation1", 
+      "pronunciation": "phonetic1",
+      "exampleSentence": "Full Lithuanian sentence using this word",
+      "sentenceTranslation": "English translation of the sentence",
+      "wordType": "noun/verb/adjective/etc"
+    },
+    {
+      "lithuanian": "word2", 
+      "english": "translation2", 
+      "pronunciation": "phonetic2",
+      "exampleSentence": "Another full sentence",
+      "sentenceTranslation": "English translation",
+      "wordType": "noun/verb/adjective/etc"
+    }
+    // Include 5-7 words total
   ],
   "exercises": [
-    {"type": "translation", "question": "How do you say 'X' in Lithuanian?", "answer": "word", "options": ["word", "opt2", "opt3", "opt4"]},
     {"type": "multiple-choice", "question": "What does 'word' mean?", "answer": "meaning", "options": ["meaning", "opt2", "opt3", "opt4"]},
-    {"type": "translation", "question": "How do you say 'Y'?", "answer": "word", "options": ["word", "opt2", "opt3", "opt4"]}
+    {"type": "translation", "question": "How do you say 'X' in Lithuanian?", "answer": "word", "options": ["word", "opt2", "opt3", "opt4"]},
+    {"type": "fill-blank", "sentence": "Aš ____ kavą", "answer": "geriu", "translation": "I drink coffee", "options": ["geriu", "valgau", "matau", "noriu"]},
+    {"type": "sentence-builder", "words": ["aš", "esu", "studentas"], "correctOrder": ["aš", "esu", "studentas"], "translation": "I am a student"},
+    {"type": "translation-full", "question": "Translate: I am learning Lithuanian", "answer": "Aš mokausi lietuvių kalbos", "hints": ["Use 'mokausi' for 'am learning'"]},
+    // Include 5-7 exercises with variety
   ]
 }
 
-IMPORTANT: Return ONLY valid JSON. No markdown, no code blocks, no explanations.`;
+CRITICAL: 
+- All vocabulary MUST have example sentences showing usage in context
+- Include at least 2 "fill-blank" exercises with real sentences
+- Include at least 1 "sentence-builder" exercise
+- Make exercises progressively harder
+- Grammar focus should be practical (word order, basic conjugation, etc)
+
+Return ONLY valid JSON. No markdown, no code blocks, no explanations.`;
 
         try {
             console.log('📡 Calling Gemini 2.0 Flash API...');
@@ -1692,108 +1857,192 @@ const PracticeManager = {
         this.displayExercise();
     },
 
-    displayExercise() {
-        const exercise = this.exercises[this.currentExercise];
-        const questionContainer = document.getElementById('practice-question-container');
-        const answerOptions = document.getElementById('practice-answer-options');
-        const checkBtn = document.getElementById('practice-check-btn');
-        
-        const progress = ((this.currentExercise + 1) / this.totalExercises) * 100;
-        document.getElementById('practice-progress').style.width = `${progress}%`;
-        document.getElementById('practice-counter').textContent = 
-            `${this.currentExercise + 1}/${this.totalExercises}`;
-        
-        this.selectedAnswer = null;
-        checkBtn.disabled = true;
-        
-        if (exercise.type === 'listening') {
-            questionContainer.innerHTML = `
-                <div class="question">
-                    <div style="text-align: center; margin-bottom: 24px;">
-                        <button id="play-audio-btn" class="btn btn-secondary" 
-                                style="font-size: 48px; padding: 32px; border-radius: 50%; width: 120px; height: 120px;">
-                            🔊
-                        </button>
-                    </div>
-                    <h3>${exercise.question}</h3>
-                    <p style="color: var(--text-light); font-size: 14px;">Click the speaker to listen</p>
-                </div>
-            `;
-            
-            document.getElementById('play-audio-btn').addEventListener('click', () => {
-                this.speak(exercise.audioText);
-            });
-            
-            // Auto-play on load
-            setTimeout(() => this.speak(exercise.audioText), 500);
-        } else if (exercise.type === 'speaking') {
-            questionContainer.innerHTML = `
-                <div class="question">
-                    <h3>${exercise.question}</h3>
-                    <p style="color: var(--text-light); margin-top: 8px;">${exercise.hint}</p>
-                    <p style="color: var(--text-light); font-size: 14px; margin-top: 16px;">
-                        English: ${exercise.english}
-                    </p>
-                    <div style="text-align: center; margin-top: 32px;">
-                        <button id="record-btn" class="btn btn-secondary" 
-                                style="font-size: 48px; padding: 32px; border-radius: 50%; width: 120px; height: 120px;">
-                            🎤
-                        </button>
-                        <p id="recording-status" style="margin-top: 16px; font-weight: 600;">
-                            Click to start recording
-                        </p>
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('record-btn').addEventListener('click', () => {
-                this.startRecording();
-            });
-            
-            answerOptions.innerHTML = '';
-            checkBtn.style.display = 'none';
-            return;
-        } else {
-            questionContainer.innerHTML = `
-                <div class="question">
-                    <h3>${exercise.question}</h3>
-                </div>
-            `;
-        }
-        
-        answerOptions.innerHTML = '';
-        
-        if (exercise.options) {
-            exercise.options.forEach(option => {
-                const button = document.createElement('button');
-                button.className = 'answer-option';
-                button.textContent = option;
-                button.onclick = () => this.selectAnswer(option, button);
-                answerOptions.appendChild(button);
-            });
-        }
-        
-        checkBtn.style.display = 'block';
-    },
+displayExercise() {
+    const exercise = this.currentLesson.exercises[this.currentExercise];
+    const questionContainer = document.getElementById('question-container');
+    const answerOptions = document.getElementById('answer-options');
+    const checkBtn = document.getElementById('check-answer-btn');
 
-    selectAnswer(answer, button) {
-        document.querySelectorAll('.answer-option').forEach(btn => {
-            btn.classList.remove('selected');
+    const progress = ((this.currentExercise + 1) / this.totalExercises) * 100;
+    document.getElementById('lesson-progress').style.width = `${progress}%`;
+
+    this.selectedAnswer = null;
+    checkBtn.disabled = true;
+    checkBtn.style.display = 'block';
+    answerOptions.innerHTML = '';
+
+    // Handle different exercise types
+    if (exercise.type === 'sentence-builder') {
+        this.displaySentenceBuilder(exercise, questionContainer, answerOptions, checkBtn);
+        return;
+    } else if (exercise.type === 'fill-blank') {
+        this.displayFillBlank(exercise, questionContainer, answerOptions);
+    } else if (exercise.type === 'translation-full') {
+        this.displayTranslationFull(exercise, questionContainer, answerOptions, checkBtn);
+        return;
+    } else {
+        // Standard multiple choice or translation
+        questionContainer.innerHTML = `
+            <div class="question">
+                <h3>${exercise.question}</h3>
+                ${exercise.translation ? `<p style="color: var(--text-light); margin-top: 8px; font-size: 14px;">${exercise.translation}</p>` : ''}
+            </div>
+        `;
+    }
+
+    // Display options for standard exercises
+    if (exercise.options) {
+        const shuffled = [...exercise.options].sort(() => Math.random() - 0.5);
+        shuffled.forEach(option => {
+            const button = document.createElement('button');
+            button.className = 'answer-option';
+            button.textContent = option;
+            button.onclick = () => this.selectAnswer(option, button);
+            answerOptions.appendChild(button);
         });
-        
-        button.classList.add('selected');
-        this.selectedAnswer = answer;
-        document.getElementById('practice-check-btn').disabled = false;
-    },
+    }
+},
 
-    checkAnswer() {
-        const exercise = this.exercises[this.currentExercise];
-        const isCorrect = this.selectedAnswer === exercise.answer;
-        
-        if (isCorrect) {
-            this.correctAnswers++;
+displaySentenceBuilder(exercise, questionContainer, answerOptions, checkBtn) {
+    questionContainer.innerHTML = `
+        <div class="question">
+            <h3>Build the sentence:</h3>
+            <p style="color: var(--text-light); margin-top: 8px;">${exercise.translation}</p>
+            <div id="selected-words" style="min-height: 60px; background: var(--bg-light); border-radius: 12px; padding: 16px; margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+                <span style="color: var(--text-light);">Tap words below to build sentence...</span>
+            </div>
+        </div>
+    `;
+
+    this.sentenceBuilder = {
+        selected: [],
+        available: [...exercise.words].sort(() => Math.random() - 0.5)
+    };
+
+    answerOptions.innerHTML = '';
+    answerOptions.style.display = 'flex';
+    answerOptions.style.flexWrap = 'wrap';
+    answerOptions.style.gap = '8px';
+
+    this.sentenceBuilder.available.forEach(word => {
+        const button = document.createElement('button');
+        button.className = 'answer-option';
+        button.textContent = word;
+        button.style.flex = '0 0 auto';
+        button.onclick = () => this.addWordToSentence(word, button);
+        answerOptions.appendChild(button);
+    });
+
+    checkBtn.disabled = true;
+},
+
+addWordToSentence(word, button) {
+    this.sentenceBuilder.selected.push(word);
+    button.disabled = true;
+    button.style.opacity = '0.3';
+
+    const selectedContainer = document.getElementById('selected-words');
+    selectedContainer.innerHTML = '';
+
+    this.sentenceBuilder.selected.forEach((w, index) => {
+        const wordSpan = document.createElement('span');
+        wordSpan.textContent = w;
+        wordSpan.style.cssText = 'background: var(--white); padding: 8px 12px; border-radius: 8px; border: 2px solid var(--primary-color); cursor: pointer; font-weight: 600;';
+        wordSpan.onclick = () => this.removeWordFromSentence(index);
+        selectedContainer.appendChild(wordSpan);
+    });
+
+    const exercise = this.currentLesson.exercises[this.currentExercise];
+    this.selectedAnswer = this.sentenceBuilder.selected.join(' ');
+    document.getElementById('check-answer-btn').disabled = 
+        this.sentenceBuilder.selected.length !== exercise.correctOrder.length;
+},
+
+removeWordFromSentence(index) {
+    const word = this.sentenceBuilder.selected[index];
+    this.sentenceBuilder.selected.splice(index, 1);
+
+    const answerOptions = document.getElementById('answer-options');
+    const buttons = answerOptions.querySelectorAll('.answer-option');
+    buttons.forEach(btn => {
+        if (btn.textContent === word && btn.disabled) {
+            btn.disabled = false;
+            btn.style.opacity = '1';
         }
-        
+    });
+
+    const selectedContainer = document.getElementById('selected-words');
+    if (this.sentenceBuilder.selected.length === 0) {
+        selectedContainer.innerHTML = '<span style="color: var(--text-light);">Tap words below to build sentence...</span>';
+    } else {
+        selectedContainer.innerHTML = '';
+        this.sentenceBuilder.selected.forEach((w, idx) => {
+            const wordSpan = document.createElement('span');
+            wordSpan.textContent = w;
+            wordSpan.style.cssText = 'background: var(--white); padding: 8px 12px; border-radius: 8px; border: 2px solid var(--primary-color); cursor: pointer; font-weight: 600;';
+            wordSpan.onclick = () => this.removeWordFromSentence(idx);
+            selectedContainer.appendChild(wordSpan);
+        });
+    }
+
+    const exercise = this.currentLesson.exercises[this.currentExercise];
+    this.selectedAnswer = this.sentenceBuilder.selected.join(' ');
+    document.getElementById('check-answer-btn').disabled = 
+        this.sentenceBuilder.selected.length !== exercise.correctOrder.length;
+},
+
+displayFillBlank(exercise, questionContainer, answerOptions) {
+    const sentenceParts = exercise.sentence.split('____');
+    questionContainer.innerHTML = `
+        <div class="question">
+            <h3>Fill in the blank:</h3>
+            <div style="background: var(--bg-light); padding: 20px; border-radius: 12px; margin: 16px 0; font-size: 20px; text-align: center;">
+                ${sentenceParts[0]}<span style="color: var(--primary-color); font-weight: 700;">____</span>${sentenceParts[1] || ''}
+            </div>
+            <p style="color: var(--text-light); font-size: 14px;">${exercise.translation}</p>
+        </div>
+    `;
+},
+
+displayTranslationFull(exercise, questionContainer, answerOptions, checkBtn) {
+    questionContainer.innerHTML = `
+        <div class="question">
+            <h3>Translate to Lithuanian:</h3>
+            <p style="font-size: 18px; margin: 16px 0; font-weight: 600;">${exercise.question.replace('Translate: ', '')}</p>
+            ${exercise.hints ? `<p style="color: var(--warning-color); font-size: 14px; margin-top: 8px;">💡 Hint: ${exercise.hints[0]}</p>` : ''}
+            <textarea id="translation-input" 
+                      style="width: 100%; min-height: 80px; margin-top: 16px; padding: 12px; border: 2px solid var(--border-color); border-radius: 12px; font-size: 16px; font-family: inherit;"
+                      placeholder="Type your translation here..."></textarea>
+        </div>
+    `;
+
+    answerOptions.style.display = 'none';
+    
+    const input = document.getElementById('translation-input');
+    input.addEventListener('input', (e) => {
+        this.selectedAnswer = e.target.value.trim();
+        checkBtn.disabled = this.selectedAnswer.length < 3;
+    });
+    
+    input.focus();
+},
+
+checkAnswer() {
+    const exercise = this.currentLesson.exercises[this.currentExercise];
+    let isCorrect = false;
+
+    // Handle different exercise types
+    if (exercise.type === 'sentence-builder') {
+        isCorrect = this.selectedAnswer === exercise.correctOrder.join(' ');
+    } else if (exercise.type === 'translation-full') {
+        // More lenient checking for typed translations
+        const userAnswer = this.selectedAnswer.toLowerCase().trim();
+        const correctAnswer = exercise.answer.toLowerCase().trim();
+        isCorrect = userAnswer === correctAnswer || 
+                   this.calculateSimilarity(userAnswer, correctAnswer) > 0.85;
+    } else {
+        isCorrect = this.selectedAnswer === exercise.answer;
+    }
         // Update vocabulary strength
         if (exercise.vocabularyWord) {
             Storage.addVocabulary(exercise.vocabularyWord, 1, isCorrect);
@@ -1827,7 +2076,37 @@ const PracticeManager = {
             btn.disabled = true;
         });
     },
+calculateSimilarity(str1, str2) {
+    const longer = str1.length > str2.length ? str1 : str2;
+    const shorter = str1.length > str2.length ? str2 : str1;
+    if (longer.length === 0) return 1.0;
+    const editDistance = this.levenshteinDistance(longer, shorter);
+    return (longer.length - editDistance) / longer.length;
+},
 
+levenshteinDistance(str1, str2) {
+    const matrix = [];
+    for (let i = 0; i <= str2.length; i++) {
+        matrix[i] = [i];
+    }
+    for (let j = 0; j <= str1.length; j++) {
+        matrix[0][j] = j;
+    }
+    for (let i = 1; i <= str2.length; i++) {
+        for (let j = 1; j <= str1.length; j++) {
+            if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+                matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+                matrix[i][j] = Math.min(
+                    matrix[i - 1][j - 1] + 1,
+                    matrix[i][j - 1] + 1,
+                    matrix[i - 1][j] + 1
+                );
+            }
+        }
+    }
+    return matrix[str2.length][str1.length];
+},
     continuePractice() {
         const feedbackPanel = document.getElementById('practice-feedback-panel');
         feedbackPanel.classList.add('hidden');
@@ -2029,7 +2308,113 @@ const PracticeManager = {
                 });
             }
         };
+// ============ ANALYTICS MANAGER ============
+const Analytics = {
+    updateAnalytics() {
+        this.updateWeeklyStats();
+        this.updateWeakAreas();
+        this.updateStreakCalendar();
+    },
 
+    updateWeeklyStats() {
+        const userData = Storage.getUserData();
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+        const weekLessons = userData.lessonsCompleted.filter(l => 
+            new Date(l.completedAt) > oneWeekAgo
+        );
+
+        const weekWords = Object.entries(userData.vocabulary).filter(([word, stats]) =>
+            new Date(stats.lastReviewed) > oneWeekAgo
+        ).length;
+
+        const weekXP = weekLessons.reduce((sum, l) => {
+            const lesson = App.lessons.find(les => les.id === l.id);
+            return sum + (lesson ? lesson.xp : 0);
+        }, 0);
+
+        const avgAccuracy = weekLessons.length > 0
+            ? Math.round(weekLessons.reduce((sum, l) => sum + l.score, 0) / weekLessons.length)
+            : 0;
+
+        document.getElementById('week-xp').textContent = weekXP;
+        document.getElementById('week-lessons').textContent = weekLessons.length;
+        document.getElementById('week-accuracy').textContent = avgAccuracy + '%';
+        document.getElementById('week-words').textContent = weekWords;
+    },
+
+    updateWeakAreas() {
+        const weakWords = Storage.getWeakWords(5);
+        const container = document.getElementById('weak-areas-list');
+
+        if (weakWords.length === 0) {
+            container.innerHTML = '<p style="color: var(--text-light);">No weak areas yet! Keep learning.</p>';
+            return;
+        }
+
+        container.innerHTML = '';
+        weakWords.forEach(wordData => {
+            const vocab = App.lessons
+                .flatMap(l => l.vocabulary || [])
+                .find(v => v.lithuanian === wordData.word);
+
+            if (!vocab) return;
+
+            const wordDiv = document.createElement('div');
+            wordDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--bg-light); border-radius: 8px; margin-bottom: 8px;';
+            
+            const accuracy = wordData.timesCorrect / (wordData.timesCorrect + wordData.timesWrong) * 100;
+            const color = accuracy < 50 ? 'var(--danger-color)' : accuracy < 75 ? 'var(--warning-color)' : 'var(--success-color)';
+            
+            wordDiv.innerHTML = `
+                <div>
+                    <strong>${vocab.lithuanian}</strong> - ${vocab.english}
+                </div>
+                <div style="color: ${color}; font-weight: 600;">
+                    ${Math.round(accuracy)}%
+                </div>
+            `;
+            container.appendChild(wordDiv);
+        });
+    },
+
+    updateStreakCalendar() {
+        const container = document.getElementById('streak-calendar');
+        const userData = Storage.getUserData();
+        container.innerHTML = '';
+
+        const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+        const today = new Date();
+        
+        for (let i = 6; i >= 0; i--) {
+            const date = new Date(today);
+            date.setDate(date.getDate() - i);
+            const dateStr = date.toDateString();
+            
+            const hasActivity = userData.lessonsCompleted.some(l => 
+                new Date(l.completedAt).toDateString() === dateStr
+            );
+
+            const dayDiv = document.createElement('div');
+            dayDiv.style.cssText = `
+                width: 40px;
+                height: 40px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 600;
+                font-size: 12px;
+                background: ${hasActivity ? 'var(--primary-color)' : 'var(--border-color)'};
+                color: ${hasActivity ? 'var(--white)' : 'var(--text-light)'};
+            `;
+            dayDiv.textContent = days[date.getDay() === 0 ? 6 : date.getDay() - 1];
+            container.appendChild(dayDiv);
+        }
+    }
+};
+        
   // ============ MAIN APP ============
 const App = {
     lessons: [],
@@ -2064,6 +2449,7 @@ async init() {
         }
         
         StreakManager.init();
+        StreakManager.checkDailyReview();
         this.displayLessonPath();
         this.displayUserStats();
         this.setupEventListeners();
@@ -2294,11 +2680,13 @@ async checkAndGenerateLesson() {
         if (targetScreen) {
             targetScreen.classList.add('active');
             
-            if (screenName === 'practice') {
-                PracticeManager.updateStats();
-            } else if (screenName === 'profile') {
-                ProfileManager.updateProfile();
-            }
+if (screenName === 'practice') {
+    PracticeManager.updateStats();
+} else if (screenName === 'profile') {
+    ProfileManager.updateProfile();
+} else if (screenName === 'analytics') {
+    Analytics.updateAnalytics();
+}
         }
     }
 };
