@@ -750,7 +750,63 @@
                     </div>
                 </div>
             </section>
+<!-- Practice Exercise Screen -->
+<section id="practice-exercise-screen" class="screen">
+    <div class="lesson-header">
+        <button id="exit-practice-btn" class="btn-icon">✕</button>
+        <div class="progress-bar">
+            <div id="practice-progress" class="progress-fill"></div>
+        </div>
+        <span id="practice-counter" style="margin-left: 12px; font-weight: 600;">0/10</span>
+    </div>
 
+    <div class="lesson-content">
+        <div id="practice-question-container"></div>
+
+        <div class="answer-section">
+            <div id="practice-answer-options"></div>
+            <button id="practice-check-btn" class="btn btn-primary" disabled>
+                Check
+            </button>
+        </div>
+    </div>
+
+    <div id="practice-feedback-panel" class="feedback-panel hidden">
+        <div class="feedback-content">
+            <h3 id="practice-feedback-title"></h3>
+            <p id="practice-feedback-message"></p>
+            <button id="practice-continue-btn" class="btn btn-success">
+                Continue
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Practice Results Screen -->
+<section id="practice-results-screen" class="screen">
+    <div class="container">
+        <div class="results-content">
+            <h2 id="practice-results-title">Practice Complete! 🎉</h2>
+            <div class="results-stats">
+                <div class="stat">
+                    <span class="stat-value" id="practice-correct-answers">0</span>
+                    <span class="stat-label">Correct</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="practice-xp-earned">0</span>
+                    <span class="stat-label">XP Earned</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="practice-accuracy">0</span>
+                    <span class="stat-label">Accuracy</span>
+                </div>
+            </div>
+            <button id="back-to-practice-btn" class="btn btn-primary">
+                Back to Practice
+            </button>
+        </div>
+    </div>
+</section>
             <!-- Profile Screen -->
             <section id="profile-screen" class="screen">
                 <div class="container">
@@ -1420,32 +1476,505 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no code blocks, no explanations.
             }
         };
 
-        // ============ PRACTICE MANAGER ============
-        const PracticeManager = {
-            startWeakWords() {
-                alert('Weak Words practice coming soon!');
-            },
+      // ============ PRACTICE MANAGER ============
+const PracticeManager = {
+    currentMode: null,
+    currentExercise: 0,
+    totalExercises: 10,
+    correctAnswers: 0,
+    exercises: [],
+    selectedAnswer: null,
+    recognition: null,
 
-            startReview() {
-                alert('Review practice coming soon!');
-            },
+    startWeakWords() {
+        this.currentMode = 'weak';
+        const weakWords = Storage.getWeakWords(10);
+        
+        if (weakWords.length === 0) {
+            alert('Great job! You have no weak words yet. Complete more lessons to practice!');
+            return;
+        }
+        
+        this.exercises = this.generateExercisesFromWords(weakWords);
+        this.startPractice('Weak Words Practice');
+    },
 
-            startSpeaking() {
-                alert('Speaking practice coming soon!');
-            },
+    startReview() {
+        this.currentMode = 'review';
+        const reviewWords = Storage.getWordsForReview(10);
+        
+        if (reviewWords.length === 0) {
+            alert('No words to review yet! Complete some lessons first.');
+            return;
+        }
+        
+        this.exercises = this.generateExercisesFromWords(reviewWords);
+        this.startPractice('Review Practice');
+    },
 
-            startListening() {
-                alert('Listening practice coming soon!');
-            },
+    startSpeaking() {
+        this.currentMode = 'speaking';
+        
+        // Check if browser supports speech recognition
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            alert('Sorry, your browser doesn\'t support speech recognition. Try Chrome or Edge!');
+            return;
+        }
+        
+        const userData = Storage.getUserData();
+        const allWords = Object.keys(userData.vocabulary);
+        
+        if (allWords.length === 0) {
+            alert('Learn some vocabulary first!');
+            return;
+        }
+        
+        const selectedWords = this.getRandomWords(allWords, 10);
+        this.exercises = this.generateSpeakingExercises(selectedWords, userData.vocabulary);
+        this.startPractice('Speaking Practice');
+    },
 
-            updateStats() {
-                const userData = Storage.getUserData();
-                const vocabCount = Object.keys(userData.vocabulary).length;
+    startListening() {
+        this.currentMode = 'listening';
+        
+        // Check if browser supports speech synthesis
+        if (!('speechSynthesis' in window)) {
+            alert('Sorry, your browser doesn\'t support text-to-speech!');
+            return;
+        }
+        
+        const userData = Storage.getUserData();
+        const allWords = Object.keys(userData.vocabulary);
+        
+        if (allWords.length === 0) {
+            alert('Learn some vocabulary first!');
+            return;
+        }
+        
+        const selectedWords = this.getRandomWords(allWords, 10);
+        this.exercises = this.generateListeningExercises(selectedWords, userData.vocabulary);
+        this.startPractice('Listening Practice');
+    },
+
+    getRandomWords(words, count) {
+        const shuffled = [...words].sort(() => Math.random() - 0.5);
+        return shuffled.slice(0, Math.min(count, words.length));
+    },
+
+    generateExercisesFromWords(words) {
+        const exercises = [];
+        const userData = Storage.getUserData();
+        
+        // Get all vocabulary for generating wrong options
+        const allVocab = [];
+        LESSONS_DATA.lessons.forEach(lesson => {
+            if (lesson.vocabulary) {
+                allVocab.push(...lesson.vocabulary);
+            }
+        });
+        
+        words.forEach(wordData => {
+            const vocab = allVocab.find(v => v.lithuanian === wordData.word);
+            if (!vocab) return;
+            
+            // Generate different types of exercises
+            const exerciseType = Math.random();
+            
+            if (exerciseType < 0.5) {
+                // Lithuanian to English
+                const wrongOptions = allVocab
+                    .filter(v => v.english !== vocab.english)
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, 3)
+                    .map(v => v.english);
                 
-                document.getElementById('vocab-count').textContent = vocabCount;
-                document.getElementById('review-count').textContent = Math.max(0, vocabCount - 5);
+                exercises.push({
+                    type: 'translation',
+                    question: `What does "${vocab.lithuanian}" mean?`,
+                    answer: vocab.english,
+                    options: [vocab.english, ...wrongOptions].sort(() => Math.random() - 0.5),
+                    vocabularyWord: vocab.lithuanian
+                });
+            } else {
+                // English to Lithuanian
+                const wrongOptions = allVocab
+                    .filter(v => v.lithuanian !== vocab.lithuanian)
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, 3)
+                    .map(v => v.lithuanian);
+                
+                exercises.push({
+                    type: 'translation',
+                    question: `How do you say "${vocab.english}" in Lithuanian?`,
+                    answer: vocab.lithuanian,
+                    options: [vocab.lithuanian, ...wrongOptions].sort(() => Math.random() - 0.5),
+                    vocabularyWord: vocab.lithuanian
+                });
+            }
+        });
+        
+        return exercises.sort(() => Math.random() - 0.5);
+    },
+
+    generateSpeakingExercises(words, vocabData) {
+        const exercises = [];
+        const allVocab = [];
+        
+        LESSONS_DATA.lessons.forEach(lesson => {
+            if (lesson.vocabulary) {
+                allVocab.push(...lesson.vocabulary);
+            }
+        });
+        
+        words.forEach(word => {
+            const vocab = allVocab.find(v => v.lithuanian === word);
+            if (!vocab) return;
+            
+            exercises.push({
+                type: 'speaking',
+                question: `Say "${vocab.lithuanian}" in Lithuanian`,
+                hint: `Pronunciation: ${vocab.pronunciation}`,
+                answer: vocab.lithuanian,
+                english: vocab.english,
+                vocabularyWord: vocab.lithuanian
+            });
+        });
+        
+        return exercises;
+    },
+
+    generateListeningExercises(words, vocabData) {
+        const exercises = [];
+        const allVocab = [];
+        
+        LESSONS_DATA.lessons.forEach(lesson => {
+            if (lesson.vocabulary) {
+                allVocab.push(...lesson.vocabulary);
+            }
+        });
+        
+        words.forEach(word => {
+            const vocab = allVocab.find(v => v.lithuanian === word);
+            if (!vocab) return;
+            
+            const wrongOptions = allVocab
+                .filter(v => v.english !== vocab.english)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 3)
+                .map(v => v.english);
+            
+            exercises.push({
+                type: 'listening',
+                audioText: vocab.lithuanian,
+                question: 'What did you hear?',
+                answer: vocab.english,
+                options: [vocab.english, ...wrongOptions].sort(() => Math.random() - 0.5),
+                vocabularyWord: vocab.lithuanian
+            });
+        });
+        
+        return exercises;
+    },
+
+    startPractice(title) {
+        this.currentExercise = 0;
+        this.correctAnswers = 0;
+        this.selectedAnswer = null;
+        this.totalExercises = this.exercises.length;
+        
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('practice-exercise-screen').classList.add('active');
+        
+        this.displayExercise();
+    },
+
+    displayExercise() {
+        const exercise = this.exercises[this.currentExercise];
+        const questionContainer = document.getElementById('practice-question-container');
+        const answerOptions = document.getElementById('practice-answer-options');
+        const checkBtn = document.getElementById('practice-check-btn');
+        
+        const progress = ((this.currentExercise + 1) / this.totalExercises) * 100;
+        document.getElementById('practice-progress').style.width = `${progress}%`;
+        document.getElementById('practice-counter').textContent = 
+            `${this.currentExercise + 1}/${this.totalExercises}`;
+        
+        this.selectedAnswer = null;
+        checkBtn.disabled = true;
+        
+        if (exercise.type === 'listening') {
+            questionContainer.innerHTML = `
+                <div class="question">
+                    <div style="text-align: center; margin-bottom: 24px;">
+                        <button id="play-audio-btn" class="btn btn-secondary" 
+                                style="font-size: 48px; padding: 32px; border-radius: 50%; width: 120px; height: 120px;">
+                            🔊
+                        </button>
+                    </div>
+                    <h3>${exercise.question}</h3>
+                    <p style="color: var(--text-light); font-size: 14px;">Click the speaker to listen</p>
+                </div>
+            `;
+            
+            document.getElementById('play-audio-btn').addEventListener('click', () => {
+                this.speak(exercise.audioText);
+            });
+            
+            // Auto-play on load
+            setTimeout(() => this.speak(exercise.audioText), 500);
+        } else if (exercise.type === 'speaking') {
+            questionContainer.innerHTML = `
+                <div class="question">
+                    <h3>${exercise.question}</h3>
+                    <p style="color: var(--text-light); margin-top: 8px;">${exercise.hint}</p>
+                    <p style="color: var(--text-light); font-size: 14px; margin-top: 16px;">
+                        English: ${exercise.english}
+                    </p>
+                    <div style="text-align: center; margin-top: 32px;">
+                        <button id="record-btn" class="btn btn-secondary" 
+                                style="font-size: 48px; padding: 32px; border-radius: 50%; width: 120px; height: 120px;">
+                            🎤
+                        </button>
+                        <p id="recording-status" style="margin-top: 16px; font-weight: 600;">
+                            Click to start recording
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('record-btn').addEventListener('click', () => {
+                this.startRecording();
+            });
+            
+            answerOptions.innerHTML = '';
+            checkBtn.style.display = 'none';
+            return;
+        } else {
+            questionContainer.innerHTML = `
+                <div class="question">
+                    <h3>${exercise.question}</h3>
+                </div>
+            `;
+        }
+        
+        answerOptions.innerHTML = '';
+        
+        if (exercise.options) {
+            exercise.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'answer-option';
+                button.textContent = option;
+                button.onclick = () => this.selectAnswer(option, button);
+                answerOptions.appendChild(button);
+            });
+        }
+        
+        checkBtn.style.display = 'block';
+    },
+
+    selectAnswer(answer, button) {
+        document.querySelectorAll('.answer-option').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+        
+        button.classList.add('selected');
+        this.selectedAnswer = answer;
+        document.getElementById('practice-check-btn').disabled = false;
+    },
+
+    checkAnswer() {
+        const exercise = this.exercises[this.currentExercise];
+        const isCorrect = this.selectedAnswer === exercise.answer;
+        
+        if (isCorrect) {
+            this.correctAnswers++;
+        }
+        
+        // Update vocabulary strength
+        if (exercise.vocabularyWord) {
+            Storage.addVocabulary(exercise.vocabularyWord, 1, isCorrect);
+        }
+        
+        this.showFeedback(isCorrect, exercise.answer);
+    },
+
+    showFeedback(isCorrect, correctAnswer) {
+        const feedbackPanel = document.getElementById('practice-feedback-panel');
+        const feedbackTitle = document.getElementById('practice-feedback-title');
+        const feedbackMessage = document.getElementById('practice-feedback-message');
+        
+        feedbackPanel.classList.remove('hidden', 'correct', 'incorrect');
+        feedbackPanel.classList.add(isCorrect ? 'correct' : 'incorrect');
+        
+        if (isCorrect) {
+            feedbackTitle.textContent = '✓ Correct!';
+            feedbackMessage.textContent = 'Great job!';
+        } else {
+            feedbackTitle.textContent = '✗ Incorrect';
+            feedbackMessage.textContent = `Correct answer: ${correctAnswer}`;
+        }
+        
+        document.querySelectorAll('.answer-option').forEach(btn => {
+            if (btn.textContent === correctAnswer) {
+                btn.classList.add('correct');
+            } else if (btn.classList.contains('selected') && !isCorrect) {
+                btn.classList.add('incorrect');
+            }
+            btn.disabled = true;
+        });
+    },
+
+    continuePractice() {
+        const feedbackPanel = document.getElementById('practice-feedback-panel');
+        feedbackPanel.classList.add('hidden');
+        
+        this.currentExercise++;
+        
+        if (this.currentExercise >= this.totalExercises) {
+            this.completePractice();
+        } else {
+            this.displayExercise();
+        }
+    },
+
+    completePractice() {
+        const accuracy = Math.round((this.correctAnswers / this.totalExercises) * 100);
+        const xpEarned = Math.round(this.correctAnswers * 2);
+        
+        Storage.addXP(xpEarned);
+        StreakManager.updateStreak();
+        
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('practice-results-screen').classList.add('active');
+        
+        document.getElementById('practice-correct-answers').textContent = 
+            `${this.correctAnswers}/${this.totalExercises}`;
+        document.getElementById('practice-xp-earned').textContent = xpEarned;
+        document.getElementById('practice-accuracy').textContent = `${accuracy}%`;
+    },
+
+    speak(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'lt-LT';
+            utterance.rate = 0.8;
+            utterance.pitch = 1;
+            
+            window.speechSynthesis.speak(utterance);
+        }
+    },
+
+    startRecording() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        
+        if (!this.recognition) {
+            this.recognition = new SpeechRecognition();
+            this.recognition.lang = 'lt-LT';
+            this.recognition.continuous = false;
+            this.recognition.interimResults = false;
+        }
+        
+        const recordBtn = document.getElementById('record-btn');
+        const status = document.getElementById('recording-status');
+        
+        recordBtn.textContent = '⏺️';
+        status.textContent = 'Listening... Speak now!';
+        status.style.color = 'var(--danger-color)';
+        
+        this.recognition.start();
+        
+        this.recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript.toLowerCase().trim();
+            const exercise = this.exercises[this.currentExercise];
+            const expected = exercise.answer.toLowerCase().trim();
+            
+            recordBtn.textContent = '🎤';
+            
+            console.log('Heard:', transcript, 'Expected:', expected);
+            
+            // Simple matching (we can make this more sophisticated)
+            const isCorrect = transcript.includes(expected) || 
+                             expected.includes(transcript) ||
+                             this.calculateSimilarity(transcript, expected) > 0.7;
+            
+            if (isCorrect) {
+                this.correctAnswers++;
+                status.textContent = '✓ Correct pronunciation!';
+                status.style.color = 'var(--success-color)';
+                Storage.addVocabulary(exercise.vocabularyWord, 1, true);
+            } else {
+                status.textContent = `✗ Try again. You said: "${transcript}"`;
+                status.style.color = 'var(--danger-color)';
+                Storage.addVocabulary(exercise.vocabularyWord, 1, false);
+            }
+            
+            setTimeout(() => this.continuePractice(), 2000);
+        };
+        
+        this.recognition.onerror = (event) => {
+            recordBtn.textContent = '🎤';
+            status.textContent = 'Error: ' + event.error + '. Try again!';
+            status.style.color = 'var(--danger-color)';
+        };
+        
+        this.recognition.onend = () => {
+            recordBtn.textContent = '🎤';
+            if (status.textContent === 'Listening... Speak now!') {
+                status.textContent = 'Click to try again';
+                status.style.color = 'var(--text-light)';
             }
         };
+    },
+
+    calculateSimilarity(str1, str2) {
+        const longer = str1.length > str2.length ? str1 : str2;
+        const shorter = str1.length > str2.length ? str2 : str1;
+        
+        if (longer.length === 0) return 1.0;
+        
+        const editDistance = this.levenshteinDistance(longer, shorter);
+        return (longer.length - editDistance) / longer.length;
+    },
+
+    levenshteinDistance(str1, str2) {
+        const matrix = [];
+        
+        for (let i = 0; i <= str2.length; i++) {
+            matrix[i] = [i];
+        }
+        
+        for (let j = 0; j <= str1.length; j++) {
+            matrix[0][j] = j;
+        }
+        
+        for (let i = 1; i <= str2.length; i++) {
+            for (let j = 1; j <= str1.length; j++) {
+                if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+                    matrix[i][j] = matrix[i - 1][j - 1];
+                } else {
+                    matrix[i][j] = Math.min(
+                        matrix[i - 1][j - 1] + 1,
+                        matrix[i][j - 1] + 1,
+                        matrix[i - 1][j] + 1
+                    );
+                }
+            }
+        }
+        
+        return matrix[str2.length][str1.length];
+    },
+
+    updateStats() {
+        const userData = Storage.getUserData();
+        const vocabCount = Object.keys(userData.vocabulary).length;
+        const weakCount = Storage.getWeakWords(100).length;
+        
+        document.getElementById('vocab-count').textContent = vocabCount;
+        document.getElementById('review-count').textContent = weakCount;
+    }
+};
 
         // ============ PROFILE MANAGER ============
         const ProfileManager = {
@@ -1659,7 +2188,24 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no code blocks, no explanations.
                 document.getElementById('practice-listening').addEventListener('click', () => {
                     PracticeManager.startListening();
                 });
+ document.getElementById('practice-check-btn').addEventListener('click', () => {
+    PracticeManager.checkAnswer();
+});
 
+document.getElementById('practice-continue-btn').addEventListener('click', () => {
+    PracticeManager.continuePractice();
+});
+
+document.getElementById('exit-practice-btn').addEventListener('click', () => {
+    if (confirm('Exit practice? Progress will not be saved.')) {
+        App.navigateToScreen('practice');
+    }
+});
+
+document.getElementById('back-to-practice-btn').addEventListener('click', () => {
+    App.navigateToScreen('practice');
+    PracticeManager.updateStats();
+});
                 document.querySelectorAll('.nav-item').forEach(item => {
                     item.addEventListener('click', (e) => {
                         const screen = e.currentTarget.dataset.screen;
