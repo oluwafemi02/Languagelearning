@@ -703,8 +703,12 @@
                     <button id="start-lesson-btn" class="btn btn-primary">
                         Start Lesson
                     </button>
+                    <button id="debug-lessons-btn" class="btn btn-secondary" style="margin-top: 10px;">
+    🐛 Debug Lessons
+</button>
                 </div>
             </section>
+            
 
             <!-- Practice Screen -->
             <section id="practice-screen" class="screen">
@@ -1198,32 +1202,32 @@ getWordsForReview(limit = 10) {
 
 // ============ GEMINI AI GENERATOR ============
 const GeminiAI = {
-    API_KEY: 'AIzaSyDZBrdgDD0y6-v_w_bt197O7PlKGxLYhhM',
+    API_KEY: 'AIzaSyDZBrdgDD0y6-v_w_bt197O7PlKGxLYhhM', //test token
     API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
     
-    async generateLesson(lessonNumber, userData) {
-        const topics = [
-            'days of the week and time',
-            'common verbs (go, come, eat, drink, see)',
-            'body parts',
-            'weather and seasons',
-            'shopping and money',
-            'asking for directions',
-            'at a restaurant',
-            'transportation',
-            'past tense basics',
-            'future tense basics'
-        ];
-        
-        const topic = topics[lessonNumber - 6] || 'conversation practice';
-        
-        const prompt = `Create a Lithuanian language lesson in valid JSON format.
+async generateLesson(lessonNumber, userData) {
+    const topics = [
+        'days of the week and time',
+        'common verbs (go, come, eat, drink, see)',
+        'body parts',
+        'weather and seasons',
+        'shopping and money',
+        'asking for directions',
+        'at a restaurant',
+        'transportation',
+        'past tense basics',
+        'future tense basics'
+    ];
+    
+    const topic = topics[lessonNumber - 6] || 'conversation practice';
+    
+    const prompt = `Create a Lithuanian language lesson in valid JSON format.
 
 Lesson number: ${lessonNumber}
 Topic: ${topic}
 Level: beginner
 
-Create a lesson with exactly this structure:
+Create a lesson with exactly this structure (ID must be ${lessonNumber}):
 {
   "id": ${lessonNumber},
   "section": "Basics",
@@ -2060,30 +2064,41 @@ const PracticeManager = {
                 console.log('App initialized successfully');
             },
 
-            async checkAndGenerateLesson() {
-                const completed = this.userData.lessonsCompleted.length;
-                const available = this.lessons.length;
-                
-                // If user is close to running out of lessons
-                if (available - completed <= 1 && !this.isGenerating && available < 15) {
-                    this.isGenerating = true;
-                    console.log('🤖 Generating new lesson...');
-                    
-                    const newLesson = await GeminiAI.generateLesson(available + 1, this.userData);
-                    
-                    if (newLesson) {
-                        this.lessons.push(newLesson);
-                        
-                        // Save to localStorage
-                        const aiLessons = this.lessons.slice(5); // All lessons after the 5 static ones
-                        localStorage.setItem('aiLessons', JSON.stringify(aiLessons));
-                        
-                        this.displayLessonPath();
-                        console.log('✅ New lesson generated:', newLesson.title);
-                    }
-                    
-                    this.isGenerating = false;
-                }
+async checkAndGenerateLesson() {
+    const completed = this.userData.lessonsCompleted.length;
+    const available = this.lessons.length;
+    
+    console.log(`📊 Lessons: ${available} available, ${completed} completed`);
+    
+    // If user is close to running out of lessons (keep 2 lessons ahead)
+    if (available - completed <= 2 && !this.isGenerating && available < 15) {
+        this.isGenerating = true;
+        console.log('🤖 Generating new lesson...');
+        
+        const nextLessonId = available + 1; // Sequential ID
+        const newLesson = await GeminiAI.generateLesson(nextLessonId, this.userData);
+        
+        if (newLesson) {
+            // Ensure correct ID
+            newLesson.id = nextLessonId;
+            
+            this.lessons.push(newLesson);
+            
+            // Save to localStorage
+            const aiLessons = this.lessons.slice(LESSONS_DATA.lessons.length);
+            localStorage.setItem('aiLessons', JSON.stringify(aiLessons));
+            
+            this.displayLessonPath();
+            console.log(`✅ New lesson generated: Lesson #${newLesson.id} - ${newLesson.title}`);
+        } else {
+            console.error('❌ Failed to generate lesson');
+        }
+        
+        this.isGenerating = false;
+    } else {
+        console.log('✓ Enough lessons available');
+    }
+}
             },
 
             displayLessonPath() {
@@ -2156,6 +2171,17 @@ const PracticeManager = {
                         this.startLesson(nextLesson.id);
                     }
                 });
+                // TEMPORARY DEBUG
+document.getElementById('debug-lessons-btn').addEventListener('click', () => {
+    console.log('=== LESSON DEBUG ===');
+    console.log('Total lessons:', this.lessons.length);
+    console.log('Lesson IDs:', this.lessons.map(l => l.id));
+    console.log('Completed lessons:', this.userData.lessonsCompleted.map(l => l.id));
+    console.log('Next lesson:', this.getNextLesson());
+    console.log('Static lessons:', LESSONS_DATA.lessons.length);
+    console.log('All lessons:', this.lessons);
+    alert(`Lessons: ${this.lessons.length}\nCompleted: ${this.userData.lessonsCompleted.length}\nCheck console for details`);
+});
 
                 document.getElementById('check-answer-btn').addEventListener('click', () => {
                     LessonManager.checkAnswer();
@@ -2259,11 +2285,43 @@ document.getElementById('back-to-practice-btn').addEventListener('click', () => 
         };
 
         // Initialize app
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => App.init());
-        } else {
-            App.init();
+       async init() {
+    console.log('🚀 Initializing Lithuanian Learning App...');
+
+    this.userData = Storage.getUserData();
+    this.lessons = [...LESSONS_DATA.lessons];
+    
+    // Load cached AI lessons
+    const cached = localStorage.getItem('aiLessons');
+    if (cached) {
+        try {
+            const aiLessons = JSON.parse(cached);
+            // Fix lesson IDs to be sequential
+            aiLessons.forEach((lesson, index) => {
+                lesson.id = LESSONS_DATA.lessons.length + index + 1;
+            });
+            this.lessons = [...LESSONS_DATA.lessons, ...aiLessons];
+            console.log(`📦 Loaded ${aiLessons.length} AI-generated lessons from cache`);
+        } catch (e) {
+            console.error('Error loading cached lessons:', e);
+            localStorage.removeItem('aiLessons'); // Clear corrupted cache
         }
+    }
+    
+    StreakManager.init();
+    this.displayLessonPath();
+    this.displayUserStats();
+    this.setupEventListeners();
+    
+    PracticeManager.updateStats();
+    ProfileManager.updateProfile();
+
+    // Generate next lesson if needed
+    setTimeout(() => this.checkAndGenerateLesson(), 2000);
+
+    console.log('✅ App initialized successfully');
+    console.log(`📚 Total lessons available: ${this.lessons.length}`);
+}
     </script>
 </body>
 </html>
