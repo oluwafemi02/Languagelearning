@@ -1128,9 +1128,9 @@ getWeakWords(limit = 10) {
         .slice(0, limit);
     return words;
 },
+};
 
-
-        // ============ STREAK MANAGER ============
+// ============ STREAK MANAGER ============
         const StreakManager = {
             updateStreak() {
                 const data = Storage.getUserData();
@@ -1170,59 +1170,60 @@ getWeakWords(limit = 10) {
             init() {
                 const data = Storage.getUserData();
                 this.displayStreak(data.streak);
+            },
+
+            checkDailyReview() {
+                const words = Storage.getWordsForReview(1);
+                if (words.length > 0) {
+                    this.showReviewReminder(words.length);
+                }
+            },
+
+            showReviewReminder(count) {
+                const userData = Storage.getUserData();
+                const today = new Date().toDateString();
+                const lastShown = localStorage.getItem('lastReviewReminder');
+                
+                if (lastShown === today) return;
+                
+                const reminderDiv = document.createElement('div');
+                reminderDiv.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: var(--warning-color);
+                    color: var(--text-dark);
+                    padding: 16px 24px;
+                    border-radius: 12px;
+                    box-shadow: var(--shadow-lg);
+                    z-index: 1000;
+                    font-weight: 600;
+                    cursor: pointer;
+                    animation: slideDown 0.3s ease;
+                `;
+                reminderDiv.innerHTML = `
+                    📚 ${count} word${count > 1 ? 's' : ''} ready for review!
+                    <span style="display: block; font-size: 12px; margin-top: 4px; opacity: 0.8;">Tap to practice</span>
+                `;
+                
+                reminderDiv.onclick = () => {
+                    document.body.removeChild(reminderDiv);
+                    App.navigateToScreen('practice');
+                    setTimeout(() => PracticeManager.startReview(), 300);
+                };
+                
+                document.body.appendChild(reminderDiv);
+                localStorage.setItem('lastReviewReminder', today);
+                
+                setTimeout(() => {
+                    if (document.body.contains(reminderDiv)) {
+                        reminderDiv.style.animation = 'slideUp 0.3s ease';
+                        setTimeout(() => document.body.removeChild(reminderDiv), 300);
+                    }
+                }, 5000);
             }
         };
-checkDailyReview() {
-    const words = Storage.getWordsForReview(1);
-    if (words.length > 0) {
-        this.showReviewReminder(words.length);
-    }
-},
-
-showReviewReminder(count) {
-    const userData = Storage.getUserData();
-    const today = new Date().toDateString();
-    const lastShown = localStorage.getItem('lastReviewReminder');
-    
-    if (lastShown === today) return; // Don't show multiple times per day
-    
-    const reminderDiv = document.createElement('div');
-    reminderDiv.style.cssText = `
-        position: fixed;
-        top: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--warning-color);
-        color: var(--text-dark);
-        padding: 16px 24px;
-        border-radius: 12px;
-        box-shadow: var(--shadow-lg);
-        z-index: 1000;
-        font-weight: 600;
-        cursor: pointer;
-        animation: slideDown 0.3s ease;
-    `;
-    reminderDiv.innerHTML = `
-        📚 ${count} word${count > 1 ? 's' : ''} ready for review!
-        <span style="display: block; font-size: 12px; margin-top: 4px; opacity: 0.8;">Tap to practice</span>
-    `;
-    
-    reminderDiv.onclick = () => {
-        document.body.removeChild(reminderDiv);
-        App.navigateToScreen('practice');
-        setTimeout(() => PracticeManager.startReview(), 300);
-    };
-    
-    document.body.appendChild(reminderDiv);
-    localStorage.setItem('lastReviewReminder', today);
-    
-    setTimeout(() => {
-        if (document.body.contains(reminderDiv)) {
-            reminderDiv.style.animation = 'slideUp 0.3s ease';
-            setTimeout(() => document.body.removeChild(reminderDiv), 300);
-        }
-    }, 5000);
-},
         // ============ LESSONS DATA ============
         const LESSONS_DATA = {
             lessons: [
@@ -1516,14 +1517,15 @@ Return ONLY valid JSON. No markdown, no code blocks, no explanations.`;
                 this.displayExercise();
             },
 
-            displayExercise() {
-                const exercise = this.currentLesson.exercises[this.currentExercise];
-                const questionContainer = document.getElementById('question-container');
-                const answerOptions = document.getElementById('answer-options');
-                const checkBtn = document.getElementById('check-answer-btn');
+displayExercise() {
+    const exercise = this.exercises[this.currentExercise];
+const questionContainer = document.getElementById('practice-question-container');
+    const answerOptions = document.getElementById('practice-answer-options');
+    const checkBtn = document.getElementById('practice-check-btn');
 
-                const progress = ((this.currentExercise + 1) / this.totalExercises) * 100;
-                document.getElementById('lesson-progress').style.width = `${progress}%`;
+const progress = ((this.currentExercise + 1) / this.totalExercises) * 100;
+    document.getElementById('practice-progress').style.width = `${progress}%`;
+    document.getElementById('practice-counter').textContent = `${this.currentExercise + 1}/${this.totalExercises}`;
 
                 questionContainer.innerHTML = `
                     <div class="question">
@@ -1556,16 +1558,30 @@ Return ONLY valid JSON. No markdown, no code blocks, no explanations.`;
                 document.getElementById('check-answer-btn').disabled = false;
             },
 
-        checkAnswer() {
+checkAnswer() {
     const exercise = this.currentLesson.exercises[this.currentExercise];
-    const isCorrect = this.selectedAnswer === exercise.answer;
+    let isCorrect = false;
+
+    // Handle different exercise types
+    if (exercise.type === 'sentence-builder') {
+        isCorrect = this.selectedAnswer === exercise.correctOrder.join(' ');
+    } else if (exercise.type === 'translation-full') {
+        // More lenient checking for typed translations
+        const userAnswer = this.selectedAnswer.toLowerCase().trim();
+        const correctAnswer = exercise.answer.toLowerCase().trim();
+        isCorrect = userAnswer === correctAnswer || 
+                   this.calculateSimilarity(userAnswer, correctAnswer) > 0.85;
+    } else {
+        // Standard exercises
+        isCorrect = this.selectedAnswer === exercise.answer;
+    }
 
     if (isCorrect) {
         this.correctAnswers++;
     }
     
     // Track vocabulary performance
-    if (exercise.type === 'translation' || exercise.type === 'multiple-choice') {
+    if (exercise.type === 'translation' || exercise.type === 'multiple-choice' || exercise.type === 'fill-blank') {
         const vocabWord = this.currentLesson.vocabulary.find(v => 
             v.lithuanian === exercise.answer || v.english === exercise.answer
         );
@@ -1573,6 +1589,9 @@ Return ONLY valid JSON. No markdown, no code blocks, no explanations.`;
         if (vocabWord) {
             Storage.addVocabulary(vocabWord.lithuanian, 1, isCorrect);
         }
+    } else if (exercise.vocabularyWord) {
+        // For sentence-builder and other new types
+        Storage.addVocabulary(exercise.vocabularyWord, 1, isCorrect);
     }
 
     this.showFeedback(isCorrect, exercise.answer);
@@ -2076,37 +2095,6 @@ checkAnswer() {
             btn.disabled = true;
         });
     },
-calculateSimilarity(str1, str2) {
-    const longer = str1.length > str2.length ? str1 : str2;
-    const shorter = str1.length > str2.length ? str2 : str1;
-    if (longer.length === 0) return 1.0;
-    const editDistance = this.levenshteinDistance(longer, shorter);
-    return (longer.length - editDistance) / longer.length;
-},
-
-levenshteinDistance(str1, str2) {
-    const matrix = [];
-    for (let i = 0; i <= str2.length; i++) {
-        matrix[i] = [i];
-    }
-    for (let j = 0; j <= str1.length; j++) {
-        matrix[0][j] = j;
-    }
-    for (let i = 1; i <= str2.length; i++) {
-        for (let j = 1; j <= str1.length; j++) {
-            if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
-                matrix[i][j] = matrix[i - 1][j - 1];
-            } else {
-                matrix[i][j] = Math.min(
-                    matrix[i - 1][j - 1] + 1,
-                    matrix[i][j - 1] + 1,
-                    matrix[i - 1][j] + 1
-                );
-            }
-        }
-    }
-    return matrix[str2.length][str1.length];
-},
     continuePractice() {
         const feedbackPanel = document.getElementById('practice-feedback-panel');
         feedbackPanel.classList.add('hidden');
