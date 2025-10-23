@@ -1877,42 +1877,76 @@ const PracticeManager = {
     },
 
 displayExercise() {
-    const exercise = this.currentLesson.exercises[this.currentExercise];
-    const questionContainer = document.getElementById('question-container');
-    const answerOptions = document.getElementById('answer-options');
-    const checkBtn = document.getElementById('check-answer-btn');
+    const exercise = this.exercises[this.currentExercise];
+    const questionContainer = document.getElementById('practice-question-container');
+    const answerOptions = document.getElementById('practice-answer-options');
+    const checkBtn = document.getElementById('practice-check-btn');
 
     const progress = ((this.currentExercise + 1) / this.totalExercises) * 100;
-    document.getElementById('lesson-progress').style.width = `${progress}%`;
+    document.getElementById('practice-progress').style.width = `${progress}%`;
+    document.getElementById('practice-counter').textContent = `${this.currentExercise + 1}/${this.totalExercises}`;
 
     this.selectedAnswer = null;
     checkBtn.disabled = true;
     checkBtn.style.display = 'block';
     answerOptions.innerHTML = '';
 
-    // Handle different exercise types
-    if (exercise.type === 'sentence-builder') {
-        this.displaySentenceBuilder(exercise, questionContainer, answerOptions, checkBtn);
-        return;
-    } else if (exercise.type === 'fill-blank') {
-        this.displayFillBlank(exercise, questionContainer, answerOptions);
-    } else if (exercise.type === 'translation-full') {
-        this.displayTranslationFull(exercise, questionContainer, answerOptions, checkBtn);
-        return;
-    } else {
-        // Standard multiple choice or translation
+    if (exercise.type === 'listening') {
+        questionContainer.innerHTML = `
+            <div class="question">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <button id="play-audio-btn" class="btn btn-secondary" 
+                            style="font-size: 48px; padding: 32px; border-radius: 50%; width: 120px; height: 120px;">
+                        🔊
+                    </button>
+                </div>
+                <h3>${exercise.question}</h3>
+                <p style="color: var(--text-light); font-size: 14px;">Click the speaker to listen</p>
+            </div>
+        `;
+        
+        document.getElementById('play-audio-btn').addEventListener('click', () => {
+            this.speak(exercise.audioText);
+        });
+        
+        setTimeout(() => this.speak(exercise.audioText), 500);
+    } else if (exercise.type === 'speaking') {
         questionContainer.innerHTML = `
             <div class="question">
                 <h3>${exercise.question}</h3>
-                ${exercise.translation ? `<p style="color: var(--text-light); margin-top: 8px; font-size: 14px;">${exercise.translation}</p>` : ''}
+                <p style="color: var(--text-light); margin-top: 8px;">${exercise.hint}</p>
+                <p style="color: var(--text-light); font-size: 14px; margin-top: 16px;">
+                    English: ${exercise.english}
+                </p>
+                <div style="text-align: center; margin-top: 32px;">
+                    <button id="record-btn" class="btn btn-secondary" 
+                            style="font-size: 48px; padding: 32px; border-radius: 50%; width: 120px; height: 120px;">
+                        🎤
+                    </button>
+                    <p id="recording-status" style="margin-top: 16px; font-weight: 600;">
+                        Click to start recording
+                    </p>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('record-btn').addEventListener('click', () => {
+            this.startRecording();
+        });
+        
+        answerOptions.innerHTML = '';
+        checkBtn.style.display = 'none';
+        return;
+    } else {
+        questionContainer.innerHTML = `
+            <div class="question">
+                <h3>${exercise.question}</h3>
             </div>
         `;
     }
 
-    // Display options for standard exercises
     if (exercise.options) {
-        const shuffled = [...exercise.options].sort(() => Math.random() - 0.5);
-        shuffled.forEach(option => {
+        exercise.options.forEach(option => {
             const button = document.createElement('button');
             button.className = 'answer-option';
             button.textContent = option;
