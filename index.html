@@ -1323,7 +1323,7 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no code blocks, no explanations.
         }
     }
 };
-        // ============ LESSON MANAGER ============
+// ============ LESSON MANAGER ============
         const LessonManager = {
             currentLesson: null,
             currentExercise: 0,
@@ -1332,11 +1332,11 @@ IMPORTANT: Return ONLY valid JSON. No markdown, no code blocks, no explanations.
             selectedAnswer: null,
 
             async startLesson(lessonId) {
-                const lessons = LESSONS_DATA.lessons;
-                this.currentLesson = lessons.find(l => l.id === lessonId);
+                // Use App.lessons instead of LESSONS_DATA.lessons to include AI-generated lessons
+                this.currentLesson = App.lessons.find(l => l.id === lessonId);
                 
                 if (!this.currentLesson) {
-                    console.error('Lesson not found');
+                    console.error('Lesson not found', lessonId, 'Available:', App.lessons.map(l => l.id));
                     return;
                 }
 
@@ -2036,23 +2036,27 @@ const App = {
     userData: null,
     isGenerating: false,
 
-    async init() {
+async init() {
         console.log('🚀 Initializing Lithuanian Learning App...');
 
         this.userData = Storage.getUserData();
         this.lessons = [...LESSONS_DATA.lessons];
         
-        // Load cached AI lessons
+        // Load cached AI lessons BEFORE displaying anything
         const cached = localStorage.getItem('aiLessons');
         if (cached) {
             try {
                 const aiLessons = JSON.parse(cached);
-                // Fix lesson IDs to be sequential
-                aiLessons.forEach((lesson, index) => {
-                    lesson.id = LESSONS_DATA.lessons.length + index + 1;
-                });
-                this.lessons = [...LESSONS_DATA.lessons, ...aiLessons];
+                // Ensure lesson IDs are correct and sequential
+                this.lessons = [
+                    ...LESSONS_DATA.lessons,
+                    ...aiLessons.map((lesson, index) => ({
+                        ...lesson,
+                        id: LESSONS_DATA.lessons.length + index + 1
+                    }))
+                ];
                 console.log(`📦 Loaded ${aiLessons.length} AI-generated lessons from cache`);
+                console.log(`📚 Total lessons: ${this.lessons.length}, IDs: [${this.lessons.map(l => l.id).join(', ')}]`);
             } catch (e) {
                 console.error('Error loading cached lessons:', e);
                 localStorage.removeItem('aiLessons');
@@ -2074,7 +2078,7 @@ const App = {
         console.log(`📚 Total lessons available: ${this.lessons.length}`);
     },
 
-    async checkAndGenerateLesson() {
+async checkAndGenerateLesson() {
         const completed = this.userData.lessonsCompleted.length;
         const available = this.lessons.length;
         
@@ -2085,18 +2089,21 @@ const App = {
             this.isGenerating = true;
             console.log('🤖 Generating new lesson...');
             
-            const nextLessonId = available + 1;
+            const nextLessonId = this.lessons.length + 1;
             const newLesson = await GeminiAI.generateLesson(nextLessonId, this.userData);
             
             if (newLesson) {
+                // Ensure correct ID
                 newLesson.id = nextLessonId;
                 this.lessons.push(newLesson);
                 
+                // Save only AI-generated lessons (not the static ones)
                 const aiLessons = this.lessons.slice(LESSONS_DATA.lessons.length);
                 localStorage.setItem('aiLessons', JSON.stringify(aiLessons));
                 
                 this.displayLessonPath();
-                console.log(`✅ New lesson generated: Lesson #${newLesson.id} - ${newLesson.title}`);
+                console.log(`✅ New lesson #${newLesson.id} generated: ${newLesson.title}`);
+                console.log(`📚 Total lessons now: ${this.lessons.length}`);
             } else {
                 console.error('❌ Failed to generate lesson');
             }
