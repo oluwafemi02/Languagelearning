@@ -1064,6 +1064,12 @@ addVocabulary(word, strength = 1, isCorrect = true) {
     const data = this.getUserData();
     const now = new Date();
     
+    // Ensure valid date
+    if (isNaN(now.getTime())) {
+        console.error('Invalid date in addVocabulary');
+        return;
+    }
+    
     if (!data.vocabulary[word]) {
         data.vocabulary[word] = {
             easeFactor: 2.5,
@@ -1103,10 +1109,16 @@ addVocabulary(word, strength = 1, isCorrect = true) {
         vocab.easeFactor = Math.max(1.3, vocab.easeFactor - 0.2);
     }
     
-    // Set next review date
+    // Set next review date - ensure it's valid
     const nextReviewDate = new Date(now);
     nextReviewDate.setDate(nextReviewDate.getDate() + vocab.interval);
-    vocab.nextReview = nextReviewDate.toISOString();
+    
+    if (isNaN(nextReviewDate.getTime())) {
+        console.error('Invalid next review date');
+        vocab.nextReview = now.toISOString();
+    } else {
+        vocab.nextReview = nextReviewDate.toISOString();
+    }
     
     this.saveUserData(data);
 },
@@ -2616,26 +2628,48 @@ async init() {
         this.userData = Storage.getUserData();
         this.lessons = [...LESSONS_DATA.lessons];
         
-        // Load cached AI lessons BEFORE displaying anything
-        const cached = localStorage.getItem('aiLessons');
-        if (cached) {
-            try {
-                const aiLessons = JSON.parse(cached);
-                // Ensure lesson IDs are correct and sequential
-                this.lessons = [
-                    ...LESSONS_DATA.lessons,
-                    ...aiLessons.map((lesson, index) => ({
-                        ...lesson,
-                        id: LESSONS_DATA.lessons.length + index + 1
-                    }))
-                ];
-                console.log(`📦 Loaded ${aiLessons.length} AI-generated lessons from cache`);
-                console.log(`📚 Total lessons: ${this.lessons.length}, IDs: [${this.lessons.map(l => l.id).join(', ')}]`);
-            } catch (e) {
-                console.error('Error loading cached lessons:', e);
-                localStorage.removeItem('aiLessons');
+// Load cached AI lessons BEFORE displaying anything
+const cached = localStorage.getItem('aiLessons');
+if (cached) {
+    try {
+        const aiLessons = JSON.parse(cached);
+        
+        // Validate each cached lesson
+        const validLessons = aiLessons.filter(lesson => {
+            const isValid = lesson && 
+                          lesson.id && 
+                          lesson.title && 
+                          lesson.exercises && 
+                          Array.isArray(lesson.exercises) && 
+                          lesson.exercises.length > 0;
+            
+            if (!isValid) {
+                console.warn(`⚠️ Skipping invalid cached lesson:`, lesson?.id || 'unknown');
             }
+            return isValid;
+        });
+        
+        if (validLessons.length > 0) {
+            // Ensure lesson IDs are correct and sequential
+            this.lessons = [
+                ...LESSONS_DATA.lessons,
+                ...validLessons.map((lesson, index) => ({
+                    ...lesson,
+                    id: LESSONS_DATA.lessons.length + index + 1
+                }))
+            ];
+            console.log(`📦 Loaded ${validLessons.length} valid AI-generated lessons from cache`);
+        } else {
+            console.log('⚠️ No valid cached lessons found, will generate fresh');
+            localStorage.removeItem('aiLessons');
         }
+        
+        console.log(`📚 Total lessons: ${this.lessons.length}, IDs: [${this.lessons.map(l => l.id).join(', ')}]`);
+    } catch (e) {
+        console.error('Error loading cached lessons:', e);
+        localStorage.removeItem('aiLessons');
+    }
+}
         
         StreakManager.init();
         StreakManager.checkDailyReview();
@@ -2654,40 +2688,53 @@ async init() {
     },
 
 async checkAndGenerateLesson() {
-        const completed = this.userData.lessonsCompleted.length;
-        const available = this.lessons.length;
+    const completed = this.userData.lessonsCompleted.length;
+    const available = this.lessons.length;
+    
+    console.log(`📊 Lessons: ${available} available, ${completed} completed`);
+    
+    // If user is close to running out of lessons (keep 2 lessons ahead)
+    if (available - completed <= 2 && !this.isGenerating && available < 15) {
+        this.isGenerating = true;
+        console.log('🤖 Generating new lesson...');
         
-        console.log(`📊 Lessons: ${available} available, ${completed} completed`);
+        const nextLessonId = this.lessons.length + 1;
+        const newLesson = await GeminiAI.generateLesson(nextLessonId, this.userData);
         
-        // If user is close to running out of lessons (keep 2 lessons ahead)
-        if (available - completed <= 2 && !this.isGenerating && available < 15) {
-            this.isGenerating = true;
-            console.log('🤖 Generating new lesson...');
+        if (newLesson && newLesson.exercises && newLesson.exercises.length > 0) {
+            // Ensure correct ID and validate structure
+            newLesson.id = nextLessonId;
             
-            const nextLessonId = this.lessons.length + 1;
-            const newLesson = await GeminiAI.generateLesson(nextLessonId, this.userData);
-            
-            if (newLesson) {
-                // Ensure correct ID
-                newLesson.id = nextLessonId;
-                this.lessons.push(newLesson);
-                
-                // Save only AI-generated lessons (not the static ones)
-                const aiLessons = this.lessons.slice(LESSONS_DATA.lessons.length);
-                localStorage.setItem('aiLessons', JSON.stringify(aiLessons));
-                
-                this.displayLessonPath();
-                console.log(`✅ New lesson #${newLesson.id} generated: ${newLesson.title}`);
-                console.log(`📚 Total lessons now: ${this.lessons.length}`);
-            } else {
-                console.error('❌ Failed to generate lesson');
+            // Validate exercises array
+            if (!Array.isArray(newLesson.exercises)) {
+                console.error('❌ Invalid exercises format');
+                this.isGenerating = false;
+                return;
             }
             
-            this.isGenerating = false;
+            this.lessons.push(newLesson);
+            
+            // Save only AI-generated lessons (not the static ones)
+            const aiLessons = this.lessons.slice(LESSONS_DATA.lessons.length);
+            try {
+                localStorage.setItem('aiLessons', JSON.stringify(aiLessons));
+                console.log(`✅ Saved ${aiLessons.length} AI lessons to cache`);
+            } catch (e) {
+                console.error('❌ Failed to cache lessons:', e);
+            }
+            
+            this.displayLessonPath();
+            console.log(`✅ New lesson #${newLesson.id} generated: ${newLesson.title}`);
+            console.log(`📚 Total lessons now: ${this.lessons.length}`);
         } else {
-            console.log('✓ Enough lessons available');
+            console.error('❌ Failed to generate valid lesson');
         }
-    },
+        
+        this.isGenerating = false;
+    } else {
+        console.log('✓ Enough lessons available');
+    }
+},
 
     displayLessonPath() {
         const lessonPath = document.getElementById('lesson-path');
@@ -2774,7 +2821,18 @@ async checkAndGenerateLesson() {
                 alert(`Lessons: ${this.lessons.length}\nCompleted: ${this.userData.lessonsCompleted.length}\nCheck console for details`);
             });
         }
-
+// Clear corrupted cache button (for debugging)
+const clearCacheBtn = document.createElement('button');
+clearCacheBtn.textContent = '🗑️ Clear AI Lesson Cache';
+clearCacheBtn.className = 'btn btn-secondary';
+clearCacheBtn.style.marginTop = '10px';
+clearCacheBtn.onclick = () => {
+    if (confirm('Clear all AI-generated lessons? You\'ll keep your progress but new lessons will be generated.')) {
+        localStorage.removeItem('aiLessons');
+        alert('Cache cleared! Refresh the page.');
+    }
+};
+document.getElementById('debug-lessons-btn').parentNode.appendChild(clearCacheBtn);
         document.getElementById('check-answer-btn').addEventListener('click', () => {
             LessonManager.checkAnswer();
         });
