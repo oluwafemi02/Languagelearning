@@ -1722,8 +1722,10 @@ addWordToSentence(word, button) {
     this.sentenceBuilder.selected.push(word);
     button.disabled = true;
     button.style.opacity = '0.3';
+    
     const selectedContainer = document.getElementById('lesson-selected-words');
     selectedContainer.innerHTML = '';
+    
     this.sentenceBuilder.selected.forEach((w, index) => {
         const wordSpan = document.createElement('span');
         wordSpan.textContent = w;
@@ -1731,7 +1733,9 @@ addWordToSentence(word, button) {
         wordSpan.onclick = () => this.removeWordFromSentence(index);
         selectedContainer.appendChild(wordSpan);
     });
-    const exercise = this.exercises[this.currentExercise];
+    
+    // FIX: Use this.currentLesson.exercises instead of this.exercises
+    const exercise = this.currentLesson.exercises[this.currentExercise];
     this.selectedAnswer = this.sentenceBuilder.selected.join(' ');
     document.getElementById('check-answer-btn').disabled = 
         this.sentenceBuilder.selected.length !== exercise.correctOrder.length;
@@ -1740,6 +1744,7 @@ addWordToSentence(word, button) {
 removeWordFromSentence(index) {
     const word = this.sentenceBuilder.selected[index];
     this.sentenceBuilder.selected.splice(index, 1);
+    
     const answerOptions = document.getElementById('answer-options');
     const buttons = answerOptions.querySelectorAll('.answer-option');
     buttons.forEach(btn => {
@@ -1748,6 +1753,7 @@ removeWordFromSentence(index) {
             btn.style.opacity = '1';
         }
     });
+    
     const selectedContainer = document.getElementById('lesson-selected-words');
     if (this.sentenceBuilder.selected.length === 0) {
         selectedContainer.innerHTML = '<span style="color: var(--text-light);">Tap words below to build sentence...</span>';
@@ -1761,6 +1767,8 @@ removeWordFromSentence(index) {
             selectedContainer.appendChild(wordSpan);
         });
     }
+    
+    // FIX: Use this.currentLesson.exercises instead of this.exercises
     const exercise = this.currentLesson.exercises[this.currentExercise];
     this.selectedAnswer = this.sentenceBuilder.selected.join(' ');
     document.getElementById('check-answer-btn').disabled = 
