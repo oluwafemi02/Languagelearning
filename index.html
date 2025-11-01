@@ -717,6 +717,25 @@
                             <span id="total-xp">0</span>
                             <span>XP</span>
                         </div>
+                        
+                        <!-- Daily Goal Widget -->
+                        <div class="daily-goal-widget">
+                            <h3>🎯 Today's Goal</h3>
+                            <div class="goal-progress-bar">
+                                <div class="goal-progress-fill" id="goal-progress-fill" style="width: 0%"></div>
+                            </div>
+                            <p class="goal-text">
+                                <span id="current-daily-xp">0</span> / <span id="daily-xp-goal">50</span> XP
+                            </p>
+                            <p class="goal-status" id="goal-status">Start learning today! ✨</p>
+                        </div>
+                    </div>
+
+                    <!-- Review Section -->
+                    <div class="review-section" id="review-section" style="display: none;">
+                        <h3>📝 Review Time!</h3>
+                        <p><span id="due-count">0</span> words need review</p>
+                        <button class="btn btn-primary" id="start-review-btn">Start Review</button>
                     </div>
 
                     <div class="lesson-path" id="lesson-path"></div>
@@ -1001,6 +1020,41 @@
                 <span class="nav-label">Profile</span>
             </button>
         </nav>
+
+        <!-- Onboarding Overlay -->
+        <div id="onboarding-overlay" class="onboarding-overlay hidden">
+            <div class="onboarding-screen active" id="onboarding-1">
+                <div class="onboarding-content">
+                    <h2>🇱🇹 Sveiki!</h2>
+                    <h3>Welcome to Lithuanian Learning</h3>
+                    <p>Learn Lithuanian in just 10 minutes a day with bite-sized lessons and fun exercises.</p>
+                    <button class="btn btn-primary" onclick="showOnboardingScreen(2)">Pradėti (Start)</button>
+                </div>
+            </div>
+            
+            <div class="onboarding-screen" id="onboarding-2">
+                <div class="onboarding-content">
+                    <h2>🎯 Your Daily Goal</h2>
+                    <p>How many minutes per day do you want to learn?</p>
+                    <div class="goal-options">
+                        <button class="goal-option" data-minutes="5">5 min<br><small>Casual</small></button>
+                        <button class="goal-option" data-minutes="10">10 min<br><small>Regular</small></button>
+                        <button class="goal-option selected" data-minutes="15">15 min<br><small>Serious</small></button>
+                        <button class="goal-option" data-minutes="20">20 min<br><small>Intense</small></button>
+                    </div>
+                    <button class="btn btn-primary" onclick="showOnboardingScreen(3)">Continue</button>
+                </div>
+            </div>
+            
+            <div class="onboarding-screen" id="onboarding-3">
+                <div class="onboarding-content">
+                    <h2>🔔 Stay Motivated</h2>
+                    <p>Get daily reminders to keep your streak alive!</p>
+                    <button class="btn btn-primary" onclick="finishOnboarding(true)">Enable Reminders</button>
+                    <button class="btn btn-secondary" onclick="finishOnboarding(false)" style="margin-top: 10px;">Skip for now</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -2953,5 +3007,14 @@ if (document.readyState === 'loading') {
     App.init();
 }
     </script>
+    
+    <!-- External JavaScript Files -->
+    <script src="storage.js"></script>
+    <script src="review.js"></script>
+    <script src="achievements.js"></script>
+    <script src="streak.js"></script>
+    <script src="notifications.js"></script>
+    <script src="lessons.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

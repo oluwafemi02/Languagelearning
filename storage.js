@@ -10,9 +10,12 @@
                     streak: 0,
                     lastStudyDate: null,
                     totalXP: 0,
+                    dailyXP: 0,
                     lessonsCompleted: [],
                     currentLesson: 1,
                     vocabulary: {},
+                    achievements: [],
+                    onboardingCompleted: false,
                     settings: {
                         dailyGoal: 50,
                         soundEnabled: true,
@@ -64,5 +67,34 @@
                     data.vocabulary[word].lastReviewed = new Date().toISOString();
                 }
                 this.saveUserData(data);
+            },
+
+            getDailyXP() {
+                const userData = this.getUserData();
+                const today = new Date().toDateString();
+                const lastDate = userData.lastStudyDate ? new Date(userData.lastStudyDate).toDateString() : null;
+                
+                if (lastDate === today) {
+                    return userData.dailyXP || 0;
+                } else {
+                    // New day, reset
+                    userData.dailyXP = 0;
+                    this.saveUserData(userData);
+                    return 0;
+                }
+            },
+
+            addDailyXP(amount) {
+                const userData = this.getUserData();
+                const today = new Date().toDateString();
+                const lastDate = userData.lastStudyDate ? new Date(userData.lastStudyDate).toDateString() : null;
+                
+                if (lastDate !== today) {
+                    userData.dailyXP = 0;
+                }
+                
+                userData.dailyXP = (userData.dailyXP || 0) + amount;
+                this.saveUserData(userData);
+                return userData.dailyXP;
             }
         };
