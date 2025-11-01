@@ -1,298 +1,6 @@
 {
   "lessons": [
     {
-      "id": 1,
-      "title": "Basics 1",
-      "titleLT": "Pagrindai 1",
-      "description": "Learn basic greetings and introductions",
-      "descriptionLT": "Išmok pagrindinių pasisveikinimų",
-      "difficulty": "beginner",
-      "xp": 10,
-      "vocabulary": [
-        {
-          "lithuanian": "labas",
-          "english": "hello",
-          "pronunciation": "la-BAHS",
-          "audio": "audio/pronunciation/labas.mp3",
-          "type": "greeting",
-          "example": "Labas! Kaip sekasi?",
-          "exampleEN": "Hello! How are you?"
-        },
-        {
-          "lithuanian": "ačiū",
-          "english": "thank you",
-          "pronunciation": "ah-CHOO",
-          "audio": "audio/pronunciation/aciu.mp3",
-          "type": "phrase",
-          "example": "Ačiū už pagalbą",
-          "exampleEN": "Thank you for the help"
-        },
-        {
-          "lithuanian": "taip",
-          "english": "yes",
-          "pronunciation": "TAHYP",
-          "audio": "audio/pronunciation/taip.mp3",
-          "type": "word",
-          "example": "Taip, aš suprantu",
-          "exampleEN": "Yes, I understand"
-        },
-        {
-          "lithuanian": "ne",
-          "english": "no",
-          "pronunciation": "NEH",
-          "audio": "audio/pronunciation/ne.mp3",
-          "type": "word",
-          "example": "Ne, ačiū",
-          "exampleEN": "No, thank you"
-        },
-        {
-          "lithuanian": "gerai",
-          "english": "okay/good",
-          "pronunciation": "geh-RAI",
-          "audio": "audio/pronunciation/gerai.mp3",
-          "type": "word",
-          "example": "Viskas gerai",
-          "exampleEN": "Everything is okay"
-        }
-      ],
-      "exercises": [
-        {
-          "type": "translation",
-          "question": "How do you say 'hello' in Lithuanian?",
-          "answer": "labas",
-          "options": ["labas", "ačiū", "viso gero", "gerai"]
-        },
-        {
-          "type": "listening",
-          "audio": "audio/pronunciation/aciu.mp3",
-          "question": "What does this mean?",
-          "answer": "thank you",
-          "options": ["hello", "goodbye", "thank you", "please"]
-        },
-        {
-          "type": "multiple-choice",
-          "question": "What is 'yes' in Lithuanian?",
-          "questionLT": "Kaip lietuviškai 'yes'?",
-          "answer": "taip",
-          "options": ["ne", "taip", "labas", "gerai"]
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "title": "Numbers 1-10",
-      "titleLT": "Skaičiai 1-10",
-      "description": "Learn numbers from one to ten",
-      "descriptionLT": "Išmok skaičius nuo vieno iki dešimties",
-      "difficulty": "beginner",
-      "xp": 10,
-      "grammarTip": "Numbers 1-4 change by gender. Masculine forms are shown here.",
-      "vocabulary": [
-        {
-          "lithuanian": "vienas",
-          "english": "one",
-          "pronunciation": "VYEH-nahs",
-          "type": "number",
-          "gender": "masculine",
-          "example": "Vienas obuolys",
-          "exampleEN": "One apple"
-        },
-        {
-          "lithuanian": "du",
-          "english": "two",
-          "pronunciation": "DOO",
-          "type": "number",
-          "gender": "masculine",
-          "example": "Du stalai",
-          "exampleEN": "Two tables"
-        },
-        {
-          "lithuanian": "trys",
-          "english": "three",
-          "pronunciation": "TREES",
-          "type": "number",
-          "gender": "masculine",
-          "example": "Trys draugai",
-          "exampleEN": "Three friends"
-        },
-        {
-          "lithuanian": "keturi",
-          "english": "four",
-          "pronunciation": "keh-tu-RI",
-          "type": "number",
-          "gender": "masculine",
-          "example": "Keturi namai",
-          "exampleEN": "Four houses"
-        },
-        {
-          "lithuanian": "penki",
-          "english": "five",
-          "pronunciation": "pen-KI",
-          "type": "number",
-          "gender": "masculine",
-          "example": "Penki pirštai",
-          "exampleEN": "Five fingers"
-        },
-        {
-          "lithuanian": "šeši",
-          "english": "six",
-          "pronunciation": "sheh-SHEE",
-          "type": "number",
-          "gender": "masculine",
-          "example": "Šeši mėnesiai",
-          "exampleEN": "Six months"
-        },
-        {
-          "lithuanian": "septyni",
-          "english": "seven",
-          "pronunciation": "sep-tee-NEE",
-          "type": "number",
-          "gender": "masculine",
-          "example": "Septyni metai",
-          "exampleEN": "Seven years"
-        },
-        {
-          "lithuanian": "aštuoni",
-          "english": "eight",
-          "pronunciation": "ash-TOO-oh-nee",
-          "type": "number",
-          "gender": "masculine",
-          "example": "Aštuoni žmonės",
-          "exampleEN": "Eight people"
-        },
-        {
-          "lithuanian": "devyni",
-          "english": "nine",
-          "pronunciation": "deh-vee-NEE",
-          "type": "number",
-          "gender": "masculine",
-          "example": "Devyni studentai",
-          "exampleEN": "Nine students"
-        },
-        {
-          "lithuanian": "dešimt",
-          "english": "ten",
-          "pronunciation": "deh-SHIMT",
-          "type": "number",
-          "gender": "masculine",
-          "example": "Dešimt eurų",
-          "exampleEN": "Ten euros"
-        }
-      ],
-      "exercises": [
-        {
-          "type": "translation",
-          "question": "How do you say 'one' in Lithuanian?",
-          "answer": "vienas",
-          "options": ["vienas", "du", "trys", "keturi"]
-        },
-        {
-          "type": "multiple-choice",
-          "question": "What is 'five' in Lithuanian?",
-          "questionLT": "Kaip lietuviškai 'five'?",
-          "answer": "penki",
-          "options": ["penki", "šeši", "keturi", "trys"]
-        },
-        {
-          "type": "translation",
-          "question": "How do you say 'seven' in Lithuanian?",
-          "answer": "septyni",
-          "options": ["šeši", "septyni", "aštuoni", "devyni"]
-        },
-        {
-          "type": "typing",
-          "question": "Type the Lithuanian word for 'ten'",
-          "answer": "dešimt",
-          "hint": "Starts with 'd'"
-        },
-        {
-          "type": "multiple-choice",
-          "question": "What does 'aštuoni' mean?",
-          "answer": "eight",
-          "options": ["seven", "eight", "nine", "ten"]
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "title": "Family",
-      "titleLT": "Šeima",
-      "description": "Learn family member terms",
-      "descriptionLT": "Išmok šeimos narių pavadinimus",
-      "difficulty": "beginner",
-      "xp": 15,
-      "culturalNote": "Family is very important in Lithuanian culture. Sunday dinners with extended family are common!",
-      "vocabulary": [
-        {
-          "lithuanian": "mama",
-          "english": "mother",
-          "pronunciation": "mah-MAH",
-          "type": "noun",
-          "gender": "feminine",
-          "declension": 1,
-          "example": "Mano mama yra mokytoja",
-          "exampleEN": "My mother is a teacher"
-        },
-        {
-          "lithuanian": "tėvas",
-          "english": "father",
-          "pronunciation": "TEH-vahs",
-          "type": "noun",
-          "gender": "masculine",
-          "declension": 1,
-          "example": "Mano tėvas dirba",
-          "exampleEN": "My father works"
-        },
-        {
-          "lithuanian": "sesuo",
-          "english": "sister",
-          "pronunciation": "seh-SUO",
-          "type": "noun",
-          "gender": "feminine",
-          "declension": 5,
-          "example": "Mano sesuo gyvena Vilniuje",
-          "exampleEN": "My sister lives in Vilnius"
-        },
-        {
-          "lithuanian": "brolis",
-          "english": "brother",
-          "pronunciation": "BRO-lis",
-          "type": "noun",
-          "gender": "masculine",
-          "declension": 3,
-          "example": "Mano brolis yra studentas",
-          "exampleEN": "My brother is a student"
-        }
-      ],
-      "exercises": [
-        {
-          "type": "translation",
-          "question": "How do you say 'mother' in Lithuanian?",
-          "answer": "mama",
-          "options": ["mama", "tėvas", "sesuo", "brolis"]
-        },
-        {
-          "type": "translation",
-          "question": "How do you say 'father' in Lithuanian?",
-          "answer": "tėvas",
-          "options": ["tėvas", "mama", "sesuo", "brolis"]
-        },
-        {
-          "type": "multiple-choice",
-          "question": "What does 'brolis' mean?",
-          "questionLT": "Ką reiškia 'brolis'?",
-          "answer": "brother",
-          "options": ["brother", "sister", "mother", "father"]
-        },
-        {
-          "type": "typing",
-          "question": "Type the Lithuanian word for 'sister'",
-          "answer": "sesuo",
-          "hint": "Starts with 's'"
-        }
-      ]
-    },
-    {
       "id": 4,
       "title": "Colors",
       "titleLT": "Spalvos",
@@ -310,7 +18,8 @@
           "type": "adjective",
           "gender": "feminine",
           "example": "Raudona suknelė",
-          "exampleEN": "Red dress"
+          "exampleEN": "Red dress",
+          "mnemonic": "Think 'raw-dona' like a red raw tomato"
         },
         {
           "lithuanian": "mėlyna",
@@ -389,7 +98,8 @@
           "type": "multiple-choice",
           "question": "What color is snow? (Kokios spalvos sniegas?)",
           "answer": "balta",
-          "options": ["balta", "juoda", "mėlyna", "raudona"]
+          "options": ["balta", "juoda", "mėlyna", "raudona"],
+          "explanation": "Snow is white (balta) in Lithuanian"
         }
       ]
     },
@@ -411,7 +121,8 @@
           "type": "noun",
           "gender": "feminine",
           "example": "Aš valgau duoną",
-          "exampleEN": "I eat bread"
+          "exampleEN": "I eat bread",
+          "culturalNote": "Bread is sacred in Lithuanian culture - never throw it away!"
         },
         {
           "lithuanian": "vanduo",
@@ -425,7 +136,7 @@
         {
           "lithuanian": "pienas",
           "english": "milk",
-          "pronunciation": "PYEH-nahs",
+          "pronunciation": "pyeh-NAHS",
           "type": "noun",
           "gender": "masculine",
           "example": "Šviežias pienas",
@@ -525,7 +236,12 @@
           "pronunciation": "AY-tee",
           "type": "verb",
           "example": "Aš einu namo",
-          "exampleEN": "I go home"
+          "exampleEN": "I go home",
+          "conjugation": {
+            "first_person": "einu",
+            "second_person": "eini",
+            "third_person": "eina"
+          }
         },
         {
           "lithuanian": "valgyti",
@@ -598,7 +314,8 @@
           "type": "multiple-choice",
           "question": "Complete: Aš ___ namo (I go home)",
           "answer": "einu",
-          "options": ["einu", "eiti", "ėjau", "eisiu"]
+          "options": ["einu", "eiti", "ėjau", "eisiu"],
+          "explanation": "First person present tense of 'eiti' is 'einu'"
         }
       ]
     },
@@ -616,7 +333,7 @@
         {
           "lithuanian": "kas",
           "english": "who/what",
-          "pronunciation": "KAHS",
+          "pronunciation": "kahs",
           "type": "question word",
           "example": "Kas tu esi?",
           "exampleEN": "Who are you?"
@@ -624,7 +341,7 @@
         {
           "lithuanian": "kur",
           "english": "where",
-          "pronunciation": "KOOR",
+          "pronunciation": "koor",
           "type": "question word",
           "example": "Kur tu gyveni?",
           "exampleEN": "Where do you live?"
@@ -632,7 +349,7 @@
         {
           "lithuanian": "kaip",
           "english": "how",
-          "pronunciation": "KAH-eep",
+          "pronunciation": "kah-eep",
           "type": "question word",
           "example": "Kaip tau sekasi?",
           "exampleEN": "How are you?"
@@ -656,7 +373,7 @@
         {
           "lithuanian": "kiek",
           "english": "how much/many",
-          "pronunciation": "KYEHK",
+          "pronunciation": "kyehk",
           "type": "question word",
           "example": "Kiek tai kainuoja?",
           "exampleEN": "How much does it cost?"

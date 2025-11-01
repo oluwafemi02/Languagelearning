@@ -8,7 +8,7 @@ const LessonManager = {
   // Load vocabulary data
   async loadLessons() {
     try {
-      const response = await fetch('data/vocabulary.json');
+      const response = await fetch('vocabulary.json');
       const data = await response.json();
       return data.lessons;
     } catch (error) {
@@ -31,6 +31,33 @@ const LessonManager = {
     this.correctAnswers = 0;
     this.totalExercises = this.currentLesson.exercises.length;
     this.selectedAnswer = null;
+    this.isReviewSession = false;
+
+    // Show lesson screen
+    document.getElementById('home-screen').classList.remove('active');
+    document.getElementById('lesson-screen').classList.add('active');
+
+    // Display first exercise
+    this.displayExercise();
+  },
+
+  // Start a review session
+  startReviewSession(exercises) {
+    // Create a temporary lesson for review
+    this.currentLesson = {
+      id: 'review',
+      title: 'Review',
+      titleLT: 'Pakartojimas',
+      xp: 10,
+      exercises: exercises,
+      vocabulary: []
+    };
+
+    this.currentExercise = 0;
+    this.correctAnswers = 0;
+    this.totalExercises = exercises.length;
+    this.selectedAnswer = null;
+    this.isReviewSession = true;
 
     // Show lesson screen
     document.getElementById('home-screen').classList.remove('active');
@@ -67,6 +94,9 @@ const LessonManager = {
         break;
       case 'multiple-choice':
         this.displayMultipleChoiceExercise(exercise);
+        break;
+      case 'typing':
+        this.displayTypingExercise(exercise);
         break;
       default:
         this.displayTranslationExercise(exercise);
@@ -143,6 +173,44 @@ const LessonManager = {
     });
   },
 
+  // Display typing exercise
+  displayTypingExercise(exercise) {
+    const questionContainer = document.getElementById('question-container');
+    const answerOptions = document.getElementById('answer-options');
+
+    questionContainer.innerHTML = `
+      <div class="question">
+        <h3>${exercise.question}</h3>
+        ${exercise.hint ? `<p class="hint">💡 Užuomina: ${exercise.hint}</p>` : ''}
+      </div>
+    `;
+
+    answerOptions.innerHTML = `
+      <input type="text" 
+             id="typing-answer" 
+             class="typing-input"
+             placeholder="Rašyk atsakymą..."
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off">
+    `;
+
+    const input = document.getElementById('typing-answer');
+    input.focus();
+    
+    input.addEventListener('input', (e) => {
+      this.selectedAnswer = e.target.value.trim().toLowerCase();
+      document.getElementById('check-answer-btn').disabled = !this.selectedAnswer;
+    });
+    
+    // Allow Enter key to submit
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && this.selectedAnswer) {
+        document.getElementById('check-answer-btn').click();
+      }
+    });
+  },
+
   // Select answer
   selectAnswer(answer, button) {
     // Remove previous selection
@@ -161,10 +229,15 @@ const LessonManager = {
   // Check answer
   checkAnswer() {
     const exercise = this.currentLesson.exercises[this.currentExercise];
-    const isCorrect = this.selectedAnswer === exercise.answer;
+    const isCorrect = this.selectedAnswer.toLowerCase() === exercise.answer.toLowerCase();
 
     if (isCorrect) {
       this.correctAnswers++;
+    }
+
+    // Update word strength if this is a review
+    if (exercise.reviewWord) {
+      ReviewManager.updateWordStrength(exercise.reviewWord, isCorrect);
     }
 
     this.showFeedback(isCorrect, exercise.answer);
@@ -219,15 +292,23 @@ feedbackTitle.textContent = '✓ Teisingai!';
     const accuracy = Math.round((this.correctAnswers / this.totalExercises) * 100);
     const xpEarned = this.currentLesson.xp;
 
-    // Update user data
-    Storage.completeLesson(this.currentLesson.id, accuracy);
+    // Only update progress for non-review sessions
+    if (!this.isReviewSession) {
+      Storage.completeLesson(this.currentLesson.id, accuracy);
+      
+      // Add vocabulary to learned list
+      this.currentLesson.vocabulary.forEach(word => {
+        Storage.addVocabulary(word.lithuanian);
+      });
+    }
+
+    // Always add XP and update streak
     Storage.addXP(xpEarned);
+    Storage.addDailyXP(xpEarned);
     StreakManager.updateStreak();
 
-    // Add vocabulary to learned list
-    this.currentLesson.vocabulary.forEach(word => {
-      Storage.addVocabulary(word.lithuanian);
-    });
+    // Check for achievements
+    AchievementManager.checkAchievements();
 
     // Show results screen
     document.getElementById('lesson-screen').classList.remove('active');

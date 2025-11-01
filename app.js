@@ -10,6 +10,12 @@ const App = {
     // Load user data
     this.userData = Storage.getUserData();
 
+    // Check if onboarding needed
+    if (!this.userData.onboardingCompleted) {
+      this.showOnboarding();
+      return;
+    }
+
     // Initialize components
     StreakManager.init();
     await NotificationManager.init();
@@ -30,6 +36,46 @@ const App = {
     this.setupInstallPrompt();
 
     console.log('App initialized successfully');
+  },
+
+  // Show onboarding flow
+  showOnboarding() {
+    const overlay = document.getElementById('onboarding-overlay');
+    if (overlay) {
+      overlay.classList.remove('hidden');
+      
+      // Setup goal option selection
+      document.querySelectorAll('.goal-option').forEach(option => {
+        option.addEventListener('click', () => {
+          document.querySelectorAll('.goal-option').forEach(o => o.classList.remove('selected'));
+          option.classList.add('selected');
+        });
+      });
+    }
+  },
+
+  // Complete onboarding
+  finishOnboarding(enableNotifications) {
+    const userData = Storage.getUserData();
+    userData.onboardingCompleted = true;
+    userData.settings.notificationsEnabled = enableNotifications;
+    
+    // Get selected goal (minutes to XP conversion)
+    const selectedOption = document.querySelector('.goal-option.selected');
+    const minutes = parseInt(selectedOption?.dataset.minutes || 10);
+    userData.settings.dailyGoal = minutes * 5; // 5 XP per minute estimate
+    
+    Storage.saveUserData(userData);
+    
+    const overlay = document.getElementById('onboarding-overlay');
+    if (overlay) overlay.classList.add('hidden');
+    
+    if (enableNotifications) {
+      NotificationManager.requestPermission();
+    }
+    
+    // Continue initialization
+    this.init();
   },
 
   // Display lesson path
@@ -69,6 +115,59 @@ const App = {
   displayUserStats() {
     document.getElementById('total-xp').textContent = this.userData.totalXP;
     document.getElementById('streak-count').textContent = this.userData.streak;
+    this.updateDailyGoal();
+    this.updateReviewSection();
+  },
+
+  // Update daily goal progress
+  updateDailyGoal() {
+    const dailyXP = Storage.getDailyXP();
+    const goalXP = this.userData.settings.dailyGoal;
+    const percentage = Math.min((dailyXP / goalXP) * 100, 100);
+    
+    const currentXPEl = document.getElementById('current-daily-xp');
+    const goalXPEl = document.getElementById('daily-xp-goal');
+    const progressFillEl = document.getElementById('goal-progress-fill');
+    const statusEl = document.getElementById('goal-status');
+    
+    if (currentXPEl) currentXPEl.textContent = dailyXP;
+    if (goalXPEl) goalXPEl.textContent = goalXP;
+    if (progressFillEl) progressFillEl.style.width = `${percentage}%`;
+    
+    if (statusEl) {
+      if (percentage >= 100) {
+        statusEl.textContent = '🎉 Goal complete! Puikiai!';
+        statusEl.classList.add('completed');
+      } else if (percentage >= 75) {
+        statusEl.textContent = '💪 Almost there!';
+        statusEl.classList.remove('completed');
+      } else if (percentage >= 50) {
+        statusEl.textContent = '🚀 Keep going!';
+        statusEl.classList.remove('completed');
+      } else if (percentage >= 25) {
+        statusEl.textContent = '📚 Great start!';
+        statusEl.classList.remove('completed');
+      } else {
+        statusEl.textContent = '✨ Start learning today!';
+        statusEl.classList.remove('completed');
+      }
+    }
+  },
+
+  // Update review section visibility
+  updateReviewSection() {
+    const dueCount = ReviewManager.getDueWordsCount();
+    const reviewSection = document.getElementById('review-section');
+    const dueCountEl = document.getElementById('due-count');
+    
+    if (reviewSection) {
+      if (dueCount > 0) {
+        reviewSection.style.display = 'block';
+        if (dueCountEl) dueCountEl.textContent = dueCount;
+      } else {
+        reviewSection.style.display = 'none';
+      }
+    }
   },
 
   // Start lesson
@@ -108,6 +207,14 @@ const App = {
     // Exit lesson button
     document.getElementById('exit-lesson-btn')?.addEventListener('click', () => {
       LessonManager.exitLesson();
+    });
+
+    // Start review button
+    document.getElementById('start-review-btn')?.addEventListener('click', async () => {
+      const exercises = await ReviewManager.generateReviewExercises(10);
+      if (exercises.length > 0) {
+        LessonManager.startReviewSession(exercises);
+      }
     });
 
     // Bottom navigation
@@ -171,6 +278,19 @@ const App = {
     });
   }
 };
+
+// Helper functions for onboarding (global scope for inline onclick)
+function showOnboardingScreen(screenNumber) {
+  document.querySelectorAll('.onboarding-screen').forEach(screen => {
+    screen.classList.remove('active');
+  });
+  const targetScreen = document.getElementById(`onboarding-${screenNumber}`);
+  if (targetScreen) targetScreen.classList.add('active');
+}
+
+function finishOnboarding(enableNotifications) {
+  App.finishOnboarding(enableNotifications);
+}
 
 // Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
