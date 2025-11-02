@@ -1,0 +1,1828 @@
+{
+  "words": [
+    {
+      "id": 1,
+      "lithuanian": "labas",
+      "english": "hello",
+      "example": "Labas rytas! - Good morning!",
+      "topic": "greetings",
+      "difficulty": "beginner",
+      "partOfSpeech": "interjection"
+    },
+    {
+      "id": 2,
+      "lithuanian": "ačiū",
+      "english": "thank you",
+      "example": "Ačiū už pagalbą. - Thank you for the help.",
+      "topic": "greetings",
+      "difficulty": "beginner",
+      "partOfSpeech": "interjection"
+    },
+    {
+      "id": 3,
+      "lithuanian": "taip",
+      "english": "yes",
+      "example": "Taip, aš suprantu. - Yes, I understand.",
+      "topic": "basics",
+      "difficulty": "beginner",
+      "partOfSpeech": "particle"
+    },
+    {
+      "id": 4,
+      "lithuanian": "ne",
+      "english": "no",
+      "example": "Ne, aš nežinau. - No, I don't know.",
+      "topic": "basics",
+      "difficulty": "beginner",
+      "partOfSpeech": "particle"
+    },
+    {
+      "id": 5,
+      "lithuanian": "prašau",
+      "english": "please",
+      "example": "Prašau padėti man. - Please help me.",
+      "topic": "greetings",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 6,
+      "lithuanian": "atsiprašau",
+      "english": "sorry",
+      "example": "Atsiprašau už vėlavimą. - Sorry for being late.",
+      "topic": "greetings",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 7,
+      "lithuanian": "vanduo",
+      "english": "water",
+      "example": "Aš noriu vandens. - I want water.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 8,
+      "lithuanian": "duona",
+      "english": "bread",
+      "example": "Duona yra skaní. - The bread is tasty.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 9,
+      "lithuanian": "pienas",
+      "english": "milk",
+      "example": "Pienas yra šviežias. - The milk is fresh.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 10,
+      "lithuanian": "kava",
+      "english": "coffee",
+      "example": "Aš gėriu kavą. - I drink coffee.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 11,
+      "lithuanian": "arbata",
+      "english": "tea",
+      "example": "Ji mėgsta arbatą. - She likes tea.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 12,
+      "lithuanian": "maistas",
+      "english": "food",
+      "example": "Maistas yra gardus. - The food is delicious.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 13,
+      "lithuanian": "esu",
+      "english": "I am",
+      "example": "Aš esu studentas. - I am a student.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 14,
+      "lithuanian": "turiu",
+      "english": "I have",
+      "example": "Aš turiu knygą. - I have a book.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 15,
+      "lithuanian": "noriu",
+      "english": "I want",
+      "example": "Aš noriu mokytis. - I want to learn.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 16,
+      "lithuanian": "moku",
+      "english": "I can/know how",
+      "example": "Aš moku plaukti. - I can swim.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 17,
+      "lithuanian": "myliu",
+      "english": "I love",
+      "example": "Aš myliu Lietuvą. - I love Lithuania.",
+      "topic": "emotions",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 18,
+      "lithuanian": "mėgstu",
+      "english": "I like",
+      "example": "Aš mėgstu muziką. - I like music.",
+      "topic": "emotions",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 19,
+      "lithuanian": "šeima",
+      "english": "family",
+      "example": "Mano šeima yra didelė. - My family is big.",
+      "topic": "family",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 20,
+      "lithuanian": "mama",
+      "english": "mother",
+      "example": "Mano mama yra gydytoja. - My mother is a doctor.",
+      "topic": "family",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 21,
+      "lithuanian": "tėvas",
+      "english": "father",
+      "example": "Tėvas dirba mokykloje. - Father works at school.",
+      "topic": "family",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 22,
+      "lithuanian": "brolis",
+      "english": "brother",
+      "example": "Mano brolis yra jaunas. - My brother is young.",
+      "topic": "family",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 23,
+      "lithuanian": "sesuo",
+      "english": "sister",
+      "example": "Sesuo studijuoja universitete. - Sister studies at university.",
+      "topic": "family",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 24,
+      "lithuanian": "vaikas",
+      "english": "child",
+      "example": "Vaikas žaidžia kieme. - The child plays in the yard.",
+      "topic": "family",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 25,
+      "lithuanian": "draugas",
+      "english": "friend (male)",
+      "example": "Mano draugas gyvena Vilniuje. - My friend lives in Vilnius.",
+      "topic": "people",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 26,
+      "lithuanian": "draugė",
+      "english": "friend (female)",
+      "example": "Draugė mokosi lietuvių kalbos. - My friend is learning Lithuanian.",
+      "topic": "people",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 27,
+      "lithuanian": "žmogus",
+      "english": "person/human",
+      "example": "Tas žmogus yra draugiškas. - That person is friendly.",
+      "topic": "people",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 28,
+      "lithuanian": "vyras",
+      "english": "man",
+      "example": "Vyras skaito knygą. - The man is reading a book.",
+      "topic": "people",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 29,
+      "lithuanian": "moteris",
+      "english": "woman",
+      "example": "Moteris dirba ligoninėje. - The woman works in a hospital.",
+      "topic": "people",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 30,
+      "lithuanian": "namas",
+      "english": "house",
+      "example": "Mano namas yra didelis. - My house is big.",
+      "topic": "places",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 31,
+      "lithuanian": "miestas",
+      "english": "city",
+      "example": "Vilnius yra gražus miestas. - Vilnius is a beautiful city.",
+      "topic": "places",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 32,
+      "lithuanian": "mokykla",
+      "english": "school",
+      "example": "Vaikai eina į mokyklą. - Children go to school.",
+      "topic": "places",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 33,
+      "lithuanian": "parduotuvė",
+      "english": "store",
+      "example": "Parduotuvė yra arti. - The store is nearby.",
+      "topic": "places",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 34,
+      "lithuanian": "biblioteka",
+      "english": "library",
+      "example": "Biblioteka yra atidara. - The library is open.",
+      "topic": "places",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 35,
+      "lithuanian": "ligoninė",
+      "english": "hospital",
+      "example": "Ligoninė yra nauja. - The hospital is new.",
+      "topic": "places",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 36,
+      "lithuanian": "didelis",
+      "english": "big",
+      "example": "Tai didelis namas. - This is a big house.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 37,
+      "lithuanian": "mažas",
+      "english": "small",
+      "example": "Mažas vaikas miega. - A small child is sleeping.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 38,
+      "lithuanian": "gražus",
+      "english": "beautiful",
+      "example": "Gražus oras šiandien. - Beautiful weather today.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 39,
+      "lithuanian": "geras",
+      "english": "good",
+      "example": "Tai gera idėja. - That's a good idea.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 40,
+      "lithuanian": "blogas",
+      "english": "bad",
+      "example": "Blogas oras. - Bad weather.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 41,
+      "lithuanian": "naujas",
+      "english": "new",
+      "example": "Naujas automobilis. - A new car.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 42,
+      "lithuanian": "senas",
+      "english": "old",
+      "example": "Senas namas. - An old house.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 43,
+      "lithuanian": "jaunas",
+      "english": "young",
+      "example": "Jaunas žmogus. - A young person.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 44,
+      "lithuanian": "šaltas",
+      "english": "cold",
+      "example": "Šaltas vanduo. - Cold water.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 45,
+      "lithuanian": "karštas",
+      "english": "hot",
+      "example": "Karšta kava. - Hot coffee.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 46,
+      "lithuanian": "laikas",
+      "english": "time",
+      "example": "Kiek laiko? - What time is it?",
+      "topic": "time",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 47,
+      "lithuanian": "diena",
+      "english": "day",
+      "example": "Gera diena! - Good day!",
+      "topic": "time",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 48,
+      "lithuanian": "naktis",
+      "english": "night",
+      "example": "Labanakt! - Good night!",
+      "topic": "time",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 49,
+      "lithuanian": "rytas",
+      "english": "morning",
+      "example": "Labas rytas! - Good morning!",
+      "topic": "time",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 50,
+      "lithuanian": "vakaras",
+      "english": "evening",
+      "example": "Labas vakaras! - Good evening!",
+      "topic": "time",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 51,
+      "lithuanian": "šiandien",
+      "english": "today",
+      "example": "Šiandien gražus oras. - Today the weather is beautiful.",
+      "topic": "time",
+      "difficulty": "beginner",
+      "partOfSpeech": "adverb"
+    },
+    {
+      "id": 52,
+      "lithuanian": "vakar",
+      "english": "yesterday",
+      "example": "Vakar buvau mokykloje. - Yesterday I was at school.",
+      "topic": "time",
+      "difficulty": "beginner",
+      "partOfSpeech": "adverb"
+    },
+    {
+      "id": 53,
+      "lithuanian": "rytoj",
+      "english": "tomorrow",
+      "example": "Rytoj bus šilta. - Tomorrow it will be warm.",
+      "topic": "time",
+      "difficulty": "beginner",
+      "partOfSpeech": "adverb"
+    },
+    {
+      "id": 54,
+      "lithuanian": "savaitė",
+      "english": "week",
+      "example": "Viena savaitė turi septynias dienas. - One week has seven days.",
+      "topic": "time",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 55,
+      "lithuanian": "mėnuo",
+      "english": "month",
+      "example": "Sausis yra pirmas mėnuo. - January is the first month.",
+      "topic": "time",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 56,
+      "lithuanian": "metai",
+      "english": "year",
+      "example": "Nauji metai! - New year!",
+      "topic": "time",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 57,
+      "lithuanian": "vienas",
+      "english": "one",
+      "example": "Vienas obuolys. - One apple.",
+      "topic": "numbers",
+      "difficulty": "beginner",
+      "partOfSpeech": "numeral"
+    },
+    {
+      "id": 58,
+      "lithuanian": "du",
+      "english": "two",
+      "example": "Du šunys. - Two dogs.",
+      "topic": "numbers",
+      "difficulty": "beginner",
+      "partOfSpeech": "numeral"
+    },
+    {
+      "id": 59,
+      "lithuanian": "trys",
+      "english": "three",
+      "example": "Trys katės. - Three cats.",
+      "topic": "numbers",
+      "difficulty": "beginner",
+      "partOfSpeech": "numeral"
+    },
+    {
+      "id": 60,
+      "lithuanian": "keturi",
+      "english": "four",
+      "example": "Keturi stalai. - Four tables.",
+      "topic": "numbers",
+      "difficulty": "beginner",
+      "partOfSpeech": "numeral"
+    },
+    {
+      "id": 61,
+      "lithuanian": "penki",
+      "english": "five",
+      "example": "Penki vaikai. - Five children.",
+      "topic": "numbers",
+      "difficulty": "beginner",
+      "partOfSpeech": "numeral"
+    },
+    {
+      "id": 62,
+      "lithuanian": "šeši",
+      "english": "six",
+      "example": "Šeši draugai. - Six friends.",
+      "topic": "numbers",
+      "difficulty": "beginner",
+      "partOfSpeech": "numeral"
+    },
+    {
+      "id": 63,
+      "lithuanian": "septyni",
+      "english": "seven",
+      "example": "Septyni žmonės. - Seven people.",
+      "topic": "numbers",
+      "difficulty": "beginner",
+      "partOfSpeech": "numeral"
+    },
+    {
+      "id": 64,
+      "lithuanian": "aštuoni",
+      "english": "eight",
+      "example": "Aštuoni pieštukiai. - Eight pencils.",
+      "topic": "numbers",
+      "difficulty": "beginner",
+      "partOfSpeech": "numeral"
+    },
+    {
+      "id": 65,
+      "lithuanian": "devyni",
+      "english": "nine",
+      "example": "Devyni laiškai. - Nine letters.",
+      "topic": "numbers",
+      "difficulty": "beginner",
+      "partOfSpeech": "numeral"
+    },
+    {
+      "id": 66,
+      "lithuanian": "dešimt",
+      "english": "ten",
+      "example": "Dešimt pirštų. - Ten fingers.",
+      "topic": "numbers",
+      "difficulty": "beginner",
+      "partOfSpeech": "numeral"
+    },
+    {
+      "id": 67,
+      "lithuanian": "spalva",
+      "english": "color",
+      "example": "Kokia spalva? - What color?",
+      "topic": "colors",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 68,
+      "lithuanian": "raudona",
+      "english": "red",
+      "example": "Raudona rožė. - A red rose.",
+      "topic": "colors",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 69,
+      "lithuanian": "mėlyna",
+      "english": "blue",
+      "example": "Mėlynas dangus. - Blue sky.",
+      "topic": "colors",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 70,
+      "lithuanian": "žalia",
+      "english": "green",
+      "example": "Žalia žolė. - Green grass.",
+      "topic": "colors",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 71,
+      "lithuanian": "geltona",
+      "english": "yellow",
+      "example": "Geltona gėlė. - A yellow flower.",
+      "topic": "colors",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 72,
+      "lithuanian": "balta",
+      "english": "white",
+      "example": "Baltas sniegas. - White snow.",
+      "topic": "colors",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 73,
+      "lithuanian": "juoda",
+      "english": "black",
+      "example": "Juoda katė. - A black cat.",
+      "topic": "colors",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 74,
+      "lithuanian": "automobilis",
+      "english": "car",
+      "example": "Naujas automobilis. - A new car.",
+      "topic": "transport",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 75,
+      "lithuanian": "autobusas",
+      "english": "bus",
+      "example": "Autobusas atvyksta. - The bus is arriving.",
+      "topic": "transport",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 76,
+      "lithuanian": "traukinys",
+      "english": "train",
+      "example": "Traukinys greitai važiuoja. - The train goes fast.",
+      "topic": "transport",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 77,
+      "lithuanian": "lėktuvas",
+      "english": "airplane",
+      "example": "Lėktuvas skrenda. - The airplane is flying.",
+      "topic": "transport",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 78,
+      "lithuanian": "dviratis",
+      "english": "bicycle",
+      "example": "Dviratis yra greitas. - The bicycle is fast.",
+      "topic": "transport",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 79,
+      "lithuanian": "knyga",
+      "english": "book",
+      "example": "Aš skaitau knygą. - I am reading a book.",
+      "topic": "objects",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 80,
+      "lithuanian": "stalas",
+      "english": "table",
+      "example": "Stalas yra didelis. - The table is big.",
+      "topic": "objects",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 81,
+      "lithuanian": "kėdė",
+      "english": "chair",
+      "example": "Kėdė yra patogi. - The chair is comfortable.",
+      "topic": "objects",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 82,
+      "lithuanian": "langas",
+      "english": "window",
+      "example": "Langas yra atviras. - The window is open.",
+      "topic": "objects",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 83,
+      "lithuanian": "durys",
+      "english": "door",
+      "example": "Durys yra uždaros. - The door is closed.",
+      "topic": "objects",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 84,
+      "lithuanian": "telefonas",
+      "english": "phone",
+      "example": "Mano telefonas skambina. - My phone is ringing.",
+      "topic": "objects",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 85,
+      "lithuanian": "kompiuteris",
+      "english": "computer",
+      "example": "Kompiuteris yra naujas. - The computer is new.",
+      "topic": "objects",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 86,
+      "lithuanian": "šuo",
+      "english": "dog",
+      "example": "Šuo loja. - The dog is barking.",
+      "topic": "animals",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 87,
+      "lithuanian": "katė",
+      "english": "cat",
+      "example": "Katė miaukia. - The cat is meowing.",
+      "topic": "animals",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 88,
+      "lithuanian": "paukštis",
+      "english": "bird",
+      "example": "Paukštis gieda. - The bird is singing.",
+      "topic": "animals",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 89,
+      "lithuanian": "žuvis",
+      "english": "fish",
+      "example": "Žuvis plaukia. - The fish is swimming.",
+      "topic": "animals",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 90,
+      "lithuanian": "arklys",
+      "english": "horse",
+      "example": "Arklys bėga. - The horse is running.",
+      "topic": "animals",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 91,
+      "lithuanian": "eiti",
+      "english": "to go/walk",
+      "example": "Aš einu namo. - I am going home.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 92,
+      "lithuanian": "važiuoti",
+      "english": "to drive/ride",
+      "example": "Mes važiuojame į miestą. - We are driving to the city.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 93,
+      "lithuanian": "bėgti",
+      "english": "to run",
+      "example": "Vaikas bėga parke. - The child is running in the park.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 94,
+      "lithuanian": "valgyt",
+      "english": "to eat",
+      "example": "Aš valgau pusryčius. - I am eating breakfast.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 95,
+      "lithuanian": "gerti",
+      "english": "to drink",
+      "example": "Ji geria arbatą. - She is drinking tea.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 96,
+      "lithuanian": "miegoti",
+      "english": "to sleep",
+      "example": "Vaikas miega. - The child is sleeping.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 97,
+      "lithuanian": "dirbti",
+      "english": "to work",
+      "example": "Aš dirbu biure. - I work in an office.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 98,
+      "lithuanian": "mokytis",
+      "english": "to learn/study",
+      "example": "Mes mokomes lietuvių kalbos. - We are learning Lithuanian.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 99,
+      "lithuanian": "skaityti",
+      "english": "to read",
+      "example": "Aš skaitau knygą. - I am reading a book.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 100,
+      "lithuanian": "rašyti",
+      "english": "to write",
+      "example": "Jis rašo laišką. - He is writing a letter.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 101,
+      "lithuanian": "kalbėti",
+      "english": "to speak",
+      "example": "Aš kalbu lietuviškai. - I speak Lithuanian.",
+      "topic": "verbs",
+      "difficulty": "intermediate",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 102,
+      "lithuanian": "klausyti",
+      "english": "to listen",
+      "example": "Mes klausome muzikos. - We are listening to music.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 103,
+      "lithuanian": "žiūrėti",
+      "english": "to watch/look",
+      "example": "Jie žiūri filmą. - They are watching a movie.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 104,
+      "lithuanian": "matyti",
+      "english": "to see",
+      "example": "Aš matau paukštį. - I see a bird.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 105,
+      "lithuanian": "girdėti",
+      "english": "to hear",
+      "example": "Aš girdžiu muziką. - I hear music.",
+      "topic": "verbs",
+      "difficulty": "beginner",
+      "partOfSpeech": "verb"
+    },
+    {
+      "id": 106,
+      "lithuanian": "obuolys",
+      "english": "apple",
+      "example": "Obuolys yra raudonas. - The apple is red.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 107,
+      "lithuanian": "bananas",
+      "english": "banana",
+      "example": "Bananas yra geltonas. - The banana is yellow.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 108,
+      "lithuanian": "apelsinas",
+      "english": "orange",
+      "example": "Apelsinas yra sultingas. - The orange is juicy.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 109,
+      "lithuanian": "pomidoras",
+      "english": "tomato",
+      "example": "Pomidoras yra raudonas. - The tomato is red.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 110,
+      "lithuanian": "agurkas",
+      "english": "cucumber",
+      "example": "Agurkas yra žalias. - The cucumber is green.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 111,
+      "lithuanian": "bulvė",
+      "english": "potato",
+      "example": "Bulvė yra daržovė. - Potato is a vegetable.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 112,
+      "lithuanian": "morka",
+      "english": "carrot",
+      "example": "Morka yra oranžinė. - The carrot is orange.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 113,
+      "lithuanian": "mėsa",
+      "english": "meat",
+      "example": "Mėsa yra šviežia. - The meat is fresh.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 114,
+      "lithuanian": "žuvis",
+      "english": "fish",
+      "example": "Žuvis yra sveika. - Fish is healthy.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 115,
+      "lithuanian": "sūris",
+      "english": "cheese",
+      "example": "Sūris yra skanus. - The cheese is tasty.",
+      "topic": "food",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 116,
+      "lithuanian": "sveikas",
+      "english": "healthy/hello",
+      "example": "Sveiki! - Hello (plural/formal)!",
+      "topic": "greetings",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 117,
+      "lithuanian": "viso gero",
+      "english": "goodbye",
+      "example": "Viso gero! - Goodbye!",
+      "topic": "greetings",
+      "difficulty": "beginner",
+      "partOfSpeech": "phrase"
+    },
+    {
+      "id": 118,
+      "lithuanian": "iki pasimatymo",
+      "english": "see you later",
+      "example": "Iki pasimatymo! - See you later!",
+      "topic": "greetings",
+      "difficulty": "beginner",
+      "partOfSpeech": "phrase"
+    },
+    {
+      "id": 119,
+      "lithuanian": "kiek kainuoja",
+      "english": "how much does it cost",
+      "example": "Kiek kainuoja knyga? - How much does the book cost?",
+      "topic": "shopping",
+      "difficulty": "intermediate",
+      "partOfSpeech": "phrase"
+    },
+    {
+      "id": 120,
+      "lithuanian": "pinigai",
+      "english": "money",
+      "example": "Aš turiu pinigų. - I have money.",
+      "topic": "shopping",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 121,
+      "lithuanian": "drabužiai",
+      "english": "clothes",
+      "example": "Nauji drabužiai. - New clothes.",
+      "topic": "shopping",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 122,
+      "lithuanian": "batai",
+      "english": "shoes",
+      "example": "Mano batai yra juodi. - My shoes are black.",
+      "topic": "shopping",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 123,
+      "lithuanian": "marškiniai",
+      "english": "shirt",
+      "example": "Balti marškiniai. - White shirt.",
+      "topic": "shopping",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 124,
+      "lithuanian": "kelnės",
+      "english": "pants",
+      "example": "Mėlynos kelnės. - Blue pants.",
+      "topic": "shopping",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 125,
+      "lithuanian": "suknelė",
+      "english": "dress",
+      "example": "Graži suknelė. - A beautiful dress.",
+      "topic": "shopping",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 126,
+      "lithuanian": "oras",
+      "english": "weather",
+      "example": "Šiandien geras oras. - The weather is good today.",
+      "topic": "weather",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 127,
+      "lithuanian": "saulė",
+      "english": "sun",
+      "example": "Saulė šviečia. - The sun is shining.",
+      "topic": "weather",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 128,
+      "lithuanian": "lietus",
+      "english": "rain",
+      "example": "Šiandien lyja lietus. - It is raining today.",
+      "topic": "weather",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 129,
+      "lithuanian": "sniegas",
+      "english": "snow",
+      "example": "Žiemą sninga. - It snows in winter.",
+      "topic": "weather",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 130,
+      "lithuanian": "vėjas",
+      "english": "wind",
+      "example": "Stiprus vėjas pučia. - A strong wind is blowing.",
+      "topic": "weather",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 131,
+      "lithuanian": "šilta",
+      "english": "warm",
+      "example": "Šiandien šilta. - It is warm today.",
+      "topic": "weather",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 132,
+      "lithuanian": "šalta",
+      "english": "cold",
+      "example": "Žiemą šalta. - It is cold in winter.",
+      "topic": "weather",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 133,
+      "lithuanian": "pavasaris",
+      "english": "spring",
+      "example": "Pavasaris yra gražus. - Spring is beautiful.",
+      "topic": "seasons",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 134,
+      "lithuanian": "vasara",
+      "english": "summer",
+      "example": "Vasara yra karšta. - Summer is hot.",
+      "topic": "seasons",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 135,
+      "lithuanian": "ruduo",
+      "english": "autumn",
+      "example": "Ruduo yra spalvingas. - Autumn is colorful.",
+      "topic": "seasons",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 136,
+      "lithuanian": "žiema",
+      "english": "winter",
+      "example": "Žiema yra šalta. - Winter is cold.",
+      "topic": "seasons",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 137,
+      "lithuanian": "muzika",
+      "english": "music",
+      "example": "Aš klausau muzikos. - I am listening to music.",
+      "topic": "hobbies",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 138,
+      "lithuanian": "daina",
+      "english": "song",
+      "example": "Graži daina. - A beautiful song.",
+      "topic": "hobbies",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 139,
+      "lithuanian": "filmas",
+      "english": "movie",
+      "example": "Mes žiūrime filmą. - We are watching a movie.",
+      "topic": "hobbies",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 140,
+      "lithuanian": "sportas",
+      "english": "sport",
+      "example": "Aš mėgstu sportą. - I like sports.",
+      "topic": "hobbies",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 141,
+      "lithuanian": "futbolas",
+      "english": "football/soccer",
+      "example": "Futbolas yra populiarus. - Football is popular.",
+      "topic": "hobbies",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 142,
+      "lithuanian": "krepšinis",
+      "english": "basketball",
+      "example": "Lietuviai mėgsta krepšinį. - Lithuanians love basketball.",
+      "topic": "hobbies",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 143,
+      "lithuanian": "plaukimas",
+      "english": "swimming",
+      "example": "Plaukimas yra sveikas sportas. - Swimming is a healthy sport.",
+      "topic": "hobbies",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 144,
+      "lithuanian": "žaidimas",
+      "english": "game",
+      "example": "Linkmas žaidimas. - A fun game.",
+      "topic": "hobbies",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 145,
+      "lithuanian": "hobis",
+      "english": "hobby",
+      "example": "Skaitymas yra mano hobis. - Reading is my hobby.",
+      "topic": "hobbies",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 146,
+      "lithuanian": "draugas",
+      "english": "friend",
+      "example": "Jis yra mano draugas. - He is my friend.",
+      "topic": "people",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 147,
+      "lithuanian": "mokslai",
+      "english": "studies/school subjects",
+      "example": "Mokslai yra įdomūs. - Studies are interesting.",
+      "topic": "education",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 148,
+      "lithuanian": "mokytoja",
+      "english": "teacher (female)",
+      "example": "Mokytoja aiškina pamoką. - The teacher is explaining the lesson.",
+      "topic": "education",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 149,
+      "lithuanian": "mokytojas",
+      "english": "teacher (male)",
+      "example": "Mokytojas yra geras. - The teacher is good.",
+      "topic": "education",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 150,
+      "lithuanian": "studentas",
+      "english": "student (male)",
+      "example": "Studentas mokosi universitete. - The student studies at university.",
+      "topic": "education",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 151,
+      "lithuanian": "studentė",
+      "english": "student (female)",
+      "example": "Studentė rašo referatą. - The student is writing an essay.",
+      "topic": "education",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 152,
+      "lithuanian": "pamoka",
+      "english": "lesson",
+      "example": "Pamoka prasideda. - The lesson is starting.",
+      "topic": "education",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 153,
+      "lithuanian": "egzaminas",
+      "english": "exam",
+      "example": "Egzaminas yra sunkus. - The exam is difficult.",
+      "topic": "education",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 154,
+      "lithuanian": "klausimas",
+      "english": "question",
+      "example": "Turiu klausimą. - I have a question.",
+      "topic": "education",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 155,
+      "lithuanian": "atsakymas",
+      "english": "answer",
+      "example": "Teisingas atsakymas. - Correct answer.",
+      "topic": "education",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 156,
+      "lithuanian": "kalba",
+      "english": "language",
+      "example": "Lietuvių kalba yra graži. - Lithuanian language is beautiful.",
+      "topic": "education",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 157,
+      "lithuanian": "žodis",
+      "english": "word",
+      "example": "Naujas žodis. - A new word.",
+      "topic": "education",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 158,
+      "lithuanian": "sakinys",
+      "english": "sentence",
+      "example": "Ilgas sakinys. - A long sentence.",
+      "topic": "education",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 159,
+      "lithuanian": "universitetas",
+      "english": "university",
+      "example": "Vilniaus universitetas yra senas. - Vilnius University is old.",
+      "topic": "education",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 160,
+      "lithuanian": "darbas",
+      "english": "work/job",
+      "example": "Aš einu į darbą. - I am going to work.",
+      "topic": "work",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 161,
+      "lithuanian": "biuras",
+      "english": "office",
+      "example": "Biuras yra didelis. - The office is big.",
+      "topic": "work",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 162,
+      "lithuanian": "komanda",
+      "english": "team",
+      "example": "Mūsų komanda dirba gerai. - Our team works well.",
+      "topic": "work",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 163,
+      "lithuanian": "susitikimas",
+      "english": "meeting",
+      "example": "Susitikimas prasideda. - The meeting is starting.",
+      "topic": "work",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 164,
+      "lithuanian": "projektas",
+      "english": "project",
+      "example": "Naujas projektas. - A new project.",
+      "topic": "work",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 165,
+      "lithuanian": "gydytojas",
+      "english": "doctor (male)",
+      "example": "Gydytojas padeda ligoniui. - The doctor helps the patient.",
+      "topic": "professions",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 166,
+      "lithuanian": "gydytoja",
+      "english": "doctor (female)",
+      "example": "Gydytoja yra profesionali. - The doctor is professional.",
+      "topic": "professions",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 167,
+      "lithuanian": "inžinierius",
+      "english": "engineer",
+      "example": "Inžinierius projektuoja. - The engineer designs.",
+      "topic": "professions",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 168,
+      "lithuanian": "programuotojas",
+      "english": "programmer",
+      "example": "Programuotojas kuria programas. - The programmer creates programs.",
+      "topic": "professions",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 169,
+      "lithuanian": "virėjas",
+      "english": "cook/chef",
+      "example": "Virėjas gamina maistą. - The chef cooks food.",
+      "topic": "professions",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 170,
+      "lithuanian": "pardavėjas",
+      "english": "salesperson",
+      "example": "Pardavėjas padeda pirkėjui. - The salesperson helps the buyer.",
+      "topic": "professions",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 171,
+      "lithuanian": "menininkas",
+      "english": "artist",
+      "example": "Menininkas piešia paveikslą. - The artist paints a picture.",
+      "topic": "professions",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 172,
+      "lithuanian": "dailininkas",
+      "english": "painter",
+      "example": "Dailininkas kuria meną. - The painter creates art.",
+      "topic": "professions",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 173,
+      "lithuanian": "muzikantas",
+      "english": "musician",
+      "example": "Muzikantas groja gitara. - The musician plays guitar.",
+      "topic": "professions",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 174,
+      "lithuanian": "grožis",
+      "english": "beauty",
+      "example": "Gamtos grožis. - The beauty of nature.",
+      "topic": "emotions",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 175,
+      "lithuanian": "laimė",
+      "english": "happiness",
+      "example": "Laimė yra svarbi. - Happiness is important.",
+      "topic": "emotions",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 176,
+      "lithuanian": "meilė",
+      "english": "love",
+      "example": "Meilė yra stipri. - Love is strong.",
+      "topic": "emotions",
+      "difficulty": "beginner",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 177,
+      "lithuanian": "džiaugsmas",
+      "english": "joy",
+      "example": "Džiaugsmas mano širdy. - Joy in my heart.",
+      "topic": "emotions",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 178,
+      "lithuanian": "liūdesys",
+      "english": "sadness",
+      "example": "Liūdesys praeina. - Sadness passes.",
+      "topic": "emotions",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 179,
+      "lithuanian": "baimė",
+      "english": "fear",
+      "example": "Baimė yra normali emocija. - Fear is a normal emotion.",
+      "topic": "emotions",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 180,
+      "lithuanian": "pyktis",
+      "english": "anger",
+      "example": "Pyktis nėra geras. - Anger is not good.",
+      "topic": "emotions",
+      "difficulty": "intermediate",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": 181,
+      "lithuanian": "laimingas",
+      "english": "happy",
+      "example": "Aš laimingas. - I am happy.",
+      "topic": "emotions",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 182,
+      "lithuanian": "liūdnas",
+      "english": "sad",
+      "example": "Jis liūdnas. - He is sad.",
+      "topic": "emotions",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 183,
+      "lithuanian": "pavargęs",
+      "english": "tired",
+      "example": "Aš pavargęs. - I am tired.",
+      "topic": "emotions",
+      "difficulty": "intermediate",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 184,
+      "lithuanian": "įdomus",
+      "english": "interesting",
+      "example": "Įdomi knyga. - An interesting book.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 185,
+      "lithuanian": "nuobodus",
+      "english": "boring",
+      "example": "Nuobodus filmas. - A boring movie.",
+      "topic": "adjectives",
+      "difficulty": "intermediate",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 186,
+      "lithuanian": "sunkus",
+      "english": "difficult/heavy",
+      "example": "Sunkus darbas. - Difficult work.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 187,
+      "lithuanian": "lengvas",
+      "english": "easy/light",
+      "example": "Lengvas egzaminas. - An easy exam.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 188,
+      "lithuanian": "greitas",
+      "english": "fast",
+      "example": "Greitas automobilis. - A fast car.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 189,
+      "lithuanian": "lėtas",
+      "english": "slow",
+      "example": "Lėtas autobusas. - A slow bus.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 190,
+      "lithuanian": "stiprus",
+      "english": "strong",
+      "example": "Stiprus vyras. - A strong man.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 191,
+      "lithuanian": "silpnas",
+      "english": "weak",
+      "example": "Silpnas signalas. - A weak signal.",
+      "topic": "adjectives",
+      "difficulty": "intermediate",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 192,
+      "lithuanian": "turtingas",
+      "english": "rich",
+      "example": "Turtingas žmogus. - A rich person.",
+      "topic": "adjectives",
+      "difficulty": "intermediate",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 193,
+      "lithuanian": "vargšas",
+      "english": "poor",
+      "example": "Vargšas žmogus. - A poor person.",
+      "topic": "adjectives",
+      "difficulty": "intermediate",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 194,
+      "lithuanian": "šviežias",
+      "english": "fresh",
+      "example": "Šviežia duona. - Fresh bread.",
+      "topic": "adjectives",
+      "difficulty": "intermediate",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 195,
+      "lithuanian": "švarus",
+      "english": "clean",
+      "example": "Švarus kambarys. - A clean room.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 196,
+      "lithuanian": "nešvarus",
+      "english": "dirty",
+      "example": "Nešvarus grindys. - Dirty floor.",
+      "topic": "adjectives",
+      "difficulty": "intermediate",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 197,
+      "lithuanian": "atviras",
+      "english": "open",
+      "example": "Atviras langas. - An open window.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 198,
+      "lithuanian": "uždarytas",
+      "english": "closed",
+      "example": "Uždaryta parduotuvė. - A closed store.",
+      "topic": "adjectives",
+      "difficulty": "intermediate",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 199,
+      "lithuanian": "pilnas",
+      "english": "full",
+      "example": "Pilnas autobusas. - A full bus.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    },
+    {
+      "id": 200,
+      "lithuanian": "tuščias",
+      "english": "empty",
+      "example": "Tuščias kambarys. - An empty room.",
+      "topic": "adjectives",
+      "difficulty": "beginner",
+      "partOfSpeech": "adjective"
+    }
+  ],
+  "topics": [
+    "greetings",
+    "basics",
+    "food",
+    "verbs",
+    "emotions",
+    "family",
+    "people",
+    "places",
+    "adjectives",
+    "time",
+    "numbers",
+    "colors",
+    "transport",
+    "objects",
+    "animals",
+    "shopping",
+    "weather",
+    "seasons",
+    "hobbies",
+    "education",
+    "work",
+    "professions"
+  ]
+}

@@ -1,0 +1,394 @@
+{
+  "lessons": [
+    {
+      "id": 1,
+      "level": 1,
+      "title": "Basic Subject + Verb",
+      "titleLT": "Subjektas + Veiksmažodis",
+      "explanation": "In Lithuanian, the basic sentence structure starts with a subject (who or what) followed by a verb (action). For example: 'Aš einu' (I go). The verb changes based on the subject.",
+      "examples": [
+        {
+          "lithuanian": "Aš einu.",
+          "english": "I go.",
+          "breakdown": "Aš (I) + einu (go)"
+        },
+        {
+          "lithuanian": "Tu ​​miegi.",
+          "english": "You sleep.",
+          "breakdown": "Tu (You) + miegi (sleep)"
+        }
+      ],
+      "exercises": [
+        {
+          "type": "reorder",
+          "question": "Reorder the words to form: 'I read'",
+          "words": ["skaitau", "Aš"],
+          "answer": "Aš skaitau"
+        },
+        {
+          "type": "reorder",
+          "question": "Reorder the words to form: 'She eats'",
+          "words": ["valgo", "Ji"],
+          "answer": "Ji valgo"
+        },
+        {
+          "type": "fill",
+          "question": "Fill in: __ einu. (I go)",
+          "answer": "Aš",
+          "options": ["Aš", "Tu", "Jis", "Ji"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "level": 1,
+      "title": "Subject + Verb + Object",
+      "titleLT": "Subjektas + Veiksmažodis + Objektas",
+      "explanation": "Now we add an object to our sentences. The object receives the action. In Lithuanian, the object often changes form (case). For example: 'Aš skaitau knygą' (I read a book). Note how 'knyga' becomes 'knygą'.",
+      "examples": [
+        {
+          "lithuanian": "Aš skaitau knygą.",
+          "english": "I read a book.",
+          "breakdown": "Aš (I) + skaitau (read) + knygą (book-accusative)"
+        },
+        {
+          "lithuanian": "Ji mėgsta kavą.",
+          "english": "She likes coffee.",
+          "breakdown": "Ji (She) + mėgsta (likes) + kavą (coffee-accusative)"
+        }
+      ],
+      "exercises": [
+        {
+          "type": "reorder",
+          "question": "Reorder: 'I drink water'",
+          "words": ["vandenį", "gėriu", "Aš"],
+          "answer": "Aš gėriu vandenį"
+        },
+        {
+          "type": "reorder",
+          "question": "Reorder: 'He sees a cat'",
+          "words": ["Jis", "katę", "mato"],
+          "answer": "Jis mato katę"
+        },
+        {
+          "type": "fill",
+          "question": "Fill: Aš mėgstu __. (I like music)",
+          "answer": "muziką",
+          "options": ["muzika", "muziką", "muzikos", "muzikai"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "level": 1,
+      "title": "Using 'to be' (būti)",
+      "titleLT": "Veiksmažodis 'būti'",
+      "explanation": "The verb 'būti' (to be) is irregular. Present tense: aš esu (I am), tu esi (you are), jis/ji yra (he/she is). It's used to describe states and identity.",
+      "examples": [
+        {
+          "lithuanian": "Aš esu studentas.",
+          "english": "I am a student.",
+          "breakdown": "Aš (I) + esu (am) + studentas (student)"
+        },
+        {
+          "lithuanian": "Ji yra mokytoja.",
+          "english": "She is a teacher.",
+          "breakdown": "Ji (She) + yra (is) + mokytoja (teacher)"
+        }
+      ],
+      "exercises": [
+        {
+          "type": "fill",
+          "question": "Fill: Aš __ studentas. (I am a student)",
+          "answer": "esu",
+          "options": ["esu", "esi", "yra", "esame"]
+        },
+        {
+          "type": "reorder",
+          "question": "Reorder: 'He is a doctor'",
+          "words": ["yra", "Jis", "gydytojas"],
+          "answer": "Jis yra gydytojas"
+        },
+        {
+          "type": "fill",
+          "question": "Fill: Tu __ draugas. (You are a friend)",
+          "answer": "esi",
+          "options": ["esu", "esi", "yra", "esame"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "level": 2,
+      "title": "Adding Adjectives",
+      "titleLT": "Būdvardžiai",
+      "explanation": "Adjectives in Lithuanian must agree with the noun in gender, number, and case. They usually come before the noun. For example: 'didelis namas' (big house) vs 'didelė knyga' (big book).",
+      "examples": [
+        {
+          "lithuanian": "Tai didelis namas.",
+          "english": "This is a big house.",
+          "breakdown": "didelis (big-masculine) + namas (house-masculine)"
+        },
+        {
+          "lithuanian": "Aš turiu gražią knygą.",
+          "english": "I have a beautiful book.",
+          "breakdown": "gražią (beautiful-accusative-feminine) + knygą (book-accusative)"
+        }
+      ],
+      "exercises": [
+        {
+          "type": "reorder",
+          "question": "Reorder: 'A small child'",
+          "words": ["mažas", "vaikas"],
+          "answer": "mažas vaikas"
+        },
+        {
+          "type": "fill",
+          "question": "Fill: Tai __ namas. (This is a good house)",
+          "answer": "geras",
+          "options": ["geras", "gera", "gerą", "gerai"]
+        },
+        {
+          "type": "reorder",
+          "question": "Reorder: 'I see a beautiful city'",
+          "words": ["matau", "Aš", "gražų", "miestą"],
+          "answer": "Aš matau gražų miestą"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "level": 2,
+      "title": "Possession (to have)",
+      "titleLT": "Turėjimas (turėti)",
+      "explanation": "To express possession, use 'turėti' (to have). The object takes the accusative case. Present: aš turiu (I have), tu turi (you have), jis/ji turi (he/she has).",
+      "examples": [
+        {
+          "lithuanian": "Aš turiu šunį.",
+          "english": "I have a dog.",
+          "breakdown": "Aš (I) + turiu (have) + šunį (dog-accusative)"
+        },
+        {
+          "lithuanian": "Ji turi knygą.",
+          "english": "She has a book.",
+          "breakdown": "Ji (She) + turi (has) + knygą (book-accusative)"
+        }
+      ],
+      "exercises": [
+        {
+          "type": "fill",
+          "question": "Fill: Aš __ dviratį. (I have a bicycle)",
+          "answer": "turiu",
+          "options": ["turiu", "turi", "turime", "turite"]
+        },
+        {
+          "type": "reorder",
+          "question": "Reorder: 'She has a friend'",
+          "words": ["turi", "Ji", "draugą"],
+          "answer": "Ji turi draugą"
+        },
+        {
+          "type": "fill",
+          "question": "Fill: Tu __ katę. (You have a cat)",
+          "answer": "turi",
+          "options": ["turiu", "turi", "turime", "tura"]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "level": 2,
+      "title": "Questions with 'ar'",
+      "titleLT": "Klausimai su 'ar'",
+      "explanation": "To form yes/no questions, add 'ar' at the beginning of the sentence. For example: 'Tu moki lietuviškai?' vs 'Ar tu moki lietuviškai?' (Do you speak Lithuanian?).",
+      "examples": [
+        {
+          "lithuanian": "Ar tu kalbi lietuviškai?",
+          "english": "Do you speak Lithuanian?",
+          "breakdown": "Ar (question particle) + tu kalbi lietuviškai (you speak Lithuanian)"
+        },
+        {
+          "lithuanian": "Ar ji mėgsta kavą?",
+          "english": "Does she like coffee?",
+          "breakdown": "Ar + ji mėgsta kavą"
+        }
+      ],
+      "exercises": [
+        {
+          "type": "reorder",
+          "question": "Reorder: 'Do you have a book?'",
+          "words": ["Ar", "turi", "tu", "knygą"],
+          "answer": "Ar tu turi knygą"
+        },
+        {
+          "type": "fill",
+          "question": "Fill: __ jis moka plaukti? (Does he know how to swim?)",
+          "answer": "Ar",
+          "options": ["Ar", "Ką", "Kada", "Kur"]
+        },
+        {
+          "type": "reorder",
+          "question": "Reorder: 'Is she a student?'",
+          "words": ["ji", "Ar", "studentė", "yra"],
+          "answer": "Ar ji yra studentė"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "level": 3,
+      "title": "Negation",
+      "titleLT": "Neiginiai",
+      "explanation": "To make a sentence negative, add 'ne-' before the verb or use 'ne' before other words. For example: 'Aš nekalbu' (I don't speak), 'ne aš' (not me).",
+      "examples": [
+        {
+          "lithuanian": "Aš nemoku lietuviškai.",
+          "english": "I don't speak Lithuanian.",
+          "breakdown": "Aš + ne-moku (don't speak) + lietuviškai"
+        },
+        {
+          "lithuanian": "Ji neturi pinigų.",
+          "english": "She doesn't have money.",
+          "breakdown": "Ji + ne-turi (doesn't have) + pinigų"
+        }
+      ],
+      "exercises": [
+        {
+          "type": "fill",
+          "question": "Fill: Aš __ skaitau. (I don't read)",
+          "answer": "neskaitau",
+          "options": ["skaitau", "neskaitau", "neskaito", "skaityti"]
+        },
+        {
+          "type": "reorder",
+          "question": "Reorder: 'He doesn't eat meat'",
+          "words": ["Jis", "nevalgo", "mėsos"],
+          "answer": "Jis nevalgo mėsos"
+        },
+        {
+          "type": "fill",
+          "question": "Fill: Tu __ mėgsti kavos. (You don't like coffee)",
+          "answer": "nemėgsti",
+          "options": ["mėgsti", "nemėgsti", "mėgsta", "nemėgsta"]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "level": 3,
+      "title": "Past Tense Basics",
+      "titleLT": "Būtasis laikas",
+      "explanation": "To form the past tense, verbs change their endings. Common patterns: -au → -avau, -u → -iau. For example: 'skaityti' → 'skaičiau' (I read), 'valgyti' → 'valgiau' (I ate).",
+      "examples": [
+        {
+          "lithuanian": "Aš skaičiau knygą.",
+          "english": "I read a book.",
+          "breakdown": "Aš + skaičiau (read-past) + knygą"
+        },
+        {
+          "lithuanian": "Ji valgė pusryčius.",
+          "english": "She ate breakfast.",
+          "breakdown": "Ji + valgė (ate-past) + pusryčius"
+        }
+      ],
+      "exercises": [
+        {
+          "type": "fill",
+          "question": "Fill: Vakar aš __ filmą. (Yesterday I watched a movie)",
+          "answer": "žiūrėjau",
+          "options": ["žiūriu", "žiūrėjau", "žiūrėti", "žiūrės"]
+        },
+        {
+          "type": "reorder",
+          "question": "Reorder: 'He worked yesterday'",
+          "words": ["Jis", "dirbo", "vakar"],
+          "answer": "Jis dirbo vakar"
+        },
+        {
+          "type": "fill",
+          "question": "Fill: Tu __ namo. (You went home)",
+          "answer": "ėjai",
+          "options": ["eini", "ėjai", "eisį", "eiti"]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "level": 3,
+      "title": "Future Tense Basics",
+      "titleLT": "Būsimasis laikas",
+      "explanation": "To express future, add the prefix 'be-' or use future endings -siu, -si, -s. For example: 'skaityti' → 'skaitysiu' (I will read).",
+      "examples": [
+        {
+          "lithuanian": "Aš skaitysiu knygą.",
+          "english": "I will read a book.",
+          "breakdown": "Aš + skaitysiu (will read-future) + knygą"
+        },
+        {
+          "lithuanian": "Rytoj jis dirbs.",
+          "english": "Tomorrow he will work.",
+          "breakdown": "Rytoj (tomorrow) + jis + dirbs (will work)"
+        }
+      ],
+      "exercises": [
+        {
+          "type": "fill",
+          "question": "Fill: Rytoj aš __. (Tomorrow I will study)",
+          "answer": "mokysiu",
+          "options": ["mokau", "mokausi", "mokysiu", "mokėsi"]
+        },
+        {
+          "type": "reorder",
+          "question": "Reorder: 'She will eat breakfast'",
+          "words": ["Ji", "pusryčius", "valgys"],
+          "answer": "Ji valgys pusryčius"
+        },
+        {
+          "type": "fill",
+          "question": "Fill: Tu __ namo. (You will go home)",
+          "answer": "eisi",
+          "options": ["eini", "ėjai", "eisi", "eiti"]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "level": 4,
+      "title": "Location (Where?) - Locative Case",
+      "titleLT": "Vietininko linksnis",
+      "explanation": "To express location (where something is), use the locative case with prepositions like 'pas' (at someone's place) or just the locative ending. Common endings: -e, -je, -yje.",
+      "examples": [
+        {
+          "lithuanian": "Aš esu mokykloje.",
+          "english": "I am at school.",
+          "breakdown": "mokykla → mokykloje (at school)"
+        },
+        {
+          "lithuanian": "Ji gyvena Vilniuje.",
+          "english": "She lives in Vilnius.",
+          "breakdown": "Vilnius → Vilniuje (in Vilnius)"
+        }
+      ],
+      "exercises": [
+        {
+          "type": "fill",
+          "question": "Fill: Aš dirbu __. (I work in an office)",
+          "answer": "biure",
+          "options": ["biuras", "biure", "biurą", "biuro"]
+        },
+        {
+          "type": "reorder",
+          "question": "Reorder: 'We are at home'",
+          "words": ["esame", "namuose", "Mes"],
+          "answer": "Mes esame namuose"
+        },
+        {
+          "type": "fill",
+          "question": "Fill: Jis studijuoja __. (He studies at university)",
+          "answer": "universitete",
+          "options": ["universitetas", "universitete", "universitetą", "universiteto"]
+        }
+      ]
+    }
+  ]
+}
