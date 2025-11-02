@@ -248,16 +248,6 @@ const App = {
     });
 
     document.getElementById(`${screenName}-screen`)?.classList.add('active');
-
-    // Initialize vocabulary manager if navigating to vocabulary screen
-    if (screenName === 'vocabulary' && typeof VocabularyManager !== 'undefined' && !VocabularyManager.allWords.length) {
-      VocabularyManager.init();
-    }
-
-    // Initialize grammar manager if navigating to grammar screen
-    if (screenName === 'grammar' && typeof GrammarManager !== 'undefined' && !GrammarManager.allLessons.length) {
-      GrammarManager.init();
-    }
   },
 
   // Set up install prompt for PWA
