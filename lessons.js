@@ -253,8 +253,7 @@ const LessonManager = {
     feedbackPanel.classList.add(isCorrect ? 'correct' : 'incorrect');
 
     if (isCorrect) {
-      feedbackTitle.textContent = '
-feedbackTitle.textContent = '✓ Teisingai!';
+      feedbackTitle.textContent = '✓ Teisingai!';
       feedbackMessage.textContent = 'Puiku! Tęsk taip pat.';
     } else {
       feedbackTitle.textContent = '✗ Neteisingai';
