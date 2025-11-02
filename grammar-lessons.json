@@ -1,0 +1,700 @@
+{
+  "lessons": [
+    {
+      "id": 1,
+      "title": "Word Order Basics",
+      "titleLT": "Žodžių Tvarka",
+      "difficulty": "beginner",
+      "xp": 15,
+      "description": "Learn the basic word order in Lithuanian sentences",
+      "descriptionLT": "Išmok pagrindinę žodžių tvarką lietuviškuose sakiniuose",
+      "icon": "📝",
+      "theory": {
+        "introduction": "Lithuanian typically follows Subject-Verb-Object (SVO) word order, similar to English. However, Lithuanian is more flexible due to its case system.",
+        "introductionLT": "Lietuvių kalba paprastai naudoja Veiksnys-Tarinys-Papildinys (VTP) žodžių tvarką, panašiai kaip anglų kalba. Tačiau lietuvių kalba yra lankstesnė dėl linksnių sistemos.",
+        "rules": [
+          {
+            "rule": "Basic sentence: Subject + Verb + Object",
+            "ruleLT": "Pagrindinis sakinys: Veiksnys + Tarinys + Papildinys",
+            "example": "Aš valgau obuolį.",
+            "exampleEN": "I eat an apple."
+          },
+          {
+            "rule": "Questions often start with question words",
+            "ruleLT": "Klausimai dažnai prasideda klausiamaisiais žodžiais",
+            "example": "Kur tu gyveni?",
+            "exampleEN": "Where do you live?"
+          },
+          {
+            "rule": "Adjectives usually come before nouns",
+            "ruleLT": "Būdvardžiai paprastai eina prieš daiktavardžius",
+            "example": "Gražus namas.",
+            "exampleEN": "Beautiful house."
+          }
+        ],
+        "culturalNote": "Lithuanians often omit the pronoun 'aš' (I) because the verb ending shows who is doing the action!"
+      },
+      "exercises": [
+        {
+          "type": "word-order",
+          "id": "ex1",
+          "instruction": "Arrange the words to form a correct sentence",
+          "instructionLT": "Sudėk žodžius į teisingą sakinį",
+          "words": ["Aš", "duoną", "valgau"],
+          "correctOrder": ["Aš", "valgau", "duoną"],
+          "translation": "I eat bread",
+          "hint": "Subject + Verb + Object"
+        },
+        {
+          "type": "word-order",
+          "id": "ex2",
+          "instruction": "Arrange the words to form a correct sentence",
+          "instructionLT": "Sudėk žodžius į teisingą sakinį",
+          "words": ["Tu", "kavą", "gerti"],
+          "correctOrder": ["Tu", "geri", "kavą"],
+          "translation": "You drink coffee",
+          "hint": "Remember to use the correct verb form 'geri'"
+        },
+        {
+          "type": "fill-blank",
+          "id": "ex3",
+          "sentence": "Aš ___ vandenį.",
+          "options": ["geriu", "gyvenu", "valgau", "matau"],
+          "correctAnswer": "geriu",
+          "translation": "I drink water"
+        },
+        {
+          "type": "multiple-choice",
+          "id": "ex4",
+          "question": "Which sentence has correct word order?",
+          "questionLT": "Kuris sakinys turi teisingą žodžių tvarką?",
+          "options": [
+            "Mama dirba namuose.",
+            "Dirba mama namuose.",
+            "Namuose mama dirba.",
+            "Mama namuose dirba."
+          ],
+          "correctAnswer": "Mama dirba namuose.",
+          "explanation": "Subject (Mama) + Verb (dirba) + Location (namuose) is the natural order."
+        },
+        {
+          "type": "translation",
+          "id": "ex5",
+          "english": "The child plays in the park",
+          "correctAnswers": ["Vaikas žaidžia parke", "Vaikas parke žaidžia"],
+          "hint": "vaikas = child, žaidžia = plays, parke = in the park"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Present Tense Verbs",
+      "titleLT": "Esamasis Laikas",
+      "difficulty": "beginner",
+      "xp": 20,
+      "description": "Learn how to conjugate verbs in the present tense",
+      "descriptionLT": "Išmok kaip keičiasi veiksmažodžiai esamuoju laiku",
+      "icon": "⏰",
+      "theory": {
+        "introduction": "Lithuanian verbs change their endings based on who is performing the action. This is called conjugation.",
+        "introductionLT": "Lietuvių kalbos veiksmažodžiai keičia galūnes priklausomai nuo to, kas atlieka veiksmą. Tai vadinama asmenavmu.",
+        "rules": [
+          {
+            "rule": "Verb 'būti' (to be): aš esu, tu esi, jis/ji yra",
+            "ruleLT": "Veiksmažodis 'būti': aš esu, tu esi, jis/ji yra",
+            "example": "Aš esu studentas. Tu esi mokytojas.",
+            "exampleEN": "I am a student. You are a teacher."
+          },
+          {
+            "rule": "Regular -ti verbs: remove -ti and add endings",
+            "ruleLT": "Reguliarūs -ti veiksmažodžiai: pašalink -ti ir pridėk galūnes",
+            "example": "Valgyti → Aš valgau, Tu valgai, Jis valgo",
+            "exampleEN": "To eat → I eat, You eat, He eats"
+          }
+        ],
+        "conjugationTable": {
+          "verb": "dirbti (to work)",
+          "forms": [
+            { "person": "aš", "form": "dirbu", "english": "I work" },
+            { "person": "tu", "form": "dirbi", "english": "you work" },
+            { "person": "jis/ji", "form": "dirba", "english": "he/she works" },
+            { "person": "mes", "form": "dirbame", "english": "we work" },
+            { "person": "jūs", "form": "dirbate", "english": "you (plural) work" },
+            { "person": "jie/jos", "form": "dirba", "english": "they work" }
+          ]
+        }
+      },
+      "exercises": [
+        {
+          "type": "fill-blank",
+          "id": "ex1",
+          "sentence": "Aš ___ Vilniuje.",
+          "options": ["gyvenu", "gyveni", "gyvena", "gyvenate"],
+          "correctAnswer": "gyvenu",
+          "translation": "I live in Vilnius"
+        },
+        {
+          "type": "fill-blank",
+          "id": "ex2",
+          "sentence": "Tu ___ lietuviškai.",
+          "options": ["kalbu", "kalbi", "kalba", "kalbame"],
+          "correctAnswer": "kalbi",
+          "translation": "You speak Lithuanian"
+        },
+        {
+          "type": "multiple-choice",
+          "id": "ex3",
+          "question": "Complete: Mano tėvas ___ biure.",
+          "questionLT": "Užpildyk: Mano tėvas ___ biure.",
+          "options": ["dirbu", "dirbi", "dirba", "dirbame"],
+          "correctAnswer": "dirba",
+          "explanation": "'Tėvas' is third person singular (he), so we use 'dirba'"
+        },
+        {
+          "type": "matching",
+          "id": "ex4",
+          "instruction": "Match the pronouns with correct verb forms",
+          "pairs": [
+            { "left": "Aš", "right": "esu" },
+            { "left": "Tu", "right": "esi" },
+            { "left": "Jis", "right": "yra" },
+            { "left": "Mes", "right": "esame" }
+          ]
+        },
+        {
+          "type": "translation",
+          "id": "ex5",
+          "english": "She works at home",
+          "correctAnswers": ["Ji dirba namuose", "Ji dirba namie"],
+          "hint": "ji = she, dirba = works, namuose/namie = at home"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Questions and Answers",
+      "titleLT": "Klausimai ir Atsakymai",
+      "difficulty": "beginner",
+      "xp": 15,
+      "description": "Learn how to ask and answer basic questions",
+      "descriptionLT": "Išmok užduoti ir atsakyti į pagrindinius klausimus",
+      "icon": "❓",
+      "theory": {
+        "introduction": "Questions in Lithuanian often start with question words like 'kas' (who/what), 'kur' (where), 'kaip' (how), etc.",
+        "introductionLT": "Klausimai lietuvių kalboje dažnai prasideda klausiamaisiais žodžiais kaip 'kas', 'kur', 'kaip' ir t.t.",
+        "rules": [
+          {
+            "rule": "Yes/No questions: You can use rising intonation or add 'ar'",
+            "ruleLT": "Taip/Ne klausimai: Galima naudoti kylančią intonaciją arba pridėti 'ar'",
+            "example": "Ar tu kalbi lietuviškai?",
+            "exampleEN": "Do you speak Lithuanian?"
+          },
+          {
+            "rule": "Wh-questions: Start with question word",
+            "ruleLT": "Klausiamukai: Prasideda klausiamaisiais žodžiais",
+            "example": "Kur tu gyveni?",
+            "exampleEN": "Where do you live?"
+          }
+        ],
+        "commonQuestions": [
+          { "lt": "Kaip tu laikaisi?", "en": "How are you?", "answer": "Gerai, ačiū!" },
+          { "lt": "Kur tu dirbi?", "en": "Where do you work?", "answer": "Aš dirbu biure." },
+          { "lt": "Kas tai yra?", "en": "What is this?", "answer": "Tai knyga." }
+        ]
+      },
+      "exercises": [
+        {
+          "type": "multiple-choice",
+          "id": "ex1",
+          "question": "How do you ask 'Where do you live?' in Lithuanian?",
+          "questionLT": "Kaip lietuviškai paklausti 'Where do you live?'?",
+          "options": [
+            "Kur tu gyveni?",
+            "Kas tu esi?",
+            "Kaip tu gyveni?",
+            "Kada tu gyveni?"
+          ],
+          "correctAnswer": "Kur tu gyveni?"
+        },
+        {
+          "type": "fill-blank",
+          "id": "ex2",
+          "sentence": "___ tau vardas?",
+          "options": ["Kas", "Kur", "Kaip", "Kada"],
+          "correctAnswer": "Koks",
+          "acceptableAnswers": ["Kas", "Koks"],
+          "translation": "What is your name?",
+          "note": "'Koks' (what kind) is more common, but 'Kas' (what) is also acceptable"
+        },
+        {
+          "type": "matching",
+          "id": "ex3",
+          "instruction": "Match questions with appropriate answers",
+          "pairs": [
+            { "left": "Kaip sekasi?", "right": "Gerai, ačiū!" },
+            { "left": "Kur tu gyveni?", "right": "Aš gyvenu Vilniuje." },
+            { "left": "Kas tu esi?", "right": "Aš esu studentas." },
+            { "left": "Ar tu kalbi angliškai?", "right": "Taip, kalbu." }
+          ]
+        },
+        {
+          "type": "word-order",
+          "id": "ex4",
+          "instruction": "Arrange to form a question",
+          "instructionLT": "Sudėk klausimą",
+          "words": ["Kada", "tu", "ateisi", "?"],
+          "correctOrder": ["Kada", "tu", "ateisi", "?"],
+          "translation": "When will you come?"
+        },
+        {
+          "type": "translation",
+          "id": "ex5",
+          "english": "Do you speak Lithuanian?",
+          "correctAnswers": ["Ar tu kalbi lietuviškai?", "Tu kalbi lietuviškai?"],
+          "hint": "ar = whether (for yes/no questions), kalbi = speak, lietuviškai = Lithuanian"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Making Simple Sentences",
+      "titleLT": "Paprasti Sakiniai",
+      "difficulty": "beginner",
+      "xp": 20,
+      "description": "Practice building complete Lithuanian sentences",
+      "descriptionLT": "Praktikuok kurti pilnus lietuviškus sakinius",
+      "icon": "💬",
+      "theory": {
+        "introduction": "A complete sentence needs a subject and a verb at minimum. Most sentences also include objects or other information.",
+        "introductionLT": "Pilnas sakinys turi turėti bent veiksnį ir tarinį. Dauguma sakinių taip pat turi papildinius ar kitą informaciją.",
+        "rules": [
+          {
+            "rule": "Simple statement: Subject + Verb",
+            "ruleLT": "Paprastas teiginys: Veiksnys + Tarinys",
+            "example": "Aš dirbu. (I work.)",
+            "exampleEN": "I work."
+          },
+          {
+            "rule": "With object: Subject + Verb + Object",
+            "ruleLT": "Su papildiniu: Veiksnys + Tarinys + Papildinys",
+            "example": "Aš valgau duoną. (I eat bread.)",
+            "exampleEN": "I eat bread."
+          },
+          {
+            "rule": "With adjective: Adjective + Noun",
+            "ruleLT": "Su būdvardžiu: Būdvardis + Daiktavardis",
+            "example": "Gražus namas. (Beautiful house.)",
+            "exampleEN": "Beautiful house."
+          }
+        ],
+        "sentencePatterns": [
+          { "pattern": "Aš + [verb]", "example": "Aš dirbu / Aš valgau / Aš gyvenu" },
+          { "pattern": "Tu + [verb] + [object]", "example": "Tu valgai duoną / Tu geri kavą" },
+          { "pattern": "[Adjective] + [noun]", "example": "Gražus namas / Didelis miestas" }
+        ]
+      },
+      "exercises": [
+        {
+          "type": "word-order",
+          "id": "ex1",
+          "instruction": "Build a sentence: I drink coffee",
+          "instructionLT": "Sudėk sakinį: I drink coffee",
+          "words": ["Aš", "geriu", "kavą", "."],
+          "correctOrder": ["Aš", "geriu", "kavą", "."],
+          "translation": "I drink coffee"
+        },
+        {
+          "type": "fill-blank",
+          "id": "ex2",
+          "sentence": "Mano mama ___ mokytoja.",
+          "options": ["yra", "esi", "esu", "esame"],
+          "correctAnswer": "yra",
+          "translation": "My mother is a teacher"
+        },
+        {
+          "type": "word-order",
+          "id": "ex3",
+          "instruction": "Build a sentence with adjective",
+          "instructionLT": "Sudėk sakinį su būdvardžiu",
+          "words": ["Gražus", "namas", ".", "labai"],
+          "correctOrder": ["Labai", "gražus", "namas", "."],
+          "acceptableOrders": [
+            ["Labai", "gražus", "namas", "."],
+            ["Gražus", "namas", "."]
+          ],
+          "translation": "Very beautiful house"
+        },
+        {
+          "type": "multiple-choice",
+          "id": "ex4",
+          "question": "Which sentence means 'My brother studies Lithuanian'?",
+          "questionLT": "Kuris sakinys reiškia 'My brother studies Lithuanian'?",
+          "options": [
+            "Mano brolis mokosi lietuvių kalbos.",
+            "Mano sesuo mokosi lietuvių kalbos.",
+            "Mano brolis dirba lietuvių.",
+            "Aš mokau lietuvių kalbos."
+          ],
+          "correctAnswer": "Mano brolis mokosi lietuvių kalbos."
+        },
+        {
+          "type": "translation",
+          "id": "ex5",
+          "english": "I read a book",
+          "correctAnswers": ["Aš skaitau knygą", "Skaitau knygą"],
+          "hint": "skaitau = I read, knygą = a book (accusative case)"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Negation",
+      "titleLT": "Neiginiai",
+      "difficulty": "beginner",
+      "xp": 15,
+      "description": "Learn how to make negative sentences",
+      "descriptionLT": "Išmok kurti neigiamus sakinius",
+      "icon": "🚫",
+      "theory": {
+        "introduction": "To make a sentence negative in Lithuanian, add 'ne' before the verb.",
+        "introductionLT": "Kad sakinys būtų neigiamas, pridėkite 'ne' prieš veiksmažodį.",
+        "rules": [
+          {
+            "rule": "Add 'ne' before the verb",
+            "ruleLT": "Pridėk 'ne' prieš veiksmažodį",
+            "example": "Aš dirbu → Aš nedirbu",
+            "exampleEN": "I work → I don't work"
+          },
+          {
+            "rule": "'Ne' attaches to the verb as one word",
+            "ruleLT": "'Ne' priklijuojamas prie veiksmažodžio",
+            "example": "Aš nevalgau. Aš negeriu.",
+            "exampleEN": "I don't eat. I don't drink."
+          }
+        ],
+        "commonNegatives": [
+          { "positive": "Aš kalbu", "negative": "Aš nekalbu", "en": "I don't speak" },
+          { "positive": "Tu gyveni", "negative": "Tu negyveni", "en": "You don't live" },
+          { "positive": "Jis dirba", "negative": "Jis nedirba", "en": "He doesn't work" }
+        ]
+      },
+      "exercises": [
+        {
+          "type": "multiple-choice",
+          "id": "ex1",
+          "question": "How do you say 'I don't understand'?",
+          "questionLT": "Kaip pasakyti 'I don't understand'?",
+          "options": [
+            "Aš nesuprantu",
+            "Aš ne suprantu",
+            "Ne aš suprantu",
+            "Aš suprantu ne"
+          ],
+          "correctAnswer": "Aš nesuprantu"
+        },
+        {
+          "type": "fill-blank",
+          "id": "ex2",
+          "sentence": "Tu ___ kavą.",
+          "options": ["negeri", "ne geri", "geri ne", "negeri ne"],
+          "correctAnswer": "negeri",
+          "translation": "You don't drink coffee"
+        },
+        {
+          "type": "transformation",
+          "id": "ex3",
+          "instruction": "Make this sentence negative",
+          "instructionLT": "Padaryk šį sakinį neigiamą",
+          "positive": "Aš gyvenu Vilniuje.",
+          "correctAnswer": "Aš negyvenu Vilniuje.",
+          "translation": "I don't live in Vilnius"
+        },
+        {
+          "type": "matching",
+          "id": "ex4",
+          "instruction": "Match positive with negative forms",
+          "pairs": [
+            { "left": "Aš dirbu", "right": "Aš nedirbu" },
+            { "left": "Tu kalbi", "right": "Tu nekalbi" },
+            { "left": "Jis valgo", "right": "Jis nevalgo" },
+            { "left": "Mes mokome", "right": "Mes nemokome" }
+          ]
+        },
+        {
+          "type": "translation",
+          "id": "ex5",
+          "english": "She doesn't work here",
+          "correctAnswers": ["Ji nedirba čia", "Ji čia nedirba"],
+          "hint": "ji = she, nedirba = doesn't work, čia = here"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Possessives",
+      "titleLT": "Savininkyste",
+      "difficulty": "intermediate",
+      "xp": 20,
+      "description": "Express possession and ownership",
+      "descriptionLT": "Išreikšk nuosavybę ir priklausomybę",
+      "icon": "🔑",
+      "theory": {
+        "introduction": "To show possession in Lithuanian, use possessive pronouns like 'mano' (my), 'tavo' (your), etc.",
+        "introductionLT": "Kad parodytum nuosavybę lietuvių kalboje, naudok savivardžius kaip 'mano', 'tavo' ir t.t.",
+        "rules": [
+          {
+            "rule": "Possessive pronouns come before the noun",
+            "ruleLT": "Savivardžiai eina prieš daiktavardį",
+            "example": "Mano namas (My house)",
+            "exampleEN": "My house"
+          },
+          {
+            "rule": "Possessive pronouns don't change with noun gender",
+            "ruleLT": "Savivardžiai nesikeičia pagal daiktavardžio giminę",
+            "example": "Mano mama, mano tėvas",
+            "exampleEN": "My mother, my father"
+          }
+        ],
+        "possessivePronouns": [
+          { "lithuanian": "mano", "english": "my", "example": "mano knyga" },
+          { "lithuanian": "tavo", "english": "your (singular)", "example": "tavo namas" },
+          { "lithuanian": "jo", "english": "his", "example": "jo automobilis" },
+          { "lithuanian": "jos", "english": "her", "example": "jos suknelė" },
+          { "lithuanian": "mūsų", "english": "our", "example": "mūsų šeima" },
+          { "lithuanian": "jūsų", "english": "your (plural)", "example": "jūsų namai" },
+          { "lithuanian": "jų", "english": "their", "example": "jų vaikai" }
+        ]
+      },
+      "exercises": [
+        {
+          "type": "fill-blank",
+          "id": "ex1",
+          "sentence": "___ mama yra mokytoja.",
+          "options": ["Mano", "Tavo", "Mūsų", "Aš"],
+          "correctAnswer": "Mano",
+          "translation": "My mother is a teacher"
+        },
+        {
+          "type": "multiple-choice",
+          "id": "ex2",
+          "question": "How do you say 'his car'?",
+          "questionLT": "Kaip pasakyti 'his car'?",
+          "options": [
+            "jo automobilis",
+            "jos automobilis",
+            "jų automobilis",
+            "mano automobilis"
+          ],
+          "correctAnswer": "jo automobilis"
+        },
+        {
+          "type": "matching",
+          "id": "ex3",
+          "instruction": "Match possessives with English",
+          "pairs": [
+            { "left": "mano namas", "right": "my house" },
+            { "left": "tavo knyga", "right": "your book" },
+            { "left": "jos šuo", "right": "her dog" },
+            { "left": "mūsų šeima", "right": "our family" }
+          ]
+        },
+        {
+          "type": "word-order",
+          "id": "ex4",
+          "instruction": "Build: Our family is big",
+          "instructionLT": "Sudėk: Our family is big",
+          "words": ["Mūsų", "šeima", "yra", "didelė", "."],
+          "correctOrder": ["Mūsų", "šeima", "yra", "didelė", "."],
+          "translation": "Our family is big"
+        },
+        {
+          "type": "translation",
+          "id": "ex5",
+          "english": "Their house is beautiful",
+          "correctAnswers": ["Jų namas yra gražus", "Jų namas gražus"],
+          "hint": "jų = their, namas = house, gražus = beautiful"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Common Phrases for Daily Life",
+      "titleLT": "Kasdienės Frazės",
+      "difficulty": "beginner",
+      "xp": 20,
+      "description": "Learn essential phrases for everyday situations",
+      "descriptionLT": "Išmok būtinas frazes kasdienėms situacijoms",
+      "icon": "💭",
+      "theory": {
+        "introduction": "These common phrases will help you navigate daily conversations in Lithuanian.",
+        "introductionLT": "Šios dažnos frazės padės tau kasdienėse lietuviškose kalbose.",
+        "commonPhrases": [
+          {
+            "category": "Greetings",
+            "phrases": [
+              { "lt": "Labas rytas", "en": "Good morning" },
+              { "lt": "Kaip sekasi?", "en": "How are you?" },
+              { "lt": "Laba diena", "en": "Good day" },
+              { "lt": "Labas vakaras", "en": "Good evening" }
+            ]
+          },
+          {
+            "category": "Polite expressions",
+            "phrases": [
+              { "lt": "Prašau", "en": "Please / Here you go" },
+              { "lt": "Ačiū", "en": "Thank you" },
+              { "lt": "Atsiprašau", "en": "Excuse me / Sorry" },
+              { "lt": "Nėra už ką", "en": "You're welcome" }
+            ]
+          },
+          {
+            "category": "Useful phrases",
+            "phrases": [
+              { "lt": "Aš nesuprantu", "en": "I don't understand" },
+              { "lt": "Ar galite pakartoti?", "en": "Can you repeat?" },
+              { "lt": "Aš mokausi lietuvių kalbos", "en": "I'm learning Lithuanian" },
+              { "lt": "Kiek tai kainuoja?", "en": "How much does it cost?" }
+            ]
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "type": "multiple-choice",
+          "id": "ex1",
+          "question": "How do you respond to 'Ačiū' (Thank you)?",
+          "questionLT": "Kaip atsakyti į 'Ačiū'?",
+          "options": [
+            "Nėra už ką",
+            "Labas",
+            "Viso gero",
+            "Atsiprašau"
+          ],
+          "correctAnswer": "Nėra už ką",
+          "explanation": "'Nėra už ką' means 'You're welcome' or literally 'There's nothing for it'"
+        },
+        {
+          "type": "matching",
+          "id": "ex2",
+          "instruction": "Match Lithuanian phrases with English",
+          "pairs": [
+            { "left": "Labas rytas", "right": "Good morning" },
+            { "left": "Kaip sekasi?", "right": "How are you?" },
+            { "left": "Aš nesuprantu", "right": "I don't understand" },
+            { "left": "Kiek tai kainuoja?", "right": "How much does it cost?" }
+          ]
+        },
+        {
+          "type": "fill-blank",
+          "id": "ex3",
+          "sentence": "Ar galite ___?",
+          "options": ["pakartoti", "valgau", "namas", "gražus"],
+          "correctAnswer": "pakartoti",
+          "translation": "Can you repeat?"
+        },
+        {
+          "type": "scenario",
+          "id": "ex4",
+          "situation": "You want to thank someone",
+          "situationLT": "Tu nori padėkoti",
+          "options": [
+            "Ačiū",
+            "Atsiprašau",
+            "Labas",
+            "Viso gero"
+          ],
+          "correctAnswer": "Ačiū"
+        },
+        {
+          "type": "translation",
+          "id": "ex5",
+          "english": "I'm learning Lithuanian",
+          "correctAnswers": ["Aš mokausi lietuvių kalbos", "Mokausi lietuvių kalbos"],
+          "hint": "mokausi = I'm learning, lietuvių kalbos = Lithuanian language"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "At the Restaurant",
+      "titleLT": "Restorane",
+      "difficulty": "intermediate",
+      "xp": 25,
+      "description": "Order food and interact in restaurant situations",
+      "descriptionLT": "Užsisakyk maisto ir bendrauk restorane",
+      "icon": "🍽️",
+      "theory": {
+        "introduction": "Learn key phrases and vocabulary for dining out in Lithuania.",
+        "introductionLT": "Išmok pagrindinius žodžius ir frazes valgyti užsienyje Lietuvoje.",
+        "restaurantVocab": [
+          { "lt": "meniu", "en": "menu" },
+          { "lt": "sąskaita", "en": "bill/check" },
+          { "lt": "norėčiau", "en": "I would like" },
+          { "lt": "skanu", "en": "tasty/delicious" },
+          { "lt": "padavėjas", "en": "waiter" },
+          { "lt": "padavėja", "en": "waitress" }
+        ],
+        "usefulPhrases": [
+          { "lt": "Norėčiau užsisakyti", "en": "I would like to order" },
+          { "lt": "Ką jūs rekomenduojate?", "en": "What do you recommend?" },
+          { "lt": "Labai skanu!", "en": "Very delicious!" },
+          { "lt": "Sąskaitą, prašau", "en": "The bill, please" }
+        ]
+      },
+      "exercises": [
+        {
+          "type": "multiple-choice",
+          "id": "ex1",
+          "question": "How do you politely order coffee?",
+          "questionLT": "Kaip mandagiai užsisakyti kavą?",
+          "options": [
+            "Kavą, prašau",
+            "Norėčiau kavos",
+            "Aš noriu kava",
+            "Kava man"
+          ],
+          "correctAnswer": "Norėčiau kavos",
+          "explanation": "'Norėčiau' (I would like) is the polite form"
+        },
+        {
+          "type": "fill-blank",
+          "id": "ex2",
+          "sentence": "___, prašau.",
+          "options": ["Sąskaitą", "Meniu", "Norėčiau", "Skanu"],
+          "correctAnswer": "Sąskaitą",
+          "acceptableAnswers": ["Sąskaitą", "Meniu"],
+          "translation": "The bill/menu, please"
+        },
+        {
+          "type": "word-order",
+          "id": "ex3",
+          "instruction": "Build: I would like water",
+          "instructionLT": "Sudėk: I would like water",
+          "words": ["Norėčiau", "vandens", "."],
+          "correctOrder": ["Norėčiau", "vandens", "."],
+          "translation": "I would like water"
+        },
+        {
+          "type": "scenario",
+          "id": "ex4",
+          "situation": "The food was excellent. What do you say?",
+          "situationLT": "Maistas buvo puikus. Ką sakai?",
+          "options": [
+            "Labai skanu!",
+            "Sąskaitą, prašau",
+            "Ačiū",
+            "Atsiprašau"
+          ],
+          "correctAnswer": "Labai skanu!"
+        },
+        {
+          "type": "translation",
+          "id": "ex5",
+          "english": "What do you recommend?",
+          "correctAnswers": ["Ką jūs rekomenduojate?", "Ką rekomenduojate?"],
+          "hint": "ką = what, jūs = you (formal), rekomenduojate = recommend"
+        }
+      ]
+    }
+  ]
+}
