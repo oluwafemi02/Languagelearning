@@ -692,6 +692,7 @@
     }
 }
     </style>
+    <link rel="stylesheet" href="learning-system.css">
 </head>
 <body>
     <div id="app">
@@ -736,6 +737,23 @@
                         <h3>📝 Review Time!</h3>
                         <p><span id="due-count">0</span> words need review</p>
                         <button class="btn btn-primary" id="start-review-btn">Start Review</button>
+                    </div>
+
+                    <!-- Learning System Quick Access -->
+                    <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: var(--shadow);">
+                        <h3 style="font-size: 20px; margin-bottom: 16px; color: var(--text-dark);">🎯 Complete Learning System</h3>
+                        <p style="color: var(--text-light); margin-bottom: 16px; font-size: 14px;">Master Lithuanian with our comprehensive learning tools</p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                            <button onclick="App.navigateToScreen('wordbank')" style="background: var(--white); border: 2px solid var(--primary-color); color: var(--text-dark); padding: 16px; border-radius: 12px; cursor: pointer; transition: all 0.2s; font-weight: 600;">
+                                📖 Word Bank<br><small style="font-weight: 400; color: var(--text-light);">200+ words to learn</small>
+                            </button>
+                            <button onclick="App.navigateToScreen('sentencebuilder')" style="background: var(--white); border: 2px solid var(--primary-color); color: var(--text-dark); padding: 16px; border-radius: 12px; cursor: pointer; transition: all 0.2s; font-weight: 600;">
+                                📝 Sentence Builder<br><small style="font-weight: 400; color: var(--text-light);">Grammar lessons</small>
+                            </button>
+                            <button onclick="App.navigateToScreen('practicemode')" style="background: var(--white); border: 2px solid var(--primary-color); color: var(--text-dark); padding: 16px; border-radius: 12px; cursor: pointer; transition: all 0.2s; font-weight: 600;">
+                                🧠 Practice Mode<br><small style="font-weight: 400; color: var(--text-light);">Adaptive exercises</small>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="lesson-path" id="lesson-path"></div>
@@ -1000,6 +1018,33 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Word Bank Screen -->
+            <section id="wordbank-screen" class="screen">
+                <div class="container">
+                    <div id="wordbank-content">
+                        <!-- Content dynamically loaded by wordbank.js -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sentence Builder Screen -->
+            <section id="sentencebuilder-screen" class="screen">
+                <div class="container">
+                    <div id="sentencebuilder-content">
+                        <!-- Content dynamically loaded by sentencebuilder.js -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Practice Mode Screen -->
+            <section id="practicemode-screen" class="screen">
+                <div class="container">
+                    <div id="practice-content">
+                        <!-- Content dynamically loaded by practice.js -->
+                    </div>
+                </div>
+            </section>
         </main>
 
         <nav class="bottom-nav">
@@ -1007,14 +1052,18 @@
                 <span class="nav-icon">🏠</span>
                 <span class="nav-label">Home</span>
             </button>
-            <button class="nav-item" data-screen="practice">
-                <span class="nav-icon">💪</span>
+            <button class="nav-item" data-screen="wordbank">
+                <span class="nav-icon">📖</span>
+                <span class="nav-label">Words</span>
+            </button>
+            <button class="nav-item" data-screen="sentencebuilder">
+                <span class="nav-icon">📝</span>
+                <span class="nav-label">Grammar</span>
+            </button>
+            <button class="nav-item" data-screen="practicemode">
+                <span class="nav-icon">🧠</span>
                 <span class="nav-label">Practice</span>
             </button>
-            <button class="nav-item" data-screen="analytics">
-    <span class="nav-icon">📊</span>
-    <span class="nav-label">Progress</span>
-</button>
             <button class="nav-item" data-screen="profile">
                 <span class="nav-icon">👤</span>
                 <span class="nav-label">Profile</span>
@@ -3015,6 +3064,9 @@ if (document.readyState === 'loading') {
     <script src="streak.js"></script>
     <script src="notifications.js"></script>
     <script src="lessons.js"></script>
+    <script src="wordbank.js"></script>
+    <script src="sentencebuilder.js"></script>
+    <script src="practice.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

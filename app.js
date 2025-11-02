@@ -248,6 +248,15 @@ const App = {
     });
 
     document.getElementById(`${screenName}-screen`)?.classList.add('active');
+
+    // Initialize screen content if needed
+    if (screenName === 'wordbank' && typeof WordBankManager !== 'undefined') {
+      WordBankManager.init();
+    } else if (screenName === 'sentencebuilder' && typeof SentenceBuilderManager !== 'undefined') {
+      SentenceBuilderManager.init();
+    } else if (screenName === 'practicemode' && typeof PracticeManager !== 'undefined') {
+      PracticeManager.init();
+    }
   },
 
   // Set up install prompt for PWA

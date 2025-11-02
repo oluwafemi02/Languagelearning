@@ -1,0 +1,810 @@
+/* ===================================
+   LEARNING SYSTEM STYLES
+   Word Bank, Sentence Builder, Practice Mode
+   =================================== */
+
+/* ===== WORD BANK STYLES ===== */
+
+.wordbank-stats, .sentencebuilder-stats, .practice-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.stat-box {
+    background: var(--white);
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.stat-box .stat-value {
+    display: block;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 4px;
+}
+
+.stat-box .stat-label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-light);
+    text-transform: uppercase;
+}
+
+.wordbank-filters {
+    background: var(--white);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.filter-group select {
+    padding: 8px 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--white);
+    cursor: pointer;
+}
+
+.wordbank-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.word-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid transparent;
+}
+
+.word-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.word-card.learned {
+    border-color: var(--success-color);
+    background: linear-gradient(to right, #f0fdf4 0%, var(--white) 100%);
+}
+
+.word-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.word-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.word-lithuanian {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.word-english {
+    font-size: 18px;
+    color: var(--text-light);
+    margin-bottom: 12px;
+}
+
+.word-example {
+    font-size: 14px;
+    color: var(--text-dark);
+    font-style: italic;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    background: var(--bg-light);
+    border-radius: 8px;
+}
+
+.word-meta {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.word-topic, .word-difficulty, .word-pos {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.word-topic {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.word-difficulty {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.word-pos {
+    background: #f3e8ff;
+    color: #6b21a8;
+}
+
+.word-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.word-actions .btn {
+    flex: 1;
+    min-width: 140px;
+    max-width: none;
+    padding: 10px 16px;
+    font-size: 14px;
+}
+
+.no-words {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-light);
+    font-size: 16px;
+}
+
+/* Learning Mode */
+.learning-mode {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: 100px;
+}
+
+.learning-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--white);
+}
+
+.learning-progress {
+    flex: 1;
+    margin-left: 16px;
+}
+
+.learning-progress .progress-text {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-top: 4px;
+}
+
+.learning-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 32px 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 28px;
+}
+
+.favorite-btn.active {
+    color: var(--warning-color);
+}
+
+.learning-word {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.word-lithuanian-large {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 16px;
+}
+
+.audio-btn-large {
+    background: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.audio-btn-large:hover {
+    transform: scale(1.05);
+}
+
+.audio-btn-large:active {
+    transform: scale(0.95);
+}
+
+.word-english-large {
+    text-align: center;
+    font-size: 22px;
+    color: var(--text-dark);
+    margin-bottom: 24px;
+    font-weight: 600;
+}
+
+.word-example-box {
+    background: var(--bg-light);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.word-example-large {
+    font-size: 16px;
+    color: var(--text-dark);
+    font-style: italic;
+    text-align: center;
+    margin: 0;
+}
+
+.word-meta-large {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.learning-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.learning-actions .btn {
+    max-width: 200px;
+}
+
+.learning-navigation {
+    display: flex;
+    gap: 12px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.learning-navigation .btn {
+    flex: 1;
+}
+
+/* ===== SENTENCE BUILDER STYLES ===== */
+
+.level-section {
+    margin-bottom: 32px;
+}
+
+.level-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--white);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+}
+
+.level-header h3 {
+    font-size: 20px;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.level-progress {
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.lesson-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.sentence-lesson-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid transparent;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.sentence-lesson-card:hover:not(.locked) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.sentence-lesson-card.completed {
+    border-color: var(--success-color);
+}
+
+.sentence-lesson-card.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.sentence-lesson-card .lesson-icon {
+    font-size: 32px;
+    min-width: 40px;
+}
+
+.sentence-lesson-card .lesson-info h4 {
+    font-size: 16px;
+    margin-bottom: 4px;
+    color: var(--text-dark);
+}
+
+.sentence-lesson-card .lesson-info p {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
+
+.lesson-level {
+    font-size: 11px;
+    padding: 4px 8px;
+    background: var(--bg-light);
+    border-radius: 6px;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.lesson-intro {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.lesson-intro h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+}
+
+.lesson-intro h3 {
+    font-size: 22px;
+    margin-bottom: 24px;
+    color: var(--text-light);
+}
+
+.explanation-box {
+    background: #eff6ff;
+    border-left: 4px solid var(--secondary-color);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+
+.explanation-box h4 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: var(--text-dark);
+}
+
+.explanation-box p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.examples-section {
+    margin-bottom: 32px;
+}
+
+.examples-section h4 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: var(--text-dark);
+}
+
+.example-card {
+    background: var(--white);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.example-lithuanian {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+.example-english {
+    font-size: 16px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
+
+.example-breakdown {
+    font-size: 13px;
+    color: var(--text-light);
+    font-style: italic;
+    padding: 8px 12px;
+    background: var(--bg-light);
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.btn-large {
+    padding: 18px 32px;
+    font-size: 18px;
+    max-width: 100%;
+}
+
+/* Exercise Screen */
+.exercise-screen, .practice-screen {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: 100px;
+}
+
+.exercise-header, .practice-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--white);
+}
+
+.exercise-progress, .practice-progress {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.exercise-content, .practice-question {
+    padding: 32px 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.exercise-content h3, .practice-question h3 {
+    font-size: 22px;
+    margin-bottom: 24px;
+    text-align: center;
+    color: var(--text-dark);
+}
+
+.reorder-exercise {
+    margin-bottom: 24px;
+}
+
+.answer-area {
+    min-height: 60px;
+    padding: 16px;
+    border: 3px dashed var(--border-color);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.answer-area .placeholder {
+    color: var(--text-light);
+    font-style: italic;
+    width: 100%;
+    text-align: center;
+}
+
+.word-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.word-tile {
+    padding: 12px 20px;
+    background: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.word-tile:hover {
+    transform: translateY(-2px);
+}
+
+.word-tile:active {
+    transform: translateY(0);
+}
+
+.answer-word {
+    padding: 12px 20px;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.answer-word:hover {
+    transform: scale(1.05);
+}
+
+.fill-exercise, .fill-options, .practice-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.exercise-actions {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.exercise-actions .btn, .practice-screen .btn {
+    width: 100%;
+    max-width: 100%;
+}
+
+.lesson-complete, .practice-complete {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.lesson-complete h2, .practice-complete h2 {
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: var(--text-dark);
+}
+
+.lesson-complete h3 {
+    font-size: 20px;
+    color: var(--text-light);
+    margin-bottom: 32px;
+}
+
+.results-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.lesson-complete-actions, .practice-complete-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.lesson-complete-actions .btn, .practice-complete-actions .btn {
+    flex: 1;
+    min-width: 180px;
+    max-width: 250px;
+}
+
+/* ===== PRACTICE MODE STYLES ===== */
+
+.practice-home {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.practice-home h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    text-align: center;
+    color: var(--text-dark);
+}
+
+.practice-subtitle {
+    text-align: center;
+    color: var(--text-light);
+    margin-bottom: 24px;
+    font-size: 16px;
+}
+
+.practice-modes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.practice-mode-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid transparent;
+    text-align: center;
+}
+
+.practice-mode-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.practice-mode-card.highlight {
+    border-color: var(--warning-color);
+    background: linear-gradient(135deg, #fffbeb 0%, var(--white) 100%);
+}
+
+.mode-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.practice-mode-card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+}
+
+.practice-mode-card p {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 12px;
+}
+
+.mode-duration {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--bg-light);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.listening-exercise {
+    text-align: center;
+}
+
+.typing-exercise {
+    margin-bottom: 24px;
+}
+
+.performance-message {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 24px;
+}
+
+/* Notifications */
+.wordbank-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--success-color);
+    color: var(--white);
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    font-weight: 600;
+    z-index: 3000;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+}
+
+.wordbank-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .lesson-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .practice-modes {
+        grid-template-columns: 1fr;
+    }
+    
+    .word-actions {
+        flex-direction: column;
+    }
+    
+    .word-actions .btn {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .word-lithuanian-large {
+        font-size: 28px;
+    }
+    
+    .word-english-large {
+        font-size: 18px;
+    }
+    
+    .lesson-intro h2 {
+        font-size: 24px;
+    }
+    
+    .wordbank-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
