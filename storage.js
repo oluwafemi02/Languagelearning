@@ -16,6 +16,14 @@
                     vocabulary: {},
                     achievements: [],
                     onboardingCompleted: false,
+                    // Sentence learning tracking
+                    sentences: {
+                        learned: [],           // Array of sentence IDs learned
+                        lastLearningDate: null, // Last date sentences were learned
+                        dailyCount: 0,         // Sentences learned today
+                        weeklyReviewDate: null, // Last weekly review date
+                        reviewScores: []       // Array of review session scores
+                    },
                     settings: {
                         dailyGoal: 50,
                         soundEnabled: true,
