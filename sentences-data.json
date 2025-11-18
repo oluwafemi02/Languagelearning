@@ -1,0 +1,634 @@
+{
+  "sentences": [
+    {
+      "id": 1,
+      "lithuanian": "Labas rytas!",
+      "english": "Good morning!",
+      "pronunciation": "LAH-bahs REE-tahs",
+      "category": "Greetings",
+      "difficulty": "beginner",
+      "week": 1
+    },
+    {
+      "id": 2,
+      "lithuanian": "Kaip laikaisi?",
+      "english": "How are you?",
+      "pronunciation": "kaip lai-KAH-si",
+      "category": "Greetings",
+      "difficulty": "beginner",
+      "week": 1
+    },
+    {
+      "id": 3,
+      "lithuanian": "Aš esu studentas.",
+      "english": "I am a student.",
+      "pronunciation": "ahsh EH-soo stoo-DEHN-tahs",
+      "category": "Introduction",
+      "difficulty": "beginner",
+      "week": 1
+    },
+    {
+      "id": 4,
+      "lithuanian": "Kur tu gyveni?",
+      "english": "Where do you live?",
+      "pronunciation": "koor too gee-VEH-ni",
+      "category": "Questions",
+      "difficulty": "beginner",
+      "week": 1
+    },
+    {
+      "id": 5,
+      "lithuanian": "Aš noriu kavos.",
+      "english": "I want coffee.",
+      "pronunciation": "ahsh NOH-riu KAH-vohs",
+      "category": "Food & Drink",
+      "difficulty": "beginner",
+      "week": 1
+    },
+    {
+      "id": 6,
+      "lithuanian": "Labai ačiū!",
+      "english": "Thank you very much!",
+      "pronunciation": "lah-BAI ah-CHOO",
+      "category": "Politeness",
+      "difficulty": "beginner",
+      "week": 1
+    },
+    {
+      "id": 7,
+      "lithuanian": "Aš nekalbu lietuviškai.",
+      "english": "I don't speak Lithuanian.",
+      "pronunciation": "ahsh neh-kahl-BOO lye-too-VISH-kai",
+      "category": "Language",
+      "difficulty": "beginner",
+      "week": 1
+    },
+    {
+      "id": 8,
+      "lithuanian": "Kiek tai kainuoja?",
+      "english": "How much does it cost?",
+      "pronunciation": "kyek tai kai-NOO-yah",
+      "category": "Shopping",
+      "difficulty": "beginner",
+      "week": 1
+    },
+    {
+      "id": 9,
+      "lithuanian": "Aš noriu mokytis lietuvių kalbos.",
+      "english": "I want to learn Lithuanian.",
+      "pronunciation": "ahsh NOH-riu moh-KEE-tis lye-too-VIU KAHL-bohs",
+      "category": "Language",
+      "difficulty": "beginner",
+      "week": 1
+    },
+    {
+      "id": 10,
+      "lithuanian": "Labanakt!",
+      "english": "Good night!",
+      "pronunciation": "lah-bah-NAHKT",
+      "category": "Greetings",
+      "difficulty": "beginner",
+      "week": 1
+    },
+    {
+      "id": 11,
+      "lithuanian": "Ar tu supranti?",
+      "english": "Do you understand?",
+      "pronunciation": "ahr too soo-prahn-TI",
+      "category": "Questions",
+      "difficulty": "beginner",
+      "week": 2
+    },
+    {
+      "id": 12,
+      "lithuanian": "Aš dirbu ligoninėje.",
+      "english": "I work at a hospital.",
+      "pronunciation": "ahsh deer-BOO li-goh-ni-NEH-yeh",
+      "category": "Work",
+      "difficulty": "beginner",
+      "week": 2
+    },
+    {
+      "id": 13,
+      "lithuanian": "Man patinka muzika.",
+      "english": "I like music.",
+      "pronunciation": "mahn pah-TEEN-kah moo-ZI-kah",
+      "category": "Hobbies",
+      "difficulty": "beginner",
+      "week": 2
+    },
+    {
+      "id": 14,
+      "lithuanian": "Šiandien yra graži diena.",
+      "english": "Today is a beautiful day.",
+      "pronunciation": "shyan-DYEN ee-rah grah-ZHI DYE-nah",
+      "category": "Weather",
+      "difficulty": "beginner",
+      "week": 2
+    },
+    {
+      "id": 15,
+      "lithuanian": "Ar galite man padėti?",
+      "english": "Can you help me?",
+      "pronunciation": "ahr gah-LI-teh mahn pah-DEH-ti",
+      "category": "Help",
+      "difficulty": "beginner",
+      "week": 2
+    },
+    {
+      "id": 16,
+      "lithuanian": "Aš turiu du brolius.",
+      "english": "I have two brothers.",
+      "pronunciation": "ahsh TOO-riu doo BROH-lius",
+      "category": "Family",
+      "difficulty": "beginner",
+      "week": 2
+    },
+    {
+      "id": 17,
+      "lithuanian": "Rytoj aš eisiu į miestą.",
+      "english": "Tomorrow I will go to the city.",
+      "pronunciation": "REE-toy ahsh ay-SIU ee MYES-tah",
+      "category": "Plans",
+      "difficulty": "intermediate",
+      "week": 2
+    },
+    {
+      "id": 18,
+      "lithuanian": "Aš mėgstu skaityti knygas.",
+      "english": "I like to read books.",
+      "pronunciation": "ahsh mehg-STOO skai-TEE-ti KNEE-gahs",
+      "category": "Hobbies",
+      "difficulty": "intermediate",
+      "week": 2
+    },
+    {
+      "id": 19,
+      "lithuanian": "Kur yra artimiausias restoranas?",
+      "english": "Where is the nearest restaurant?",
+      "pronunciation": "koor ee-RAH ahr-ti-MYOU-sias reh-stoh-RAH-nahs",
+      "category": "Directions",
+      "difficulty": "intermediate",
+      "week": 2
+    },
+    {
+      "id": 20,
+      "lithuanian": "Mes galime susitikti vėliau.",
+      "english": "We can meet later.",
+      "pronunciation": "mess gah-LI-meh soo-si-TIK-ti VEH-lyou",
+      "category": "Plans",
+      "difficulty": "intermediate",
+      "week": 2
+    },
+    {
+      "id": 21,
+      "lithuanian": "Aš esu čia atostogų.",
+      "english": "I am here on vacation.",
+      "pronunciation": "ahsh EH-soo chya ah-tohs-TOH-gu",
+      "category": "Travel",
+      "difficulty": "intermediate",
+      "week": 3
+    },
+    {
+      "id": 22,
+      "lithuanian": "Kokia tavo mėgstamiausia spalva?",
+      "english": "What is your favorite color?",
+      "pronunciation": "KOH-kya TAH-voh mehg-stah-MYOU-sya SPAHL-vah",
+      "category": "Preferences",
+      "difficulty": "intermediate",
+      "week": 3
+    },
+    {
+      "id": 23,
+      "lithuanian": "Aš buvau Vilniuje praeitą savaitę.",
+      "english": "I was in Vilnius last week.",
+      "pronunciation": "ahsh boo-VOU vil-NYOO-yeh prah-ay-TAHN sah-vai-TEH",
+      "category": "Past Events",
+      "difficulty": "intermediate",
+      "week": 3
+    },
+    {
+      "id": 24,
+      "lithuanian": "Man reikia nusipirkti duonos.",
+      "english": "I need to buy bread.",
+      "pronunciation": "mahn ray-KYA noo-si-PEER-kti DOO-ohs",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 3
+    },
+    {
+      "id": 25,
+      "lithuanian": "Ar tu nori eiti su manimi?",
+      "english": "Do you want to come with me?",
+      "pronunciation": "ahr too NOH-ri AY-ti soo mah-NI-mi",
+      "category": "Invitations",
+      "difficulty": "intermediate",
+      "week": 3
+    },
+    {
+      "id": 26,
+      "lithuanian": "Kiek valandų tu dirbi per dieną?",
+      "english": "How many hours do you work per day?",
+      "pronunciation": "kyek vah-lahn-DOO too DEER-bi pehr DYE-nahn",
+      "category": "Work",
+      "difficulty": "intermediate",
+      "week": 3
+    },
+    {
+      "id": 27,
+      "lithuanian": "Aš mokiausi lietuvių kalbos du metus.",
+      "english": "I studied Lithuanian for two years.",
+      "pronunciation": "ahsh moh-KYOU-si lye-too-VIU KAHL-bohs doo MEH-toos",
+      "category": "Education",
+      "difficulty": "intermediate",
+      "week": 3
+    },
+    {
+      "id": 28,
+      "lithuanian": "Lietuvoje yra daug gražių vietų.",
+      "english": "There are many beautiful places in Lithuania.",
+      "pronunciation": "lye-too-VOH-yeh ee-RAH doug grah-ZHIU VYE-too",
+      "category": "Country",
+      "difficulty": "intermediate",
+      "week": 3
+    },
+    {
+      "id": 29,
+      "lithuanian": "Aš laukiu tavo atsakymo.",
+      "english": "I am waiting for your answer.",
+      "pronunciation": "ahsh LOU-kiu TAH-voh aht-sah-KEE-moh",
+      "category": "Communication",
+      "difficulty": "intermediate",
+      "week": 3
+    },
+    {
+      "id": 30,
+      "lithuanian": "Per savaitgalį aš mėgstu ilsėtis.",
+      "english": "During the weekend I like to rest.",
+      "pronunciation": "pehr sah-vait-GAH-li ahsh mehg-STOO ill-SEH-tis",
+      "category": "Leisure",
+      "difficulty": "intermediate",
+      "week": 3
+    },
+    {
+      "id": 31,
+      "lithuanian": "Noriu užsisakyti stalą dviems.",
+      "english": "I want to book a table for two.",
+      "pronunciation": "NOH-riu oo-zhi-sah-KEE-ti STAH-lahn DVYEMS",
+      "category": "Restaurant",
+      "difficulty": "intermediate",
+      "week": 4
+    },
+    {
+      "id": 32,
+      "lithuanian": "Prašau pakartoti lėčiau.",
+      "english": "Please repeat more slowly.",
+      "pronunciation": "prah-SHOU pah-kahr-TOH-ti LEH-chyou",
+      "category": "Communication",
+      "difficulty": "intermediate",
+      "week": 4
+    },
+    {
+      "id": 33,
+      "lithuanian": "Kaip pateko į centrą?",
+      "english": "How do I get to the center?",
+      "pronunciation": "kaip pah-TEH-koh ee tsehn-TRAH",
+      "category": "Directions",
+      "difficulty": "intermediate",
+      "week": 4
+    },
+    {
+      "id": 34,
+      "lithuanian": "Aš esu iš Amerikos.",
+      "english": "I am from America.",
+      "pronunciation": "ahsh EH-soo ish ah-MEH-ri-kohs",
+      "category": "Introduction",
+      "difficulty": "intermediate",
+      "week": 4
+    },
+    {
+      "id": 35,
+      "lithuanian": "Man labai patinka lietuviška virtuvė.",
+      "english": "I really like Lithuanian cuisine.",
+      "pronunciation": "mahn lah-BAI pah-TEEN-kah lye-too-VISH-kah veer-too-VEH",
+      "category": "Food",
+      "difficulty": "intermediate",
+      "week": 4
+    },
+    {
+      "id": 36,
+      "lithuanian": "Ar galėtumėte man pasakyti laiką?",
+      "english": "Could you tell me the time?",
+      "pronunciation": "ahr gah-LEH-too-meh-teh mahn pah-sah-KEE-ti LAI-kahn",
+      "category": "Time",
+      "difficulty": "intermediate",
+      "week": 4
+    },
+    {
+      "id": 37,
+      "lithuanian": "Aš ieškau naujų draugų.",
+      "english": "I am looking for new friends.",
+      "pronunciation": "ahsh yesh-KOU nou-YU drou-GU",
+      "category": "Social",
+      "difficulty": "intermediate",
+      "week": 4
+    },
+    {
+      "id": 38,
+      "lithuanian": "Ar jūs kalbate angliškai?",
+      "english": "Do you speak English?",
+      "pronunciation": "ahr yoos kahl-BAH-teh ahn-glish-KAI",
+      "category": "Language",
+      "difficulty": "beginner",
+      "week": 4
+    },
+    {
+      "id": 39,
+      "lithuanian": "Šis automobilis yra labai greitas.",
+      "english": "This car is very fast.",
+      "pronunciation": "shees ou-toh-moh-BI-lis ee-RAH lah-BAI gray-TAHS",
+      "category": "Transportation",
+      "difficulty": "intermediate",
+      "week": 4
+    },
+    {
+      "id": 40,
+      "lithuanian": "Jei turite klausimų, klauskite.",
+      "english": "If you have questions, ask.",
+      "pronunciation": "yay TOO-ri-teh klou-SI-mu klous-KI-teh",
+      "category": "Communication",
+      "difficulty": "intermediate",
+      "week": 4
+    },
+    {
+      "id": 41,
+      "lithuanian": "Mes galime susitikti prie kavines.",
+      "english": "We can meet at the cafe.",
+      "pronunciation": "mess gah-LI-meh soo-si-TIK-ti PRYEH kah-vi-NEHS",
+      "category": "Plans",
+      "difficulty": "intermediate",
+      "week": 5
+    },
+    {
+      "id": 42,
+      "lithuanian": "Kokia šiandien oro prognozė?",
+      "english": "What is today's weather forecast?",
+      "pronunciation": "KOH-kya shyan-DYEN OH-roh prohg-noh-ZEH",
+      "category": "Weather",
+      "difficulty": "intermediate",
+      "week": 5
+    },
+    {
+      "id": 43,
+      "lithuanian": "Aš negaliu ateiti į susitikimą.",
+      "english": "I cannot come to the meeting.",
+      "pronunciation": "ahsh neh-gah-LIU ah-tay-TI ee soo-si-ti-KI-mahn",
+      "category": "Work",
+      "difficulty": "intermediate",
+      "week": 5
+    },
+    {
+      "id": 44,
+      "lithuanian": "Man reikia pasitikrinti el. paštą.",
+      "english": "I need to check my email.",
+      "pronunciation": "mahn ray-KYA pah-si-tik-RIN-ti ehl. pahsh-TAHN",
+      "category": "Technology",
+      "difficulty": "intermediate",
+      "week": 5
+    },
+    {
+      "id": 45,
+      "lithuanian": "Tai yra mano mėgstamiausias filmas.",
+      "english": "This is my favorite movie.",
+      "pronunciation": "tai ee-RAH MAH-noh mehg-stah-MYOU-sias FEEL-mahs",
+      "category": "Entertainment",
+      "difficulty": "intermediate",
+      "week": 5
+    },
+    {
+      "id": 46,
+      "lithuanian": "Kiek kainuoja biletas?",
+      "english": "How much does a ticket cost?",
+      "pronunciation": "kyek kai-NOO-yah bi-LEH-tahs",
+      "category": "Travel",
+      "difficulty": "beginner",
+      "week": 5
+    },
+    {
+      "id": 47,
+      "lithuanian": "Aš norėčiau užsisakyti picos.",
+      "english": "I would like to order a pizza.",
+      "pronunciation": "ahsh noh-REH-chyou oo-zhi-sah-KEE-ti PI-tsohs",
+      "category": "Food",
+      "difficulty": "intermediate",
+      "week": 5
+    },
+    {
+      "id": 48,
+      "lithuanian": "Ar galiu išbandyti šitą?",
+      "english": "Can I try this?",
+      "pronunciation": "ahr gah-LIU ish-bahn-DEE-ti shi-TAHN",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 5
+    },
+    {
+      "id": 49,
+      "lithuanian": "Prašau pagalbos!",
+      "english": "Help, please!",
+      "pronunciation": "prah-SHOU pah-GAHL-bohs",
+      "category": "Emergency",
+      "difficulty": "beginner",
+      "week": 5
+    },
+    {
+      "id": 50,
+      "lithuanian": "Aš mokiausi visą vakarą.",
+      "english": "I studied all evening.",
+      "pronunciation": "ahsh moh-KYOU-si vi-SAHN vah-kah-RAHN",
+      "category": "Education",
+      "difficulty": "intermediate",
+      "week": 5
+    },
+    {
+      "id": 51,
+      "lithuanian": "Esu labai laimingas dėl šios galimybės.",
+      "english": "I am very happy about this opportunity.",
+      "pronunciation": "EH-soo lah-BAI lai-MIN-gahs dehl SHYOHS gah-li-MEE-behs",
+      "category": "Emotions",
+      "difficulty": "advanced",
+      "week": 6
+    },
+    {
+      "id": 52,
+      "lithuanian": "Jeigu galėčiau, važiuočiau į Lietuvą.",
+      "english": "If I could, I would go to Lithuania.",
+      "pronunciation": "yay-GOO gah-LEH-chyou vah-zhuoh-CHYOU ee lye-too-VAHN",
+      "category": "Conditional",
+      "difficulty": "advanced",
+      "week": 6
+    },
+    {
+      "id": 53,
+      "lithuanian": "Kuo skiriasi lietuvių ir anglų kalba?",
+      "english": "What is the difference between Lithuanian and English?",
+      "pronunciation": "KOO ski-RYA-si lye-too-VIU eer ahn-GLU KAHL-bah",
+      "category": "Language",
+      "difficulty": "advanced",
+      "week": 6
+    },
+    {
+      "id": 54,
+      "lithuanian": "Norėčiau rezervuoti kambarį vienai nakčiai.",
+      "english": "I would like to reserve a room for one night.",
+      "pronunciation": "noh-REH-chyou reh-zehr-VOO-ti kahm-bah-RI VYE-nai nahk-CHAI",
+      "category": "Hotel",
+      "difficulty": "advanced",
+      "week": 6
+    },
+    {
+      "id": 55,
+      "lithuanian": "Aš su tuo visiškai sutinku.",
+      "english": "I completely agree with that.",
+      "pronunciation": "ahsh soo TOO-oh vi-SISH-kai soo-TEEN-koo",
+      "category": "Opinion",
+      "difficulty": "advanced",
+      "week": 6
+    },
+    {
+      "id": 56,
+      "lithuanian": "Apie ką mes kalbėjome vakar?",
+      "english": "What were we talking about yesterday?",
+      "pronunciation": "ah-PYEH kahn mess kahl-BEH-yoh-meh vah-KAHR",
+      "category": "Past Events",
+      "difficulty": "advanced",
+      "week": 6
+    },
+    {
+      "id": 57,
+      "lithuanian": "Aš manau, kad tai puiki idėja.",
+      "english": "I think that's a great idea.",
+      "pronunciation": "ahsh mah-NOU kahd tai PWEE-kya i-DEH-yah",
+      "category": "Opinion",
+      "difficulty": "intermediate",
+      "week": 6
+    },
+    {
+      "id": 58,
+      "lithuanian": "Galbūt galėtume išeiti vakarieniaut.",
+      "english": "Perhaps we could go out for dinner.",
+      "pronunciation": "gahl-BOOT gah-LEH-too-meh i-SHAY-ti vah-kah-rye-NYOUT",
+      "category": "Invitations",
+      "difficulty": "advanced",
+      "week": 6
+    },
+    {
+      "id": 59,
+      "lithuanian": "Ar tau patiktų ateiti pas mane?",
+      "english": "Would you like to come to my place?",
+      "pronunciation": "ahr tou pah-TIK-tu ah-tay-TI pahs MAH-neh",
+      "category": "Invitations",
+      "difficulty": "intermediate",
+      "week": 6
+    },
+    {
+      "id": 60,
+      "lithuanian": "Aš ką tik buvau parduotuvėje.",
+      "english": "I just was at the store.",
+      "pronunciation": "ahsh kahn tik boo-VOU pahr-duo-too-VEH-yeh",
+      "category": "Recent Events",
+      "difficulty": "intermediate",
+      "week": 6
+    },
+    {
+      "id": 61,
+      "lithuanian": "Svarbu mokytis kiekvieną dieną.",
+      "english": "It's important to study every day.",
+      "pronunciation": "svahr-BOO moh-KEE-tis kyek-VYE-nahn DYE-nahn",
+      "category": "Education",
+      "difficulty": "intermediate",
+      "week": 7
+    },
+    {
+      "id": 62,
+      "lithuanian": "Kokia nuostabi diena!",
+      "english": "What a wonderful day!",
+      "pronunciation": "KOH-kya noo-ohs-TAH-bi DYE-nah",
+      "category": "Weather",
+      "difficulty": "intermediate",
+      "week": 7
+    },
+    {
+      "id": 63,
+      "lithuanian": "Gal galėtume susitikti kitą kartą?",
+      "english": "Maybe we could meet another time?",
+      "pronunciation": "gahl gah-LEH-too-meh soo-si-TIK-ti ki-TAHN kahr-TAHN",
+      "category": "Plans",
+      "difficulty": "intermediate",
+      "week": 7
+    },
+    {
+      "id": 64,
+      "lithuanian": "Man įdomu sužinoti daugiau apie Lietuvą.",
+      "english": "I'm interested in learning more about Lithuania.",
+      "pronunciation": "mahn i-DOH-moo soo-zhi-NOH-ti dou-GYOU ah-PYEH lye-too-VAHN",
+      "category": "Learning",
+      "difficulty": "advanced",
+      "week": 7
+    },
+    {
+      "id": 65,
+      "lithuanian": "Per daug žmonių yra šioje vietoje.",
+      "english": "There are too many people in this place.",
+      "pronunciation": "pehr doug zhmo-NIU ee-RAH SHYO-yeh VYE-toh-yeh",
+      "category": "Observation",
+      "difficulty": "intermediate",
+      "week": 7
+    },
+    {
+      "id": 66,
+      "lithuanian": "Aš tikuosi pamatyti tave netrukus.",
+      "english": "I hope to see you soon.",
+      "pronunciation": "ahsh ti-KOO-oh-si pah-mah-TEE-ti TAH-veh neh-troo-KOOS",
+      "category": "Farewell",
+      "difficulty": "intermediate",
+      "week": 7
+    },
+    {
+      "id": 67,
+      "lithuanian": "Kodėl tu taip galvoji?",
+      "english": "Why do you think that way?",
+      "pronunciation": "koh-DEHL too taip gahl-VOH-yi",
+      "category": "Questions",
+      "difficulty": "intermediate",
+      "week": 7
+    },
+    {
+      "id": 68,
+      "lithuanian": "Aš turėčiau grįžti namo.",
+      "english": "I should go back home.",
+      "pronunciation": "ahsh too-REH-chyou greezh-TI NAH-moh",
+      "category": "Plans",
+      "difficulty": "intermediate",
+      "week": 7
+    },
+    {
+      "id": 69,
+      "lithuanian": "Man patinka žiūrėti lietuviškus filmus.",
+      "english": "I like watching Lithuanian movies.",
+      "pronunciation": "mahn pah-TEEN-kah zhiu-REH-ti lye-too-VISH-koos FEEL-moos",
+      "category": "Entertainment",
+      "difficulty": "intermediate",
+      "week": 7
+    },
+    {
+      "id": 70,
+      "lithuanian": "Tai buvo nuostabus patyrimas.",
+      "english": "It was an amazing experience.",
+      "pronunciation": "tai boo-VOH noo-ohs-TAH-boos pah-TEE-ri-mahs",
+      "category": "Opinion",
+      "difficulty": "intermediate",
+      "week": 7
+    }
+  ]
+}

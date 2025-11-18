@@ -256,6 +256,8 @@ const App = {
       SentenceBuilderManager.init();
     } else if (screenName === 'practicemode' && typeof PracticeManager !== 'undefined') {
       PracticeManager.init();
+    } else if (screenName === 'sentences' && typeof SentenceManager !== 'undefined') {
+      SentenceManager.init();
     }
   },
 
