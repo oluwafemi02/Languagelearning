@@ -257,7 +257,7 @@ const PracticeManager = {
     return `
       <div class="practice-options">
         ${exercise.options.map(option => `
-          <button class="answer-option" onclick="PracticeManager.selectAnswer('${option.replace(/'/g, "\\'")}')">
+          <button class="answer-option" onclick="PracticeManager.selectAnswer('${option.replace(/'/g, "\\'")}', event)">
             ${option}
           </button>
         `).join('')}
@@ -290,7 +290,7 @@ const PracticeManager = {
     return `
       <div class="fill-options">
         ${exercise.options.map(option => `
-          <button class="answer-option" onclick="PracticeManager.selectAnswer('${option}')">
+          <button class="answer-option" onclick="PracticeManager.selectAnswer('${option}', event)">
             ${option}
           </button>
         `).join('')}
@@ -307,7 +307,7 @@ const PracticeManager = {
         </button>
         <div class="practice-options">
           ${exercise.options.map(option => `
-            <button class="answer-option" onclick="PracticeManager.selectAnswer('${option}')">
+            <button class="answer-option" onclick="PracticeManager.selectAnswer('${option}', event)">
               ${option}
             </button>
           `).join('')}
@@ -329,11 +329,20 @@ const PracticeManager = {
   },
 
   // Select answer
-  selectAnswer(answer) {
+  selectAnswer(answer, event) {
     document.querySelectorAll('.answer-option').forEach(btn => {
       btn.classList.remove('selected');
     });
-    event.target.classList.add('selected');
+    if (event && event.target) {
+      event.target.classList.add('selected');
+    } else {
+      // Fallback: find the button that was clicked
+      document.querySelectorAll('.answer-option').forEach(btn => {
+        if (btn.textContent === answer) {
+          btn.classList.add('selected');
+        }
+      });
+    }
     this.selectedAnswer = answer;
     document.getElementById('practice-check-btn').disabled = false;
   },
