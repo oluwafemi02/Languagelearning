@@ -114,10 +114,15 @@ const PracticeManager = {
     if (type === 'mixed' || type === 'words') {
       // Add word exercises
       const learnedWordIds = userData.wordBankLearned || [];
-      if (learnedWordIds.length > 0) {
-        const wordData = await this.loadWordData();
-        const learnedWords = wordData.filter(w => learnedWordIds.includes(w.id));
-        const selectedWords = this.shuffleArray(learnedWords).slice(0, Math.ceil(count / (type === 'mixed' ? 2 : 1)));
+      const wordData = await this.loadWordData();
+      
+      // If no learned words, use first 20 words from the bank for practice
+      const wordsToUse = learnedWordIds.length > 0 
+        ? wordData.filter(w => learnedWordIds.includes(w.id))
+        : wordData.slice(0, 20);
+      
+      if (wordsToUse.length > 0) {
+        const selectedWords = this.shuffleArray(wordsToUse).slice(0, Math.ceil(count / (type === 'mixed' ? 2 : 1)));
         
         selectedWords.forEach(word => {
           exercises.push(this.createWordExercise(word));
@@ -128,10 +133,15 @@ const PracticeManager = {
     if (type === 'mixed' || type === 'sentences') {
       // Add sentence exercises
       const completedLessons = userData.sentenceBuilderCompleted || [];
-      if (completedLessons.length > 0) {
-        const sentenceData = await this.loadSentenceData();
-        const completedLessonData = sentenceData.filter(l => completedLessons.includes(l.id));
-        const allExercises = completedLessonData.flatMap(lesson => 
+      const sentenceData = await this.loadSentenceData();
+      
+      // If no completed lessons, use first 2 lessons for practice
+      const lessonsToUse = completedLessons.length > 0
+        ? sentenceData.filter(l => completedLessons.includes(l.id))
+        : sentenceData.slice(0, 2);
+      
+      if (lessonsToUse.length > 0) {
+        const allExercises = lessonsToUse.flatMap(lesson => 
           lesson.exercises.map(ex => ({ ...ex, lessonTitle: lesson.title }))
         );
         
