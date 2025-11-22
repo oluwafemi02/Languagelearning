@@ -92,6 +92,78 @@
     },
     {
       "id": 11,
+      "lithuanian": "Ar šis produktas yra šviežias?",
+      "english": "Is this product fresh?",
+      "pronunciation": "ahr shis proh-DOOK-tahs ee-RAH SHVYE-zhias",
+      "category": "Shopping",
+      "difficulty": "beginner",
+      "week": 1
+    },
+    {
+      "id": 12,
+      "lithuanian": "Kur galiu rasti šaldytus produktus?",
+      "english": "Where can I find frozen products?",
+      "pronunciation": "koor gah-LIU rahs-TI shahl-DEE-toos proh-DOOK-toos",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 1
+    },
+    {
+      "id": 13,
+      "lithuanian": "Ar galiu išbandyti šiuos batus?",
+      "english": "Can I try on these shoes?",
+      "pronunciation": "ahr gah-LIU ish-bahn-DEE-ti SHYUOS BAH-toos",
+      "category": "Shopping",
+      "difficulty": "beginner",
+      "week": 2
+    },
+    {
+      "id": 14,
+      "lithuanian": "Ar turite kitų spalvų?",
+      "english": "Do you have other colors?",
+      "pronunciation": "ahr TOO-ri-teh KI-tu spahl-VU",
+      "category": "Shopping",
+      "difficulty": "beginner",
+      "week": 2
+    },
+    {
+      "id": 15,
+      "lithuanian": "Šis dydis man per mažas.",
+      "english": "This size is too small for me.",
+      "pronunciation": "shis DEE-dis mahn pehr MAH-zhas",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 2
+    },
+    {
+      "id": 16,
+      "lithuanian": "Ar galiu tai grąžinti?",
+      "english": "Can I return this?",
+      "pronunciation": "ahr gah-LIU tai grahzh-IN-ti",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 2
+    },
+    {
+      "id": 17,
+      "lithuanian": "Iki kada veikia parduotuvė?",
+      "english": "Until when is the store open?",
+      "pronunciation": "i-KI kah-DAH VAY-kia pahr-duo-too-VEH",
+      "category": "Shopping",
+      "difficulty": "beginner",
+      "week": 2
+    },
+    {
+      "id": 18,
+      "lithuanian": "Ar šiandien yra išpardavimas?",
+      "english": "Is there a sale today?",
+      "pronunciation": "ahr shyan-DYEN ee-RAH ish-pahr-dah-VI-mahs",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 2
+    },
+    {
+      "id": 19,
       "lithuanian": "Mano šeima gyvena Vilniuje.",
       "english": "My family lives in Vilnius.",
       "pronunciation": "MAH-noh SHAY-mah gee-VEH-nah vil-NYOO-yeh",
@@ -100,7 +172,7 @@
       "week": 2
     },
     {
-      "id": 12,
+      "id": 20,
       "lithuanian": "Aš turiu dvi seseris ir vieną brolį.",
       "english": "I have two sisters and one brother.",
       "pronunciation": "ahsh TOO-riu dvi SEH-seh-ris eer VYE-nahn BROH-li",
@@ -109,7 +181,7 @@
       "week": 2
     },
     {
-      "id": 13,
+      "id": 21,
       "lithuanian": "Mano tėvai atvažiuos šį savaitgalį.",
       "english": "My parents will come this weekend.",
       "pronunciation": "MAH-noh TEH-vai aht-vah-ZHYOU-ohs shi sah-vait-GAH-li",
@@ -118,457 +190,277 @@
       "week": 2
     },
     {
-      "id": 14,
-      "lithuanian": "Ar galime susitikti po darbo?",
-      "english": "Can we meet after work?",
-      "pronunciation": "ahr gah-LI-meh soo-si-TIK-ti poh DAHR-boh",
-      "category": "Friends",
-      "difficulty": "beginner",
-      "week": 2
-    },
-    {
-      "id": 15,
-      "lithuanian": "Ką veiki šį vakarą?",
-      "english": "What are you doing tonight?",
-      "pronunciation": "kahn VEI-ki shi vah-kah-RAHN",
-      "category": "Friends",
-      "difficulty": "beginner",
-      "week": 2
-    },
-    {
-      "id": 16,
-      "lithuanian": "Gal nueisime į kavinę?",
-      "english": "Shall we go to a cafe?",
-      "pronunciation": "gahl noo-ay-SI-meh ee kah-vi-NEH",
-      "category": "Friends",
-      "difficulty": "beginner",
-      "week": 2
-    },
-    {
-      "id": 17,
-      "lithuanian": "Kaip sekasi darbas?",
-      "english": "How is work going?",
-      "pronunciation": "kaip seh-KAH-si DAHR-bahs",
-      "category": "Friends",
-      "difficulty": "beginner",
-      "week": 2
-    },
-    {
-      "id": 18,
-      "lithuanian": "Ar turi laiko pietums?",
-      "english": "Do you have time for lunch?",
-      "pronunciation": "ahr TOO-ri LAI-koh pye-TOOMS",
-      "category": "Friends",
-      "difficulty": "beginner",
-      "week": 2
-    },
-    {
-      "id": 19,
-      "lithuanian": "Labai seniai nesimatėme!",
-      "english": "We haven't seen each other in so long!",
-      "pronunciation": "lah-BAI seh-NYAI neh-si-mah-TEH-meh",
-      "category": "Friends",
-      "difficulty": "intermediate",
-      "week": 2
-    },
-    {
-      "id": 20,
-      "lithuanian": "Skambink man, kai būsi laisvas.",
-      "english": "Call me when you're free.",
-      "pronunciation": "skahm-BINK mahn kai BOO-si lais-VAHS",
-      "category": "Friends",
-      "difficulty": "intermediate",
-      "week": 2
-    },
-    {
-      "id": 21,
-      "lithuanian": "Aš dirbu IT kompanijoje.",
-      "english": "I work at an IT company.",
-      "pronunciation": "ahsh deer-BOO IT kohm-pah-NI-yoh-yeh",
-      "category": "Business",
-      "difficulty": "beginner",
-      "week": 3
-    },
-    {
       "id": 22,
-      "lithuanian": "Kada yra susitikimas?",
-      "english": "When is the meeting?",
-      "pronunciation": "kah-DAH ee-RAH soo-si-ti-KI-mahs",
-      "category": "Business",
+      "lithuanian": "Kaip sveikina tavo mama?",
+      "english": "How is your mom doing?",
+      "pronunciation": "kaip SVAY-ki-nah TAH-voh MAH-mah",
+      "category": "Family",
       "difficulty": "beginner",
       "week": 3
     },
     {
       "id": 23,
-      "lithuanian": "Man reikia nusiųsti el. laišką.",
-      "english": "I need to send an email.",
-      "pronunciation": "mahn ray-KYA noo-SIU-sti ehl. lais-KAHN",
-      "category": "Business",
+      "lithuanian": "Mano vaikai eina į mokyklą.",
+      "english": "My children go to school.",
+      "pronunciation": "MAH-noh vai-KAI AY-nah ee moh-KEEK-lahn",
+      "category": "Family",
       "difficulty": "beginner",
       "week": 3
     },
     {
       "id": 24,
-      "lithuanian": "Ar galėtumėte perduoti šią informaciją?",
-      "english": "Could you pass on this information?",
-      "pronunciation": "ahr gah-LEH-too-meh-teh pehr-DOO-ti SHYAHN in-fohr-MAH-tsi-yahn",
-      "category": "Business",
+      "lithuanian": "Ar tavo sesuo jau išsikraustė?",
+      "english": "Has your sister already moved out?",
+      "pronunciation": "ahr TAH-voh seh-SUO yau ish-si-kraus-TEH",
+      "category": "Family",
       "difficulty": "intermediate",
       "week": 3
     },
     {
       "id": 25,
-      "lithuanian": "Turiu baigti projektą iki penktadienio.",
-      "english": "I need to finish the project by Friday.",
-      "pronunciation": "TOO-riu baig-TI proh-yek-TAHN i-KI penk-tah-DYE-nio",
-      "category": "Business",
+      "lithuanian": "Mano senelis švenčia gimtadienį.",
+      "english": "My grandfather is celebrating his birthday.",
+      "pronunciation": "MAH-noh seh-NEH-lis shvehn-CHYA gim-tah-DYE-ni",
+      "category": "Family",
       "difficulty": "intermediate",
       "week": 3
     },
     {
       "id": 26,
-      "lithuanian": "Ar galime nukelti susitikimą?",
-      "english": "Can we postpone the meeting?",
-      "pronunciation": "ahr gah-LI-meh noo-KEHL-ti soo-si-ti-KI-mahn",
-      "category": "Business",
-      "difficulty": "intermediate",
+      "lithuanian": "Ar tavo brolis vis dar dirba toje pačioje vietoje?",
+      "english": "Does your brother still work at the same place?",
+      "pronunciation": "ahr TAH-voh BROH-lis vis dahr deer-BAH TOH-yeh pah-CHYO-yeh VYE-toh-yeh",
+      "category": "Family",
+      "difficulty": "advanced",
       "week": 3
     },
     {
       "id": 27,
-      "lithuanian": "Prašau persiųsti man dokumentus.",
-      "english": "Please forward me the documents.",
-      "pronunciation": "prah-SHOU pehr-SIU-sti mahn doh-koo-MEHN-toos",
-      "category": "Business",
+      "lithuanian": "Mano žmona laukiasi kūdikio.",
+      "english": "My wife is pregnant.",
+      "pronunciation": "MAH-noh zhmo-NAH lou-KYA-si KOO-di-kio",
+      "category": "Family",
       "difficulty": "intermediate",
       "week": 3
     },
     {
       "id": 28,
-      "lithuanian": "Koks jūsų darbo telefono numeris?",
-      "english": "What is your work phone number?",
-      "pronunciation": "koks YOO-su DAHR-boh teh-leh-FOH-noh NOO-meh-ris",
-      "category": "Business",
+      "lithuanian": "Ar galime susitikti po darbo?",
+      "english": "Can we meet after work?",
+      "pronunciation": "ahr gah-LI-meh soo-si-TIK-ti poh DAHR-boh",
+      "category": "Friends",
       "difficulty": "beginner",
       "week": 3
     },
     {
       "id": 29,
-      "lithuanian": "Aš ieškau darbo Lietuvoje.",
-      "english": "I am looking for work in Lithuania.",
-      "pronunciation": "ahsh yesh-KOU DAHR-boh lye-too-VOH-yeh",
-      "category": "Business",
+      "lithuanian": "Ką veiki šį vakarą?",
+      "english": "What are you doing tonight?",
+      "pronunciation": "kahn VEI-ki shi vah-kah-RAHN",
+      "category": "Friends",
       "difficulty": "beginner",
       "week": 3
     },
     {
       "id": 30,
-      "lithuanian": "Turiu patirties šioje srityje.",
-      "english": "I have experience in this field.",
-      "pronunciation": "TOO-riu pah-TEER-ties SHYO-yeh SREE-tyeh-yeh",
-      "category": "Business",
-      "difficulty": "intermediate",
+      "lithuanian": "Gal nueisime į kavinę?",
+      "english": "Shall we go to a cafe?",
+      "pronunciation": "gahl noo-ay-SI-meh ee kah-vi-NEH",
+      "category": "Friends",
+      "difficulty": "beginner",
       "week": 3
     },
     {
       "id": 31,
-      "lithuanian": "Man reikia išsiimti leidimą gyventi.",
-      "english": "I need to get a residence permit.",
-      "pronunciation": "mahn ray-KYA ish-si-IM-ti lay-DI-mahn gee-VEHN-ti",
-      "category": "Immigration",
-      "difficulty": "intermediate",
+      "lithuanian": "Kaip sekasi darbas?",
+      "english": "How is work going?",
+      "pronunciation": "kaip seh-KAH-si DAHR-bahs",
+      "category": "Friends",
+      "difficulty": "beginner",
       "week": 4
     },
     {
       "id": 32,
-      "lithuanian": "Kur galiu registruotis gyvenamąją vietą?",
-      "english": "Where can I register my residence?",
-      "pronunciation": "koor gah-LIU reh-gis-troo-OH-tis gee-veh-nah-mahn-YAHN VYE-tahn",
-      "category": "Immigration",
-      "difficulty": "intermediate",
+      "lithuanian": "Ar turi laiko pietums?",
+      "english": "Do you have time for lunch?",
+      "pronunciation": "ahr TOO-ri LAI-koh pye-TOOMS",
+      "category": "Friends",
+      "difficulty": "beginner",
       "week": 4
     },
     {
       "id": 33,
-      "lithuanian": "Kokių dokumentų man reikia?",
-      "english": "What documents do I need?",
-      "pronunciation": "KOH-kiu doh-koo-MEHN-tu mahn ray-KYA",
-      "category": "Immigration",
-      "difficulty": "beginner",
+      "lithuanian": "Labai seniai nesimatėme!",
+      "english": "We haven't seen each other in so long!",
+      "pronunciation": "lah-BAI seh-NYAI neh-si-mah-TEH-meh",
+      "category": "Friends",
+      "difficulty": "intermediate",
       "week": 4
     },
     {
       "id": 34,
-      "lithuanian": "Aš esu čia su darbo viza.",
-      "english": "I am here on a work visa.",
-      "pronunciation": "ahsh EH-soo chya soo DAHR-boh VI-zah",
-      "category": "Immigration",
-      "difficulty": "beginner",
+      "lithuanian": "Skambink man, kai būsi laisvas.",
+      "english": "Call me when you're free.",
+      "pronunciation": "skahm-BINK mahn kai BOO-si lais-VAHS",
+      "category": "Friends",
+      "difficulty": "intermediate",
       "week": 4
     },
     {
       "id": 35,
-      "lithuanian": "Man reikia pratęsti vizą.",
-      "english": "I need to extend my visa.",
-      "pronunciation": "mahn ray-KYA prah-TEHN-sti VI-zahn",
-      "category": "Immigration",
+      "lithuanian": "Pakviesiu tave į savo gimtadienį.",
+      "english": "I'll invite you to my birthday.",
+      "pronunciation": "pahk-VYES-iu TAH-veh ee SAH-voh gim-tah-DYE-ni",
+      "category": "Friends",
       "difficulty": "intermediate",
       "week": 4
     },
     {
       "id": 36,
-      "lithuanian": "Kur yra migracijos tarnyba?",
-      "english": "Where is the migration office?",
-      "pronunciation": "koor ee-RAH mi-grah-TSI-yohs tahr-NEE-bah",
-      "category": "Immigration",
-      "difficulty": "intermediate",
+      "lithuanian": "Ar tau patiko tas filmas?",
+      "english": "Did you like that movie?",
+      "pronunciation": "ahr tou pah-TI-koh tahs FIL-mahs",
+      "category": "Friends",
+      "difficulty": "beginner",
       "week": 4
     },
     {
       "id": 37,
-      "lithuanian": "Ar man reikia vertėjo?",
-      "english": "Do I need a translator?",
-      "pronunciation": "ahr mahn ray-KYA vehr-TEH-yoh",
-      "category": "Immigration",
-      "difficulty": "beginner",
+      "lithuanian": "Gal išeitume kur nors vakare?",
+      "english": "Shall we go out somewhere in the evening?",
+      "pronunciation": "gahl i-SHAY-too-meh koor nohrs vah-kah-REH",
+      "category": "Friends",
+      "difficulty": "intermediate",
       "week": 4
     },
     {
       "id": 38,
-      "lithuanian": "Kada galiu gauti atsakymą?",
-      "english": "When can I get an answer?",
-      "pronunciation": "kah-DAH gah-LIU gou-TI aht-sah-KEE-mahn",
-      "category": "Immigration",
-      "difficulty": "beginner",
-      "week": 4
+      "lithuanian": "Atsiprašau, kad vėluoju.",
+      "english": "Sorry that I'm late.",
+      "pronunciation": "aht-si-prah-SHOU kahd VEH-luo-yu",
+      "category": "Friends",
+      "difficulty": "intermediate",
+      "week": 5
     },
     {
       "id": 39,
-      "lithuanian": "Aš turiu sveikatos draudimą.",
-      "english": "I have health insurance.",
-      "pronunciation": "ahsh TOO-riu svay-kah-TOHS drou-DI-mahn",
-      "category": "Immigration",
+      "lithuanian": "Gal susitinkame prie metro stoties?",
+      "english": "Shall we meet at the metro station?",
+      "pronunciation": "gahl soo-si-tin-KAH-meh PRYEH MEH-troh STOH-ties",
+      "category": "Friends",
       "difficulty": "intermediate",
-      "week": 4
+      "week": 5
     },
     {
       "id": 40,
-      "lithuanian": "Noriu atidaryt banko sąskaitą.",
-      "english": "I want to open a bank account.",
-      "pronunciation": "NOH-riu ah-ti-dah-REET BAHN-koh sahn-skai-TAHN",
-      "category": "Immigration",
+      "lithuanian": "Ar žinai gerą restoraną netoliese?",
+      "english": "Do you know a good restaurant nearby?",
+      "pronunciation": "ahr ZHI-nai geh-RAHN rehs-toh-rah-NAHN neh-toh-LYE-seh",
+      "category": "Friends",
       "difficulty": "intermediate",
-      "week": 4
+      "week": 5
     },
     {
       "id": 41,
-      "lithuanian": "Ar priimate kreditines korteles?",
-      "english": "Do you accept credit cards?",
-      "pronunciation": "ahr pri-i-MAH-teh kreh-di-TI-nehs kohr-TEH-lehs",
-      "category": "Shopping",
+      "lithuanian": "Aš dirbu IT kompanijoje.",
+      "english": "I work at an IT company.",
+      "pronunciation": "ahsh deer-BOO IT kohm-pah-NI-yoh-yeh",
+      "category": "Business",
       "difficulty": "beginner",
       "week": 5
     },
     {
       "id": 42,
-      "lithuanian": "Kur yra kasininkas?",
-      "english": "Where is the cashier?",
-      "pronunciation": "koor ee-RAH kah-si-NIN-kahs",
-      "category": "Shopping",
+      "lithuanian": "Kada yra susitikimas?",
+      "english": "When is the meeting?",
+      "pronunciation": "kah-DAH ee-RAH soo-si-ti-KI-mahs",
+      "category": "Business",
       "difficulty": "beginner",
       "week": 5
     },
     {
       "id": 43,
-      "lithuanian": "Ar galiu tai pakeisti?",
-      "english": "Can I exchange this?",
-      "pronunciation": "ahr gah-LIU tai pah-KAYS-ti",
-      "category": "Shopping",
+      "lithuanian": "Man reikia nusiųsti el. laišką.",
+      "english": "I need to send an email.",
+      "pronunciation": "mahn ray-KYA noo-SIU-sti ehl. lais-KAHN",
+      "category": "Business",
       "difficulty": "beginner",
       "week": 5
     },
     {
       "id": 44,
-      "lithuanian": "Ar turite didesnį dydį?",
-      "english": "Do you have a bigger size?",
-      "pronunciation": "ahr TOO-ri-teh di-DEHS-ni DEE-di",
-      "category": "Shopping",
-      "difficulty": "beginner",
+      "lithuanian": "Ar galėtumėte perduoti šią informaciją?",
+      "english": "Could you pass on this information?",
+      "pronunciation": "ahr gah-LEH-too-meh-teh pehr-DOO-ti SHYAHN in-fohr-MAH-tsi-yahn",
+      "category": "Business",
+      "difficulty": "intermediate",
       "week": 5
     },
     {
       "id": 45,
-      "lithuanian": "Kiek svarsto šis daržovės?",
-      "english": "How much does this vegetable weigh?",
-      "pronunciation": "kyek svahr-STOH shis dahr-ZHO-vehs",
-      "category": "Shopping",
-      "difficulty": "beginner",
-      "week": 5
+      "lithuanian": "Turiu baigti projektą iki penktadienio.",
+      "english": "I need to finish the project by Friday.",
+      "pronunciation": "TOO-riu baig-TI proh-yek-TAHN i-KI penk-tah-DYE-nio",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 6
     },
     {
       "id": 46,
-      "lithuanian": "Ar yra nuolaidų šiandien?",
-      "english": "Are there any discounts today?",
-      "pronunciation": "ahr ee-RAH nuo-lai-DU shyan-DYEN",
-      "category": "Shopping",
-      "difficulty": "beginner",
-      "week": 5
+      "lithuanian": "Ar galime nukelti susitikimą?",
+      "english": "Can we postpone the meeting?",
+      "pronunciation": "ahr gah-LI-meh noo-KEHL-ti soo-si-ti-KI-mahn",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 6
     },
     {
       "id": 47,
-      "lithuanian": "Man reikia pakuotės.",
-      "english": "I need wrapping.",
-      "pronunciation": "mahn ray-KYA pah-kuo-TEHS",
-      "category": "Shopping",
-      "difficulty": "beginner",
-      "week": 5
+      "lithuanian": "Prašau persiųsti man dokumentus.",
+      "english": "Please forward me the documents.",
+      "pronunciation": "prah-SHOU pehr-SIU-sti mahn doh-koo-MEHN-toos",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 6
     },
     {
       "id": 48,
-      "lithuanian": "Ar galiu išbandyti šitą?",
-      "english": "Can I try this on?",
-      "pronunciation": "ahr gah-LIU ish-bahn-DEE-ti shi-TAHN",
-      "category": "Shopping",
+      "lithuanian": "Koks jūsų darbo telefono numeris?",
+      "english": "What is your work phone number?",
+      "pronunciation": "koks YOO-su DAHR-boh teh-leh-FOH-noh NOO-meh-ris",
+      "category": "Business",
       "difficulty": "beginner",
-      "week": 5
+      "week": 6
     },
     {
       "id": 49,
-      "lithuanian": "Kur yra pritaikomosios patalpos?",
-      "english": "Where are the fitting rooms?",
-      "pronunciation": "koor ee-RAH pri-tai-koh-MOH-syohs pah-TAHL-pohs",
-      "category": "Shopping",
-      "difficulty": "intermediate",
-      "week": 5
+      "lithuanian": "Aš ieškau darbo Lietuvoje.",
+      "english": "I am looking for work in Lithuania.",
+      "pronunciation": "ahsh yesh-KOU DAHR-boh lye-too-VOH-yeh",
+      "category": "Business",
+      "difficulty": "beginner",
+      "week": 6
     },
     {
       "id": 50,
-      "lithuanian": "Aš ieškau dovanos draugui.",
-      "english": "I'm looking for a gift for a friend.",
-      "pronunciation": "ahsh yesh-KOU doh-VAH-nohs drou-GUI",
-      "category": "Shopping",
-      "difficulty": "beginner",
-      "week": 5
+      "lithuanian": "Turiu patirties šioje srityje.",
+      "english": "I have experience in this field.",
+      "pronunciation": "TOO-riu pah-TEER-ties SHYO-yeh SREE-tyeh-yeh",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 6
     },
     {
       "id": 51,
-      "lithuanian": "Mano mama atvažiuoja savaitei.",
-      "english": "My mom is coming for a week.",
-      "pronunciation": "MAH-noh MAH-mah aht-vah-ZHYOU-yah sah-vai-TEI",
-      "category": "Family",
+      "lithuanian": "Ar galite man paaiškinti šią užduotį?",
+      "english": "Can you explain this task to me?",
+      "pronunciation": "ahr gah-LI-teh mahn pah-aish-KIN-ti SHYAHN oozh-duo-TI",
+      "category": "Business",
       "difficulty": "intermediate",
-      "week": 6
+      "week": 7
     },
     {
       "id": 52,
-      "lithuanian": "Ar jūsų šeima kartu gyvena?",
-      "english": "Does your family live together?",
-      "pronunciation": "ahr YOO-su SHAY-mah kahr-TOO gee-VEH-nah",
-      "category": "Family",
-      "difficulty": "beginner",
-      "week": 6
-    },
-    {
-      "id": 53,
-      "lithuanian": "Mano vaikai mokosi lietuvių kalbos.",
-      "english": "My children are learning Lithuanian.",
-      "pronunciation": "MAH-noh vai-KAI moh-KOH-si lye-too-VIU KAHL-bohs",
-      "category": "Family",
-      "difficulty": "intermediate",
-      "week": 6
-    },
-    {
-      "id": 54,
-      "lithuanian": "Kiek metų tavo vaikams?",
-      "english": "How old are your children?",
-      "pronunciation": "kyek meh-TU TAH-voh vai-KAHMS",
-      "category": "Family",
-      "difficulty": "beginner",
-      "week": 6
-    },
-    {
-      "id": 55,
-      "lithuanian": "Mano vyras dirba ligoninėje.",
-      "english": "My husband works at a hospital.",
-      "pronunciation": "MAH-noh VEE-rahs deer-BAH li-goh-ni-NEH-yeh",
-      "category": "Family",
-      "difficulty": "beginner",
-      "week": 6
-    },
-    {
-      "id": 56,
-      "lithuanian": "Mano žmona dirba mokykloje.",
-      "english": "My wife works at a school.",
-      "pronunciation": "MAH-noh zhmo-NAH deer-BAH moh-KEEK-loh-yeh",
-      "category": "Family",
-      "difficulty": "beginner",
-      "week": 6
-    },
-    {
-      "id": 57,
-      "lithuanian": "Ar tavo tėvai kalba angliškai?",
-      "english": "Do your parents speak English?",
-      "pronunciation": "ahr TAH-voh TEH-vai KAHL-bah ahn-glish-KAI",
-      "category": "Family",
-      "difficulty": "beginner",
-      "week": 6
-    },
-    {
-      "id": 58,
-      "lithuanian": "Mano broliukas eina į darželį.",
-      "english": "My little brother goes to kindergarten.",
-      "pronunciation": "MAH-noh broh-LIU-kahs AY-nah ee dahr-ZHE-li",
-      "category": "Family",
-      "difficulty": "intermediate",
-      "week": 6
-    },
-    {
-      "id": 59,
-      "lithuanian": "Aš noriu pakviest tave vakarienei.",
-      "english": "I want to invite you to dinner.",
-      "pronunciation": "ahsh NOH-riu pahk-VYEST TAH-veh vah-kah-rye-NEI",
-      "category": "Friends",
-      "difficulty": "intermediate",
-      "week": 6
-    },
-    {
-      "id": 60,
-      "lithuanian": "Ar galime pakeist planus?",
-      "english": "Can we change the plans?",
-      "pronunciation": "ahr gah-LI-meh pah-KAYST PLAH-noos",
-      "category": "Friends",
-      "difficulty": "beginner",
-      "week": 6
-    },
-    {
-      "id": 61,
-      "lithuanian": "Su kokiu projektu dabar dirbi?",
-      "english": "What project are you working on now?",
-      "pronunciation": "soo koh-KIU proh-yek-TOO dah-BAHR deer-BI",
-      "category": "Business",
-      "difficulty": "intermediate",
-      "week": 7
-    },
-    {
-      "id": 62,
-      "lithuanian": "Ar galėtumėte man paskambinti vėliau?",
-      "english": "Could you call me later?",
-      "pronunciation": "ahr gah-LEH-too-meh-teh mahn pahs-kahm-BIN-ti VEH-lyou",
-      "category": "Business",
-      "difficulty": "intermediate",
-      "week": 7
-    },
-    {
-      "id": 63,
-      "lithuanian": "Turiu klausimą dėl sutarties.",
-      "english": "I have a question about the contract.",
-      "pronunciation": "TOO-riu klou-SI-mahn dehl soo-TAHR-ties",
-      "category": "Business",
-      "difficulty": "intermediate",
-      "week": 7
-    },
-    {
-      "id": 64,
       "lithuanian": "Kada yra terminas?",
       "english": "When is the deadline?",
       "pronunciation": "kah-DAH ee-RAH tehr-MI-nahs",
@@ -577,238 +469,886 @@
       "week": 7
     },
     {
-      "id": 65,
+      "id": 53,
+      "lithuanian": "Man reikia atostogų.",
+      "english": "I need vacation time.",
+      "pronunciation": "mahn ray-KYA ah-tohs-toh-GU",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 7
+    },
+    {
+      "id": 54,
+      "lithuanian": "Šiandien dirbu iš namų.",
+      "english": "Today I'm working from home.",
+      "pronunciation": "shyan-DYEN deer-BOO ish nah-MU",
+      "category": "Business",
+      "difficulty": "beginner",
+      "week": 7
+    },
+    {
+      "id": 55,
+      "lithuanian": "Ar galiu gauti darbo pažymėjimą?",
+      "english": "Can I get an employment certificate?",
+      "pronunciation": "ahr gah-LIU gou-TI DAHR-boh pah-zhee-MEH-yi-mahn",
+      "category": "Business",
+      "difficulty": "advanced",
+      "week": 7
+    },
+    {
+      "id": 56,
+      "lithuanian": "Kokios yra darbo valandos?",
+      "english": "What are the work hours?",
+      "pronunciation": "KOH-kios ee-RAH DAHR-boh vah-lahn-DOHS",
+      "category": "Business",
+      "difficulty": "beginner",
+      "week": 7
+    },
+    {
+      "id": 57,
+      "lithuanian": "Ar turite klausimų dėl pasiūlymo?",
+      "english": "Do you have questions about the offer?",
+      "pronunciation": "ahr TOO-ri-teh klou-SI-mu dehl pah-SIU-lee-moh",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 8
+    },
+    {
+      "id": 58,
+      "lithuanian": "Koks atlygis už šią poziciją?",
+      "english": "What is the salary for this position?",
+      "pronunciation": "koks aht-LEE-gis oozh SHYAHN poh-ZI-tsi-yahn",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 8
+    },
+    {
+      "id": 59,
       "lithuanian": "Ar galiu dirbti nuotoliniu būdu?",
       "english": "Can I work remotely?",
       "pronunciation": "ahr gah-LIU deer-BTI nuo-toh-LI-niu BOO-doo",
       "category": "Business",
       "difficulty": "intermediate",
-      "week": 7
+      "week": 8
+    },
+    {
+      "id": 60,
+      "lithuanian": "Man reikia pasirašyti sutartį.",
+      "english": "I need to sign the contract.",
+      "pronunciation": "mahn ray-KYA pah-si-rah-SHEET soo-TAHR-ti",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 8
+    },
+    {
+      "id": 61,
+      "lithuanian": "Man reikia išsiimti leidimą gyventi.",
+      "english": "I need to get a residence permit.",
+      "pronunciation": "mahn ray-KYA ish-si-IM-ti lay-DI-mahn gee-VEHN-ti",
+      "category": "Immigration",
+      "difficulty": "intermediate",
+      "week": 8
+    },
+    {
+      "id": 62,
+      "lithuanian": "Kur galiu registruotis gyvenamąją vietą?",
+      "english": "Where can I register my residence?",
+      "pronunciation": "koor gah-LIU reh-gis-troo-OH-tis gee-veh-nah-mahn-YAHN VYE-tahn",
+      "category": "Immigration",
+      "difficulty": "intermediate",
+      "week": 8
+    },
+    {
+      "id": 63,
+      "lithuanian": "Kokių dokumentų man reikia?",
+      "english": "What documents do I need?",
+      "pronunciation": "KOH-kiu doh-koo-MEHN-tu mahn ray-KYA",
+      "category": "Immigration",
+      "difficulty": "beginner",
+      "week": 9
+    },
+    {
+      "id": 64,
+      "lithuanian": "Aš esu čia su darbo viza.",
+      "english": "I am here on a work visa.",
+      "pronunciation": "ahsh EH-soo chya soo DAHR-boh VI-zah",
+      "category": "Immigration",
+      "difficulty": "beginner",
+      "week": 9
+    },
+    {
+      "id": 65,
+      "lithuanian": "Man reikia pratęsti vizą.",
+      "english": "I need to extend my visa.",
+      "pronunciation": "mahn ray-KYA prah-TEHN-sti VI-zahn",
+      "category": "Immigration",
+      "difficulty": "intermediate",
+      "week": 9
     },
     {
       "id": 66,
-      "lithuanian": "Koks darbo užmokestis?",
-      "english": "What is the salary?",
-      "pronunciation": "koks DAHR-boh oozh-moh-KEHS-tis",
-      "category": "Business",
+      "lithuanian": "Kur yra migracijos tarnyba?",
+      "english": "Where is the migration office?",
+      "pronunciation": "koor ee-RAH mi-grah-TSI-yohs tahr-NEE-bah",
+      "category": "Immigration",
       "difficulty": "intermediate",
-      "week": 7
+      "week": 9
     },
     {
       "id": 67,
-      "lithuanian": "Man reikia pasirašyt dokumentą.",
-      "english": "I need to sign a document.",
-      "pronunciation": "mahn ray-KYA pah-si-rah-SHEET doh-koo-MEHN-tahn",
-      "category": "Business",
-      "difficulty": "intermediate",
-      "week": 7
+      "lithuanian": "Ar man reikia vertėjo?",
+      "english": "Do I need a translator?",
+      "pronunciation": "ahr mahn ray-KYA vehr-TEH-yoh",
+      "category": "Immigration",
+      "difficulty": "beginner",
+      "week": 9
     },
     {
       "id": 68,
-      "lithuanian": "Ar galime aptart detales?",
-      "english": "Can we discuss the details?",
-      "pronunciation": "ahr gah-LI-meh ahp-TAHRT deh-TAH-lehs",
-      "category": "Business",
-      "difficulty": "intermediate",
-      "week": 7
+      "lithuanian": "Kada galiu gauti atsakymą?",
+      "english": "When can I get an answer?",
+      "pronunciation": "kah-DAH gah-LIU gou-TI aht-sah-KEE-mahn",
+      "category": "Immigration",
+      "difficulty": "beginner",
+      "week": 9
     },
     {
       "id": 69,
-      "lithuanian": "Aš ieškau buto nuomai.",
-      "english": "I'm looking for an apartment to rent.",
-      "pronunciation": "ahsh yesh-KOU BOO-toh nuo-MOH-mai",
+      "lithuanian": "Aš turiu sveikatos draudimą.",
+      "english": "I have health insurance.",
+      "pronunciation": "ahsh TOO-riu svay-kah-TOHS drou-DI-mahn",
       "category": "Immigration",
       "difficulty": "intermediate",
-      "week": 7
+      "week": 10
     },
     {
       "id": 70,
-      "lithuanian": "Koks nuomos mokestis per mėnesį?",
-      "english": "What is the monthly rent?",
-      "pronunciation": "koks nuo-MOHS moh-KEHS-tis pehr MEH-neh-si",
+      "lithuanian": "Noriu atidaryt banko sąskaitą.",
+      "english": "I want to open a bank account.",
+      "pronunciation": "NOH-riu ah-ti-dah-REET BAHN-koh sahn-skai-TAHN",
       "category": "Immigration",
       "difficulty": "intermediate",
-      "week": 7
+      "week": 10
     },
     {
       "id": 71,
+      "lithuanian": "Kiek kainuoja nuomos mokestis?",
+      "english": "How much is the rent?",
+      "pronunciation": "kyek kai-NOO-yah nuo-MOHS moh-KEHS-tis",
+      "category": "Immigration",
+      "difficulty": "intermediate",
+      "week": 10
+    },
+    {
+      "id": 72,
       "lithuanian": "Ar būstas yra su baldais?",
       "english": "Is the apartment furnished?",
       "pronunciation": "ahr BOO-stahs ee-RAH soo bahl-DAIS",
       "category": "Immigration",
       "difficulty": "intermediate",
-      "week": 8
+      "week": 10
     },
     {
-      "id": 72,
+      "id": 73,
       "lithuanian": "Man reikia registruoti automobilį.",
       "english": "I need to register my car.",
       "pronunciation": "mahn ray-KYA reh-gis-troo-OH-ti ou-toh-moh-BI-li",
       "category": "Immigration",
       "difficulty": "intermediate",
-      "week": 8
+      "week": 10
     },
     {
-      "id": 73,
+      "id": 74,
       "lithuanian": "Kur galiu gauti asmens kodą?",
       "english": "Where can I get a personal code?",
       "pronunciation": "koor gah-LIU gou-TI ahs-MEHNS koh-DAHN",
       "category": "Immigration",
       "difficulty": "intermediate",
-      "week": 8
+      "week": 11
     },
     {
-      "id": 74,
+      "id": 75,
       "lithuanian": "Ar man reikia mokėt mokesčius?",
       "english": "Do I need to pay taxes?",
       "pronunciation": "ahr mahn ray-KYA moh-KEHT moh-KEHS-chus",
       "category": "Immigration",
       "difficulty": "intermediate",
-      "week": 8
+      "week": 11
     },
     {
-      "id": 75,
+      "id": 76,
       "lithuanian": "Kur yra artimiausias gydytojas?",
       "english": "Where is the nearest doctor?",
       "pronunciation": "koor ee-RAH ahr-ti-MYOU-sias gee-DEE-toh-yahs",
       "category": "Healthcare",
       "difficulty": "beginner",
-      "week": 8
+      "week": 11
     },
     {
-      "id": 76,
+      "id": 77,
       "lithuanian": "Man reikia vaistų iš recepto.",
       "english": "I need prescription medicine.",
       "pronunciation": "mahn ray-KYA vais-TU ish reh-TSEHP-toh",
       "category": "Healthcare",
       "difficulty": "beginner",
-      "week": 8
+      "week": 11
     },
     {
-      "id": 77,
+      "id": 78,
       "lithuanian": "Noriu užsisakyt vizitą pas gydytoją.",
       "english": "I want to book an appointment with a doctor.",
       "pronunciation": "NOH-riu oo-zhi-sah-KEET vi-zi-TAHN pahs gee-DEE-toh-yahn",
       "category": "Healthcare",
       "difficulty": "intermediate",
-      "week": 8
+      "week": 11
     },
     {
-      "id": 78,
+      "id": 79,
       "lithuanian": "Kur yra artimiausią vaistinė?",
       "english": "Where is the nearest pharmacy?",
       "pronunciation": "koor ee-RAH ahr-ti-MYOU-sya vais-ti-NEH",
       "category": "Healthcare",
       "difficulty": "beginner",
-      "week": 8
-    },
-    {
-      "id": 79,
-      "lithuanian": "Ar darbdavys teikia sveikatos draudimą?",
-      "english": "Does the employer provide health insurance?",
-      "pronunciation": "ahr dahrb-DAH-vees tay-KYA svay-kah-TOHS drou-DI-mahn",
-      "category": "Business",
-      "difficulty": "advanced",
-      "week": 8
+      "week": 11
     },
     {
       "id": 80,
-      "lithuanian": "Koks atostogų kiekis per metus?",
-      "english": "How many vacation days per year?",
-      "pronunciation": "koks ah-tohs-toh-GU KYE-kis pehr MEH-toos",
-      "category": "Business",
-      "difficulty": "intermediate",
-      "week": 8
+      "lithuanian": "Ar čia priimama prašymai internetu?",
+      "english": "Are applications accepted online here?",
+      "pronunciation": "ahr chya pri-i-MAH-mah prah-SHEE-mai in-tehr-NEH-too",
+      "category": "Immigration",
+      "difficulty": "advanced",
+      "week": 12
     },
     {
       "id": 81,
-      "lithuanian": "Ar mokate užsienio kalbų?",
-      "english": "Do you know foreign languages?",
-      "pronunciation": "ahr moh-KAH-teh oozh-sye-NIO kahl-BU",
-      "category": "Business",
+      "lithuanian": "Šiandien užsisakysiu maistą.",
+      "english": "Today I will order food.",
+      "pronunciation": "shyan-DYEN oozh-si-sah-KEE-siu mais-TAHN",
+      "category": "Daily Life",
       "difficulty": "beginner",
-      "week": 9
+      "week": 12
     },
     {
       "id": 82,
-      "lithuanian": "Aš noriu susitikt su vadovu.",
-      "english": "I want to meet with the manager.",
-      "pronunciation": "ahsh NOH-riu soo-si-TIKT soo vah-DOH-voo",
-      "category": "Business",
+      "lithuanian": "Kiek laiko užtrunka pristatymas?",
+      "english": "How long does delivery take?",
+      "pronunciation": "kyek LAI-koh oozh-truhn-KAH pris-tah-TEE-mahs",
+      "category": "Daily Life",
       "difficulty": "intermediate",
-      "week": 9
+      "week": 12
     },
     {
       "id": 83,
-      "lithuanian": "Kada pradeda darbo diena?",
-      "english": "When does the work day start?",
-      "pronunciation": "kah-DAH prah-DEH-dah DAHR-boh DYE-nah",
-      "category": "Business",
+      "lithuanian": "Ar galiu sumokėti grynaisiais?",
+      "english": "Can I pay with cash?",
+      "pronunciation": "ahr gah-LIU soo-moh-KEH-ti gree-NAI-siais",
+      "category": "Shopping",
       "difficulty": "beginner",
-      "week": 9
+      "week": 12
     },
     {
       "id": 84,
+      "lithuanian": "Ar turite mažesnį?",
+      "english": "Do you have something smaller? (money)",
+      "pronunciation": "ahr TOO-ri-teh mah-ZHEHS-ni",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 12
+    },
+    {
+      "id": 85,
+      "lithuanian": "Kiek aš jums esu skolingas?",
+      "english": "How much do I owe you?",
+      "pronunciation": "kyek ahsh yums EH-soo skoh-LIN-gahs",
+      "category": "Daily Life",
+      "difficulty": "intermediate",
+      "week": 13
+    },
+    {
+      "id": 86,
+      "lithuanian": "Ar galiu gauti nuolaidą?",
+      "english": "Can I get a discount?",
+      "pronunciation": "ahr gah-LIU gou-TI nuo-lai-DAHN",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 13
+    },
+    {
+      "id": 87,
+      "lithuanian": "Šis produktas yra sugadintas.",
+      "english": "This product is damaged.",
+      "pronunciation": "shis proh-DOOK-tahs ee-RAH soo-gah-DIN-tahs",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 13
+    },
+    {
+      "id": 88,
+      "lithuanian": "Man reikia kito dydžio.",
+      "english": "I need a different size.",
+      "pronunciation": "mahn ray-KYA KI-toh DEE-dzhio",
+      "category": "Shopping",
+      "difficulty": "beginner",
+      "week": 13
+    },
+    {
+      "id": 89,
+      "lithuanian": "Ar galiu užsisakyti internetu?",
+      "english": "Can I order online?",
+      "pronunciation": "ahr gah-LIU oozh-si-sah-KEE-ti in-tehr-NEH-too",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 13
+    },
+    {
+      "id": 90,
+      "lithuanian": "Kada atvežsite prekę?",
+      "english": "When will you deliver the item?",
+      "pronunciation": "kah-DAH aht-veh-ZHIS-teh PREH-keh",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 14
+    },
+    {
+      "id": 91,
+      "lithuanian": "Ar turiu mokėti už pristatymą?",
+      "english": "Do I have to pay for delivery?",
+      "pronunciation": "ahr TOO-riu moh-KEH-ti oozh pris-tah-TEE-mahn",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 14
+    },
+    {
+      "id": 92,
+      "lithuanian": "Man reikia susikalbėti su vadovu.",
+      "english": "I need to speak with the manager.",
+      "pronunciation": "mahn ray-KYA soo-si-kahl-BEH-ti soo vah-DOH-voo",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 14
+    },
+    {
+      "id": 93,
+      "lithuanian": "Ar galite patvirtinti užsakymą?",
+      "english": "Can you confirm the order?",
+      "pronunciation": "ahr gah-LI-teh paht-veer-TIN-ti oozh-sah-KEE-mahn",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 14
+    },
+    {
+      "id": 94,
+      "lithuanian": "Aš negaliu dabar dalyvauti.",
+      "english": "I cannot attend right now.",
+      "pronunciation": "ahsh neh-gah-LIU dah-BAHR dah-lee-VOU-ti",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 14
+    },
+    {
+      "id": 95,
+      "lithuanian": "Ar galime perkelti susirinkimą?",
+      "english": "Can we reschedule the meeting?",
+      "pronunciation": "ahr gah-LI-meh pehr-KEHL-ti soo-si-rin-KI-mahn",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 15
+    },
+    {
+      "id": 96,
+      "lithuanian": "Aš nespėsiu baigti laiku.",
+      "english": "I won't manage to finish on time.",
+      "pronunciation": "ahsh nehs-PEH-siu baig-TI lai-KOO",
+      "category": "Business",
+      "difficulty": "advanced",
+      "week": 15
+    },
+    {
+      "id": 97,
+      "lithuanian": "Ar galiu gauti daugiau informacijos?",
+      "english": "Can I get more information?",
+      "pronunciation": "ahr gah-LIU gou-TI dou-GYOU in-fohr-MAH-tsi-yohs",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 15
+    },
+    {
+      "id": 98,
+      "lithuanian": "Man reikia aptarti svarbų klausimą.",
+      "english": "I need to discuss an important matter.",
+      "pronunciation": "mahn ray-KYA ahp-TAR-ti svahr-BU klou-SI-mahn",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 15
+    },
+    {
+      "id": 99,
+      "lithuanian": "Ar galėtumėte man paskambinti vėliau?",
+      "english": "Could you call me later?",
+      "pronunciation": "ahr gah-LEH-too-meh-teh mahn pahs-kahm-BIN-ti VEH-lyou",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 15
+    },
+    {
+      "id": 100,
+      "lithuanian": "Kada prasideda darbo diena?",
+      "english": "When does the work day start?",
+      "pronunciation": "kah-DAH prah-si-DEH-dah DAHR-boh DYE-nah",
+      "category": "Business",
+      "difficulty": "beginner",
+      "week": 16
+    },
+    {
+      "id": 101,
       "lithuanian": "Ar turite pietų pertraukos?",
       "english": "Do you have lunch breaks?",
       "pronunciation": "ahr TOO-ri-teh pye-TU pehr-trou-KOHS",
       "category": "Business",
       "difficulty": "beginner",
-      "week": 9
+      "week": 16
     },
     {
-      "id": 85,
-      "lithuanian": "Mano draugas iš užsienio.",
-      "english": "My friend is from abroad.",
-      "pronunciation": "MAH-noh drou-GAHS ish oozh-sye-NIO",
+      "id": 102,
+      "lithuanian": "Ar šiandien būsi biure?",
+      "english": "Will you be in the office today?",
+      "pronunciation": "ahr shyan-DYEN BOO-si BYU-reh",
+      "category": "Business",
+      "difficulty": "beginner",
+      "week": 16
+    },
+    {
+      "id": 103,
+      "lithuanian": "Man reikia susitvarkyti asmeninių reikalų.",
+      "english": "I need to take care of personal matters.",
+      "pronunciation": "mahn ray-KYA soo-si-tvahr-KEE-ti ahs-meh-ni-NIU ray-kah-LU",
+      "category": "Business",
+      "difficulty": "advanced",
+      "week": 16
+    },
+    {
+      "id": 104,
+      "lithuanian": "Gal eisime kartu pietauti?",
+      "english": "Shall we go for lunch together?",
+      "pronunciation": "gahl ay-SI-meh kahr-TOO pye-tou-TI",
       "category": "Friends",
       "difficulty": "beginner",
-      "week": 9
+      "week": 16
     },
     {
-      "id": 86,
-      "lithuanian": "Ar nori eiti į kiną šį savaitgalį?",
-      "english": "Do you want to go to the cinema this weekend?",
-      "pronunciation": "ahr NOH-ri AY-ti ee ki-NAHN shi sah-vait-GAH-li",
+      "id": 105,
+      "lithuanian": "Ar nori kavos?",
+      "english": "Do you want coffee?",
+      "pronunciation": "ahr NOH-ri kah-VOHS",
       "category": "Friends",
       "difficulty": "beginner",
-      "week": 9
+      "week": 17
     },
     {
-      "id": 87,
-      "lithuanian": "Kiek laiko gyvenai Lietuvoje?",
-      "english": "How long have you lived in Lithuania?",
-      "pronunciation": "kyek LAI-koh gee-veh-NAI lye-too-VOH-yeh",
+      "id": 106,
+      "lithuanian": "Pasakok, kaip tau sekasi.",
+      "english": "Tell me, how are you doing.",
+      "pronunciation": "pah-sah-KOK kaip tou seh-KAH-si",
+      "category": "Friends",
+      "difficulty": "beginner",
+      "week": 17
+    },
+    {
+      "id": 107,
+      "lithuanian": "Ar girdėjai naujienų?",
+      "english": "Have you heard the news?",
+      "pronunciation": "ahr geer-DEH-yai nou-YE-nu",
       "category": "Friends",
       "difficulty": "intermediate",
-      "week": 9
+      "week": 17
     },
     {
-      "id": 88,
-      "lithuanian": "Ar tau patinka lietuviška maistas?",
-      "english": "Do you like Lithuanian food?",
-      "pronunciation": "ahr tou pah-TEEN-kah lye-too-VISH-kah mais-TAHS",
+      "id": 108,
+      "lithuanian": "Kur galime susitikti?",
+      "english": "Where can we meet?",
+      "pronunciation": "koor gah-LI-meh soo-si-TIK-ti",
       "category": "Friends",
       "difficulty": "beginner",
-      "week": 9
+      "week": 17
     },
     {
-      "id": 89,
-      "lithuanian": "Gal galėtume susikalbėti telefonu?",
-      "english": "Maybe we could talk on the phone?",
-      "pronunciation": "gahl gah-LEH-too-meh soo-si-kahl-BEH-ti teh-leh-FOH-noo",
+      "id": 109,
+      "lithuanian": "Ar turi planų savaitgaliui?",
+      "english": "Do you have plans for the weekend?",
+      "pronunciation": "ahr TOO-ri plah-NU sah-vait-GAH-lyui",
       "category": "Friends",
       "difficulty": "intermediate",
-      "week": 9
+      "week": 17
     },
     {
-      "id": 90,
-      "lithuanian": "Kur galima pirkti lietuviškos produkcijos?",
-      "english": "Where can I buy Lithuanian products?",
-      "pronunciation": "koor gah-LI-mah PEER-kti lye-too-VISH-kohs proh-DOOK-tsi-yohs",
+      "id": 110,
+      "lithuanian": "Gal nueitume į kiną?",
+      "english": "Shall we go to the cinema?",
+      "pronunciation": "gahl noo-ay-TOO-meh ee ki-NAHN",
+      "category": "Friends",
+      "difficulty": "beginner",
+      "week": 18
+    },
+    {
+      "id": 111,
+      "lithuanian": "Parašyk man žinutę.",
+      "english": "Send me a message.",
+      "pronunciation": "pah-rah-SHEEK mahn zhi-NOO-teh",
+      "category": "Friends",
+      "difficulty": "beginner",
+      "week": 18
+    },
+    {
+      "id": 112,
+      "lithuanian": "Ar galiu tau padėti?",
+      "english": "Can I help you?",
+      "pronunciation": "ahr gah-LIU tou pah-DEH-ti",
+      "category": "Friends",
+      "difficulty": "beginner",
+      "week": 18
+    },
+    {
+      "id": 113,
+      "lithuanian": "Pasveikinki mamą nuo manęs.",
+      "english": "Say hello to your mom from me.",
+      "pronunciation": "pahs-vay-KIN-ki MAH-mahn noo mah-NEHS",
+      "category": "Family",
+      "difficulty": "intermediate",
+      "week": 18
+    },
+    {
+      "id": 114,
+      "lithuanian": "Ar tavo šeima gerai?",
+      "english": "Is your family well?",
+      "pronunciation": "ahr TAH-voh SHAY-mah geh-RAI",
+      "category": "Family",
+      "difficulty": "beginner",
+      "week": 18
+    },
+    {
+      "id": 115,
+      "lithuanian": "Kada gimė tavo vaikas?",
+      "english": "When was your child born?",
+      "pronunciation": "kah-DAH gi-MEH TAH-voh vai-KAHS",
+      "category": "Family",
+      "difficulty": "intermediate",
+      "week": 19
+    },
+    {
+      "id": 116,
+      "lithuanian": "Kiek metų tavo vaikui?",
+      "english": "How old is your child?",
+      "pronunciation": "kyek meh-TU TAH-voh vai-KUI",
+      "category": "Family",
+      "difficulty": "beginner",
+      "week": 19
+    },
+    {
+      "id": 117,
+      "lithuanian": "Mano tėvai gyvena kaime.",
+      "english": "My parents live in the countryside.",
+      "pronunciation": "MAH-noh TEH-vai gee-VEH-nah kai-MEH",
+      "category": "Family",
+      "difficulty": "beginner",
+      "week": 19
+    },
+    {
+      "id": 118,
+      "lithuanian": "Ar dažnai matai savo šeimą?",
+      "english": "Do you see your family often?",
+      "pronunciation": "ahr dahzh-NAI MAH-tai SAH-voh SHAY-mahn",
+      "category": "Family",
+      "difficulty": "intermediate",
+      "week": 19
+    },
+    {
+      "id": 119,
+      "lithuanian": "Mes švęsime Kalėdas kartu.",
+      "english": "We will celebrate Christmas together.",
+      "pronunciation": "mehs shvehn-SI-meh kah-LEH-dahs kahr-TOO",
+      "category": "Family",
+      "difficulty": "intermediate",
+      "week": 19
+    },
+    {
+      "id": 120,
+      "lithuanian": "Ar reikia paimti kažką iš parduotuvės?",
+      "english": "Do I need to pick up anything from the store?",
+      "pronunciation": "ahr ray-KYA pai-MTI kah-ZHKAHN ish pahr-duo-too-VEHS",
       "category": "Shopping",
       "difficulty": "intermediate",
-      "week": 9
+      "week": 20
+    },
+    {
+      "id": 121,
+      "lithuanian": "Kur parduodama šviežia duona?",
+      "english": "Where is fresh bread sold?",
+      "pronunciation": "koor pahr-duo-DAH-mah SHVYE-zhia DOO-oh-nah",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 20
+    },
+    {
+      "id": 122,
+      "lithuanian": "Ar šis produktas yra ekologiškas?",
+      "english": "Is this product organic?",
+      "pronunciation": "ahr shis proh-DOOK-tahs ee-RAH eh-koh-loh-GISH-kahs",
+      "category": "Shopping",
+      "difficulty": "advanced",
+      "week": 20
+    },
+    {
+      "id": 123,
+      "lithuanian": "Ar galiu pamatyti sudedamąsias dalis?",
+      "english": "Can I see the ingredients?",
+      "pronunciation": "ahr gah-LIU pah-mah-TEE-ti soo-deh-dah-MAHN-sias DAH-lis",
+      "category": "Shopping",
+      "difficulty": "advanced",
+      "week": 20
+    },
+    {
+      "id": 124,
+      "lithuanian": "Iki kada galioja šis pasiūlymas?",
+      "english": "Until when is this offer valid?",
+      "pronunciation": "i-KI kah-DAH gah-LYO-yah shis pah-SIU-lee-mahs",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 20
+    },
+    {
+      "id": 125,
+      "lithuanian": "Ar turite lojalumo kortelę?",
+      "english": "Do you have a loyalty card?",
+      "pronunciation": "ahr TOO-ri-teh loh-yah-LU-moh kohr-TEH-leh",
+      "category": "Shopping",
+      "difficulty": "intermediate",
+      "week": 21
+    },
+    {
+      "id": 126,
+      "lithuanian": "Aš ieškau dovanos vaikui.",
+      "english": "I'm looking for a gift for a child.",
+      "pronunciation": "ahsh yesh-KOU doh-VAH-nohs vai-KUI",
+      "category": "Shopping",
+      "difficulty": "beginner",
+      "week": 21
+    },
+    {
+      "id": 127,
+      "lithuanian": "Kur yra apsikeitimo punktas?",
+      "english": "Where is the exchange point?",
+      "pronunciation": "koor ee-RAH ahp-si-kay-TI-moh PUHNK-tahs",
+      "category": "Daily Life",
+      "difficulty": "intermediate",
+      "week": 21
+    },
+    {
+      "id": 128,
+      "lithuanian": "Kokia šiandien valiutos kursas?",
+      "english": "What is today's exchange rate?",
+      "pronunciation": "KOH-kia shyan-DYEN vah-LYU-tohs KOOR-sahs",
+      "category": "Daily Life",
+      "difficulty": "intermediate",
+      "week": 21
+    },
+    {
+      "id": 129,
+      "lithuanian": "Man reikia pervesti pinigus.",
+      "english": "I need to transfer money.",
+      "pronunciation": "mahn ray-KYA pehr-VEHS-ti pi-ni-GOOS",
+      "category": "Daily Life",
+      "difficulty": "intermediate",
+      "week": 21
+    },
+    {
+      "id": 130,
+      "lithuanian": "Ar galiu mokėti eurais?",
+      "english": "Can I pay in euros?",
+      "pronunciation": "ahr gah-LIU moh-KEH-ti AY-oo-rais",
+      "category": "Shopping",
+      "difficulty": "beginner",
+      "week": 22
+    },
+    {
+      "id": 131,
+      "lithuanian": "Ar priimate šią draudimo kortelę?",
+      "english": "Do you accept this insurance card?",
+      "pronunciation": "ahr pri-i-MAH-teh SHYAHN drou-DI-moh kohr-TEH-leh",
+      "category": "Healthcare",
+      "difficulty": "intermediate",
+      "week": 22
+    },
+    {
+      "id": 132,
+      "lithuanian": "Man blogai. Kur yra artimiausias gydytojas?",
+      "english": "I feel bad. Where is the nearest doctor?",
+      "pronunciation": "mahn bloh-GAI koor ee-RAH ahr-ti-MYOU-sias gee-DEE-toh-yahs",
+      "category": "Healthcare",
+      "difficulty": "beginner",
+      "week": 22
+    },
+    {
+      "id": 133,
+      "lithuanian": "Ar turite vaistų nuo galvos skausmo?",
+      "english": "Do you have medicine for headache?",
+      "pronunciation": "ahr TOO-ri-teh vais-TU noo gahl-VOHS skous-MOH",
+      "category": "Healthcare",
+      "difficulty": "intermediate",
+      "week": 22
+    },
+    {
+      "id": 134,
+      "lithuanian": "Man reikia skubios pagalbos.",
+      "english": "I need emergency help.",
+      "pronunciation": "mahn ray-KYA skoo-BIOS pah-GAHL-bohs",
+      "category": "Healthcare",
+      "difficulty": "intermediate",
+      "week": 22
+    },
+    {
+      "id": 135,
+      "lithuanian": "Aš sergų ir negaliu ateiti į darbą.",
+      "english": "I'm sick and can't come to work.",
+      "pronunciation": "ahsh sehr-GU eer neh-gah-LIU ah-tay-TI ee dahr-BAHN",
+      "category": "Business",
+      "difficulty": "intermediate",
+      "week": 23
+    },
+    {
+      "id": 136,
+      "lithuanian": "Ar galiu gauti ligos pažymėjimą?",
+      "english": "Can I get a sick note?",
+      "pronunciation": "ahr gah-LIU gou-TI LI-gohs pah-zhee-MEH-yi-mahn",
+      "category": "Healthcare",
+      "difficulty": "intermediate",
+      "week": 23
+    },
+    {
+      "id": 137,
+      "lithuanian": "Kada priiminėja gydytojas?",
+      "english": "When does the doctor see patients?",
+      "pronunciation": "kah-DAH pri-i-mi-NEH-yah gee-DEE-toh-yahs",
+      "category": "Healthcare",
+      "difficulty": "intermediate",
+      "week": 23
+    },
+    {
+      "id": 138,
+      "lithuanian": "Man reikia padaryti kraujo tyrimą.",
+      "english": "I need to do a blood test.",
+      "pronunciation": "mahn ray-KYA pah-dah-REE-ti KROU-yoh tee-ree-MAHN",
+      "category": "Healthcare",
+      "difficulty": "intermediate",
+      "week": 23
+    },
+    {
+      "id": 139,
+      "lithuanian": "Ar galite išrašyti receptą?",
+      "english": "Can you write a prescription?",
+      "pronunciation": "ahr gah-LI-teh ish-rah-SHEE-ti reh-TSEH-ptahn",
+      "category": "Healthcare",
+      "difficulty": "intermediate",
+      "week": 23
+    },
+    {
+      "id": 140,
+      "lithuanian": "Kiek laiko reikia laukti rezultatų?",
+      "english": "How long do I need to wait for the results?",
+      "pronunciation": "kyek LAI-koh ray-KYA lou-KTI reh-zool-TAH-tu",
+      "category": "Healthcare",
+      "difficulty": "intermediate",
+      "week": 24
+    },
+    {
+      "id": 141,
+      "lithuanian": "Ar čia galiu užpildyti prašymą?",
+      "english": "Can I fill out an application here?",
+      "pronunciation": "ahr chya gah-LIU oozh-pil-DEE-ti prah-SHEE-mahn",
+      "category": "Immigration",
+      "difficulty": "intermediate",
+      "week": 24
+    },
+    {
+      "id": 142,
+      "lithuanian": "Man reikia nuotraukų pasui.",
+      "english": "I need photos for my passport.",
+      "pronunciation": "mahn ray-KYA nuo-TROU-ku pah-SUI",
+      "category": "Immigration",
+      "difficulty": "intermediate",
+      "week": 24
+    },
+    {
+      "id": 143,
+      "lithuanian": "Kada galima paimti dokumentą?",
+      "english": "When can I pick up the document?",
+      "pronunciation": "kah-DAH gah-LI-mah pai-MTI doh-koo-MEHN-tahn",
+      "category": "Immigration",
+      "difficulty": "intermediate",
+      "week": 24
+    },
+    {
+      "id": 144,
+      "lithuanian": "Ar reikia mokėti mokestį?",
+      "english": "Do I need to pay a fee?",
+      "pronunciation": "ahr ray-KYA moh-KEH-ti moh-KEHS-ti",
+      "category": "Immigration",
+      "difficulty": "intermediate",
+      "week": 24
+    },
+    {
+      "id": 145,
+      "lithuanian": "Ar turite klausimų dėl mano prašymo?",
+      "english": "Do you have questions about my application?",
+      "pronunciation": "ahr TOO-ri-teh klou-SI-mu dehl MAH-noh prah-SHEE-moh",
+      "category": "Immigration",
+      "difficulty": "intermediate",
+      "week": 25
+    },
+    {
+      "id": 146,
+      "lithuanian": "Man reikia patvirtinimo apie gyvenamąją vietą.",
+      "english": "I need a certificate of residence.",
+      "pronunciation": "mahn ray-KYA paht-veer-TI-ni-moh ah-PYE gee-veh-nah-mahn-YAHN VYE-tahn",
+      "category": "Immigration",
+      "difficulty": "advanced",
+      "week": 25
+    },
+    {
+      "id": 147,
+      "lithuanian": "Ar galiu pratęsti leidimą internetu?",
+      "english": "Can I extend my permit online?",
+      "pronunciation": "ahr gah-LIU prah-TEHN-sti lay-DI-mahn in-tehr-NEH-too",
+      "category": "Immigration",
+      "difficulty": "intermediate",
+      "week": 25
+    },
+    {
+      "id": 148,
+      "lithuanian": "Kiek kainuoja leidimas gyventi?",
+      "english": "How much does a residence permit cost?",
+      "pronunciation": "kyek kai-NOO-yah lay-DI-mahs gee-VEHN-ti",
+      "category": "Immigration",
+      "difficulty": "intermediate",
+      "week": 25
+    },
+    {
+      "id": 149,
+      "lithuanian": "Ar galiu dirbti su šia viza?",
+      "english": "Can I work with this visa?",
+      "pronunciation": "ahr gah-LIU deer-BTI soo SHYA VI-zah",
+      "category": "Immigration",
+      "difficulty": "intermediate",
+      "week": 25
+    },
+    {
+      "id": 150,
+      "lithuanian": "Man baigėsi leidimas. Ką daryti?",
+      "english": "My permit expired. What should I do?",
+      "pronunciation": "mahn bai-GEH-si lay-DI-mahs kahn dah-REE-ti",
+      "category": "Immigration",
+      "difficulty": "intermediate",
+      "week": 26
     }
   ]
 }
