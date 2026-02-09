@@ -182,7 +182,10 @@ const App = {
     if (window.QuestManager) {
       QuestManager.renderDailyQuests();
     }
+<<<<<<< codex/review-language-learning-repo-for-improvements-hs14zh
     this.updateProfile();
+=======
+>>>>>>> main
   },
 
   // Update daily goal progress
