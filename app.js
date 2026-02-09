@@ -182,7 +182,9 @@ const App = {
     if (window.QuestManager) {
       QuestManager.renderDailyQuests();
     }
-    this.updateProfile();
+    if (this.updateProfile) {
+      this.updateProfile();
+    }
   },
 
   // Update daily goal progress

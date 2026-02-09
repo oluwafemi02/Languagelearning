@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lithuanian-learning-v3';
+const CACHE_NAME = 'lithuanian-learning-v4';
 const urlsToCache = [
   './',
   './index.html',
