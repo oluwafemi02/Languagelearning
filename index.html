@@ -877,6 +877,11 @@
                         <!-- Daily Goal Widget -->
                         <div class="daily-goal-widget">
                             <h3>🎯 Today's Goal</h3>
+                            <div class="goal-ring-wrapper">
+                                <div class="goal-ring" id="goal-ring">
+                                    <span class="goal-ring-text" id="goal-ring-text">0%</span>
+                                </div>
+                            </div>
                             <div class="goal-progress-bar">
                                 <div class="goal-progress-fill" id="goal-progress-fill" style="width: 0%"></div>
                             </div>
@@ -1068,7 +1073,7 @@
             <section id="results-screen" class="screen">
                 <div class="container">
                     <div class="results-content">
-                        <h2>Lesson Complete! 🎉</h2>
+                        <h2 id="results-title">Lesson Complete! 🎉</h2>
                         <div class="results-stats">
                             <div class="stat">
                                 <span class="stat-value" id="correct-answers">0</span>
@@ -1267,6 +1272,8 @@
 
     
     <!-- External JavaScript Files -->
+    <script src="state-logic.js"></script>
+    <script src="srs.js"></script>
     <script src="storage.js"></script>
     <script src="review.js"></script>
     <script src="achievements.js"></script>

@@ -370,8 +370,7 @@ const SentenceBuilderManager = {
     this.completedLessons.add(this.currentLesson.id);
     this.saveProgress();
 
-    Storage.addXP(xpEarned);
-    Storage.addDailyXP(xpEarned);
+    Storage.awardXP(xpEarned);
     StreakManager.updateStreak();
 
     const container = document.getElementById('sentencebuilder-content');

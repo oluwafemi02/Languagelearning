@@ -66,7 +66,7 @@ const App = {
     // Get selected goal (minutes to XP conversion)
     const selectedOption = document.querySelector('.goal-option.selected');
     const minutes = parseInt(selectedOption?.dataset.minutes || 10);
-    userData.settings.dailyGoal = minutes * 5; // 5 XP per minute estimate
+    userData.dailyGoalXP = minutes * 5; // 5 XP per minute estimate
     
     Storage.saveUserData(userData);
     
@@ -106,10 +106,11 @@ const App = {
       unitLessons.forEach((lesson, index) => {
         const globalIndex = unitStart + index;
         const isCompleted = this.userData.lessonsCompleted.some(l => l.id === lesson.id);
-        const isLocked = globalIndex > 0 && !this.userData.lessonsCompleted.some(l => l.id === this.lessons[globalIndex - 1].id);
+        const isLocked = !StateLogic.isLessonUnlocked(this.userData.lessonsCompleted, globalIndex);
+        const isCurrent = !isCompleted && !isLocked;
 
         const lessonCard = document.createElement('div');
-        lessonCard.className = `lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
+        lessonCard.className = `lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''} ${isCurrent ? 'current' : ''}`;
         
         lessonCard.innerHTML = `
           <div class="lesson-icon">${isCompleted ? '✓' : isLocked ? '🔒' : '📚'}</div>
@@ -175,33 +176,36 @@ const App = {
   // Display user stats
   displayUserStats() {
     this.userData = Storage.getUserData();
-    document.getElementById('total-xp').textContent = this.userData.totalXP;
-    document.getElementById('streak-count').textContent = this.userData.streak;
+    document.getElementById('total-xp').textContent = this.userData.xpTotal;
+    document.getElementById('streak-count').textContent = this.userData.streakCount;
     this.updateDailyGoal();
     this.updateReviewSection();
     if (window.QuestManager) {
       QuestManager.renderDailyQuests();
     }
-<<<<<<< codex/review-language-learning-repo-for-improvements-hs14zh
     this.updateProfile();
-=======
->>>>>>> main
   },
 
   // Update daily goal progress
   updateDailyGoal() {
     const dailyXP = Storage.getDailyXP();
-    const goalXP = this.userData.settings.dailyGoal;
+    const goalXP = this.userData.dailyGoalXP;
     const percentage = Math.min((dailyXP / goalXP) * 100, 100);
     
     const currentXPEl = document.getElementById('current-daily-xp');
     const goalXPEl = document.getElementById('daily-xp-goal');
     const progressFillEl = document.getElementById('goal-progress-fill');
     const statusEl = document.getElementById('goal-status');
+    const ringEl = document.getElementById('goal-ring');
+    const ringTextEl = document.getElementById('goal-ring-text');
     
     if (currentXPEl) currentXPEl.textContent = dailyXP;
     if (goalXPEl) goalXPEl.textContent = goalXP;
     if (progressFillEl) progressFillEl.style.width = `${percentage}%`;
+    if (ringEl) {
+      ringEl.style.background = `conic-gradient(var(--primary-color) ${percentage}%, rgba(255, 255, 255, 0.6) ${percentage}%)`;
+    }
+    if (ringTextEl) ringTextEl.textContent = `${Math.round(percentage)}%`;
     
     if (statusEl) {
       if (percentage >= 100) {
@@ -334,11 +338,11 @@ const App = {
 
   updateProfile() {
     const userData = Storage.getUserData();
-    const level = this.getUserLevel(userData.totalXP);
+    const level = this.getUserLevel(userData.xpTotal);
     const lessonsCompleted = userData.lessonsCompleted.length;
-    const vocabCount = Object.keys(userData.vocabulary || {}).length;
+    const vocabCount = Object.values(userData.srsItems || {}).filter(item => item.kind === 'word').length;
     const dailyXP = Storage.getDailyXP();
-    const dailyGoal = userData.settings.dailyGoal;
+    const dailyGoal = userData.dailyGoalXP;
     const goalPct = Math.min(Math.round((dailyXP / dailyGoal) * 100), 100);
 
     const setText = (id, value) => {
@@ -346,8 +350,8 @@ const App = {
       if (el) el.textContent = value;
     };
 
-    setText('profile-xp', userData.totalXP);
-    setText('profile-streak', userData.streak);
+    setText('profile-xp', userData.xpTotal);
+    setText('profile-streak', userData.streakCount);
     setText('profile-lessons', lessonsCompleted);
     setText('profile-vocab', vocabCount);
     setText('user-level', level);

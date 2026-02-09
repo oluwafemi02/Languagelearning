@@ -38,7 +38,7 @@ const AchievementManager = {
       descriptionLT: 'Išlaikyk 7 dienų seriją',
       icon: '🔥',
       xpBonus: 50,
-      condition: (userData) => userData.streak >= 7
+      condition: (userData) => userData.streakCount >= 7
     },
     {
       id: 'two-week-streak',
@@ -48,7 +48,7 @@ const AchievementManager = {
       descriptionLT: 'Išlaikyk 14 dienų seriją',
       icon: '🏅',
       xpBonus: 100,
-      condition: (userData) => userData.streak >= 14
+      condition: (userData) => userData.streakCount >= 14
     },
     {
       id: 'thirty-words',
@@ -58,7 +58,7 @@ const AchievementManager = {
       descriptionLT: 'Išmok 30 žodžių',
       icon: '📖',
       xpBonus: 30,
-      condition: (userData) => Object.keys(userData.vocabulary).length >= 30
+      condition: (userData) => Object.values(userData.srsItems || {}).filter(item => item.kind === 'word').length >= 30
     },
     {
       id: 'fifty-words',
@@ -68,7 +68,7 @@ const AchievementManager = {
       descriptionLT: 'Išmok 50 žodžių',
       icon: '📚',
       xpBonus: 50,
-      condition: (userData) => Object.keys(userData.vocabulary).length >= 50
+      condition: (userData) => Object.values(userData.srsItems || {}).filter(item => item.kind === 'word').length >= 50
     },
     {
       id: 'hundred-xp',
@@ -78,7 +78,7 @@ const AchievementManager = {
       descriptionLT: 'Uždirbk 100 XP',
       icon: '⭐',
       xpBonus: 20,
-      condition: (userData) => userData.totalXP >= 100
+      condition: (userData) => userData.xpTotal >= 100
     },
     {
       id: 'two-fifty-xp',
@@ -88,7 +88,7 @@ const AchievementManager = {
       descriptionLT: 'Uždirbk 250 XP',
       icon: '🌟',
       xpBonus: 50,
-      condition: (userData) => userData.totalXP >= 250
+      condition: (userData) => userData.xpTotal >= 250
     },
     {
       id: 'month-streak',
@@ -98,7 +98,7 @@ const AchievementManager = {
       descriptionLT: 'Išlaikyk 30 dienų seriją',
       icon: '🏆',
       xpBonus: 100,
-      condition: (userData) => userData.streak >= 30
+      condition: (userData) => userData.streakCount >= 30
     },
     {
       id: 'perfect-lesson',
@@ -109,7 +109,7 @@ const AchievementManager = {
       icon: '💯',
       xpBonus: 25,
       condition: (userData) => {
-        return userData.lessonsCompleted.some(lesson => lesson.score === 100);
+        return userData.lessonsCompleted.some(lesson => lesson.accuracy === 100);
       }
     }
   ],
@@ -136,7 +136,7 @@ const AchievementManager = {
       // Show achievement popup for each new one
       newAchievements.forEach(achievement => {
         this.showAchievementPopup(achievement);
-        Storage.addXP(achievement.xpBonus);
+        Storage.awardXP(achievement.xpBonus);
       });
     }
     

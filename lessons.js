@@ -4,6 +4,7 @@ const LessonManager = {
   correctAnswers: 0,
   totalExercises: 0,
   selectedAnswer: null,
+  minAccuracy: 80,
 
   // Load vocabulary data
   async loadLessons() {
@@ -98,6 +99,12 @@ const LessonManager = {
       case 'typing':
         this.displayTypingExercise(exercise);
         break;
+      case 'sentence-build':
+        this.displaySentenceBuildExercise(exercise);
+        break;
+      case 'fill-blank':
+        this.displayFillBlankExercise(exercise);
+        break;
       default:
         this.displayTranslationExercise(exercise);
     }
@@ -133,7 +140,7 @@ const LessonManager = {
 
     questionContainer.innerHTML = `
       <div class="question">
-        <button class="audio-btn" onclick="LessonManager.playAudio('${exercise.audio}')">
+        <button class="audio-btn" onclick="LessonManager.playAudio('${exercise.audio || ''}', '${exercise.text || ''}')">
           🔊 Klausyti
         </button>
         <p>${exercise.question}</p>
@@ -199,7 +206,7 @@ const LessonManager = {
     input.focus();
     
     input.addEventListener('input', (e) => {
-      this.selectedAnswer = e.target.value.trim().toLowerCase();
+      this.selectedAnswer = e.target.value.trim();
       document.getElementById('check-answer-btn').disabled = !this.selectedAnswer;
     });
     
@@ -208,6 +215,69 @@ const LessonManager = {
       if (e.key === 'Enter' && this.selectedAnswer) {
         document.getElementById('check-answer-btn').click();
       }
+    });
+  },
+
+  displaySentenceBuildExercise(exercise) {
+    const questionContainer = document.getElementById('question-container');
+    const answerOptions = document.getElementById('answer-options');
+    const tiles = [...exercise.tiles].sort(() => Math.random() - 0.5);
+    this.selectedAnswer = '';
+
+    questionContainer.innerHTML = `
+      <div class="question">
+        <h3>${exercise.question}</h3>
+        <div class="built-sentence" id="built-sentence"></div>
+      </div>
+    `;
+
+    answerOptions.innerHTML = `
+      <div class="word-tiles" id="word-tiles">
+        ${tiles.map((tile, idx) => `<button class="tile-btn" data-word="${tile}" data-index="${idx}">${tile}</button>`).join('')}
+      </div>
+      <button class="btn btn-secondary" id="reset-tiles-btn">Reset</button>
+    `;
+
+    const builtSentence = document.getElementById('built-sentence');
+    const tilesContainer = document.getElementById('word-tiles');
+    tilesContainer.addEventListener('click', (event) => {
+      const target = event.target.closest('.tile-btn');
+      if (!target || target.disabled) return;
+      const word = target.dataset.word;
+      target.disabled = true;
+      const current = this.selectedAnswer ? `${this.selectedAnswer} ${word}` : word;
+      this.selectedAnswer = current.trim();
+      builtSentence.textContent = this.selectedAnswer;
+      document.getElementById('check-answer-btn').disabled = !this.selectedAnswer;
+    });
+
+    document.getElementById('reset-tiles-btn').addEventListener('click', () => {
+      this.selectedAnswer = '';
+      builtSentence.textContent = '';
+      document.querySelectorAll('.tile-btn').forEach(btn => {
+        btn.disabled = false;
+      });
+      document.getElementById('check-answer-btn').disabled = true;
+    });
+  },
+
+  displayFillBlankExercise(exercise) {
+    const questionContainer = document.getElementById('question-container');
+    const answerOptions = document.getElementById('answer-options');
+    questionContainer.innerHTML = `
+      <div class="question">
+        <h3>${exercise.question}</h3>
+        <p class="hint">Fill in the blank</p>
+      </div>
+    `;
+
+    const shuffled = [...exercise.options].sort(() => Math.random() - 0.5);
+    shuffled.forEach(option => {
+      const button = document.createElement('button');
+      button.className = 'answer-option';
+      button.textContent = option;
+      button.onclick = () => this.selectAnswer(option, button);
+      answerOptions.appendChild(button);
     });
   },
 
@@ -229,15 +299,15 @@ const LessonManager = {
   // Check answer
   checkAnswer() {
     const exercise = this.currentLesson.exercises[this.currentExercise];
-    const isCorrect = this.selectedAnswer.toLowerCase() === exercise.answer.toLowerCase();
+    const isCorrect = this.normalizeAnswer(this.selectedAnswer) === this.normalizeAnswer(exercise.answer);
 
     if (isCorrect) {
       this.correctAnswers++;
     }
 
     // Update word strength if this is a review
-    if (exercise.reviewWord) {
-      ReviewManager.updateWordStrength(exercise.reviewWord, isCorrect);
+    if (exercise.reviewItemId) {
+      ReviewManager.updateReviewItem(exercise.reviewItemId, isCorrect);
     }
 
     this.showFeedback(isCorrect, exercise.answer);
@@ -269,6 +339,10 @@ const LessonManager = {
       }
       btn.disabled = true;
     });
+
+    document.querySelectorAll('.tile-btn').forEach(btn => {
+      btn.disabled = true;
+    });
   },
 
   // Continue to next exercise
@@ -289,21 +363,23 @@ const LessonManager = {
   // Complete lesson
   completeLesson() {
     const accuracy = Math.round((this.correctAnswers / this.totalExercises) * 100);
-    const xpEarned = this.currentLesson.xp;
+    const passed = accuracy >= this.minAccuracy;
+    const xpEarned = passed ? this.currentLesson.xp : 0;
 
     // Only update progress for non-review sessions
     if (!this.isReviewSession) {
-      Storage.completeLesson(this.currentLesson.id, accuracy);
+      Storage.completeLesson(this.currentLesson.id, accuracy, passed);
       
       // Add vocabulary to learned list
       this.currentLesson.vocabulary.forEach(word => {
-        Storage.addVocabulary(word.lithuanian);
+        Storage.addVocabulary(word.lithuanian, 'word');
       });
     }
 
     // Always add XP and update streak
-    Storage.addXP(xpEarned);
-    Storage.addDailyXP(xpEarned);
+    if (xpEarned > 0) {
+      Storage.awardXP(xpEarned);
+    }
     StreakManager.updateStreak();
 
     // Check for achievements
@@ -318,12 +394,35 @@ const LessonManager = {
       `${this.correctAnswers}/${this.totalExercises}`;
     document.getElementById('xp-earned').textContent = xpEarned;
     document.getElementById('accuracy').textContent = `${accuracy}%`;
+    const titleEl = document.getElementById('results-title');
+    if (titleEl) {
+      titleEl.textContent = passed ? 'Lesson Complete! 🎉' : 'Keep Practicing 💪';
+    }
   },
 
   // Play audio
-  playAudio(audioPath) {
-    const audio = new Audio(audioPath);
-    audio.play().catch(err => console.log('Audio playback failed:', err));
+  playAudio(audioPath, text) {
+    if (audioPath) {
+      const audio = new Audio(audioPath);
+      audio.play().catch(err => console.log('Audio playback failed:', err));
+      return;
+    }
+    if ('speechSynthesis' in window && text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'lt-LT';
+      window.speechSynthesis.speak(utterance);
+    }
+  },
+
+  normalizeAnswer(value) {
+    if (!value) return '';
+    const state = Storage.getUserData();
+    const ignoreDiacritics = state.settings?.ignoreDiacritics;
+    let normalized = value.trim().toLowerCase();
+    if (ignoreDiacritics) {
+      normalized = normalized.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+    return normalized;
   },
 
   // Exit lesson

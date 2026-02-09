@@ -204,8 +204,7 @@ const WordBankManager = {
     }
     
     // Add XP
-    Storage.addXP(2);
-    Storage.addDailyXP(2);
+    Storage.awardXP(2);
     
     this.displayWordBank();
     this.showNotification('✓ Word learned! +2 XP');

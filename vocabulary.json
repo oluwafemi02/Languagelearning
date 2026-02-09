@@ -75,6 +75,12 @@
           "questionLT": "Kaip lietuviškai 'yes'?",
           "answer": "taip",
           "options": ["ne", "taip", "labas", "gerai"]
+        },
+        {
+          "type": "sentence-build",
+          "question": "Build the phrase: Hello",
+          "answer": "labas",
+          "tiles": ["labas"]
         }
       ]
     },
@@ -283,6 +289,12 @@
           "questionLT": "Ką reiškia 'brolis'?",
           "answer": "brother",
           "options": ["brother", "sister", "mother", "father"]
+        },
+        {
+          "type": "fill-blank",
+          "question": "Mano ____ yra mama. (My ____ is mom.)",
+          "answer": "mama",
+          "options": ["mama", "tėvas", "sesuo", "brolis"]
         },
         {
           "type": "typing",

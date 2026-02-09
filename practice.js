@@ -484,8 +484,7 @@ const PracticeManager = {
     const accuracy = Math.round((this.correctAnswers / this.exercises.length) * 100);
     const xpEarned = Math.round(this.exercises.length * (accuracy / 100) * 3);
 
-    Storage.addXP(xpEarned);
-    Storage.addDailyXP(xpEarned);
+    Storage.awardXP(xpEarned);
     StreakManager.updateStreak();
 
     const container = document.getElementById('practice-content');
