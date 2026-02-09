@@ -19,6 +19,9 @@ const App = {
     // Initialize components
     StreakManager.init();
     await NotificationManager.init();
+    if (window.QuestManager) {
+      QuestManager.init();
+    }
 
     // Load lessons
     this.lessons = await LessonManager.loadLessons();
@@ -117,6 +120,9 @@ const App = {
     document.getElementById('streak-count').textContent = this.userData.streak;
     this.updateDailyGoal();
     this.updateReviewSection();
+    if (window.QuestManager) {
+      QuestManager.renderDailyQuests();
+    }
   },
 
   // Update daily goal progress

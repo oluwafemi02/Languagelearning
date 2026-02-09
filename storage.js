@@ -16,6 +16,11 @@
                     vocabulary: {},
                     achievements: [],
                     onboardingCompleted: false,
+                    dailyQuests: {
+                        date: null,
+                        quests: [],
+                        bonusClaimed: false
+                    },
                     // Sentence learning tracking
                     sentences: {
                         learned: [],           // Array of sentence IDs learned
@@ -47,6 +52,9 @@
                 const data = this.getUserData();
                 data.totalXP += amount;
                 this.saveUserData(data);
+                if (window.QuestManager && !window.QuestManager.isRewarding) {
+                    window.QuestManager.updateProgress('xp', amount);
+                }
                 return data.totalXP;
             },
 
@@ -60,6 +68,9 @@
                     });
                 }
                 this.saveUserData(data);
+                if (window.QuestManager) {
+                    window.QuestManager.updateProgress('lessons', 1);
+                }
             },
 
             addVocabulary(word, strength = 1) {
