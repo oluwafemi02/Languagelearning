@@ -1,7 +1,27 @@
-const CACHE_NAME = 'lithuanian-learning-v1';
+const CACHE_NAME = 'lithuanian-learning-v2';
 const urlsToCache = [
-  '/',
-  '/index.html'
+  './',
+  './index.html',
+  './app.js',
+  './lessons.js',
+  './review.js',
+  './notifications.js',
+  './streak.js',
+  './achievements.js',
+  './storage.js',
+  './practice.js',
+  './sentences.js',
+  './sentencebuilder.js',
+  './wordbank.js',
+  './quests.js',
+  './styles.css',
+  './learning-system.css',
+  './sentences.css',
+  './vocabulary.json',
+  './wordbank-data.json',
+  './sentence-builder-data.json',
+  './sentences-data.json',
+  './manifest.json'
 ];
 
 // Install event
@@ -19,14 +39,19 @@ self.addEventListener('install', event => {
 // Fetch event
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        if (response) {
+    caches.match(event.request).then(cachedResponse => {
+      const networkFetch = fetch(event.request)
+        .then(response => {
+          if (response && response.status === 200) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseClone));
+          }
           return response;
-        }
-        return fetch(event.request);
-      }
-    )
+        })
+        .catch(() => cachedResponse);
+
+      return cachedResponse || networkFetch;
+    })
   );
 });
 

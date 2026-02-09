@@ -19,6 +19,9 @@ const App = {
     // Initialize components
     StreakManager.init();
     await NotificationManager.init();
+    if (window.QuestManager) {
+      QuestManager.init();
+    }
 
     // Load lessons
     this.lessons = await LessonManager.loadLessons();
@@ -82,41 +85,104 @@ const App = {
   displayLessonPath() {
     const lessonPath = document.querySelector('.lesson-path');
     lessonPath.innerHTML = '';
+    const unitSize = 5;
+    const totalUnits = Math.ceil(this.lessons.length / unitSize);
 
-    this.lessons.forEach((lesson, index) => {
-      const isCompleted = this.userData.lessonsCompleted.some(l => l.id === lesson.id);
-      const isLocked = index > 0 && !this.userData.lessonsCompleted.some(l => l.id === this.lessons[index - 1].id);
+    for (let unitIndex = 0; unitIndex < totalUnits; unitIndex++) {
+      const unitStart = unitIndex * unitSize;
+      const unitLessons = this.lessons.slice(unitStart, unitStart + unitSize);
+      const unitCompleted = unitLessons.filter(lesson =>
+        this.userData.lessonsCompleted.some(l => l.id === lesson.id)
+      ).length;
 
-      const lessonCard = document.createElement('div');
-      lessonCard.className = `lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
-      
-      lessonCard.innerHTML = `
-        <div class="lesson-icon">${isCompleted ? '✓' : isLocked ? '🔒' : '📚'}</div>
+      const sectionHeader = document.createElement('div');
+      sectionHeader.className = 'section-header';
+      sectionHeader.innerHTML = `
+        <h3>Unit ${unitIndex + 1} · ${this.getUnitTitle(unitIndex)}</h3>
+        <div class="section-progress">${unitCompleted}/${unitLessons.length} lessons completed</div>
+      `;
+      lessonPath.appendChild(sectionHeader);
+
+      unitLessons.forEach((lesson, index) => {
+        const globalIndex = unitStart + index;
+        const isCompleted = this.userData.lessonsCompleted.some(l => l.id === lesson.id);
+        const isLocked = globalIndex > 0 && !this.userData.lessonsCompleted.some(l => l.id === this.lessons[globalIndex - 1].id);
+
+        const lessonCard = document.createElement('div');
+        lessonCard.className = `lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
+        
+        lessonCard.innerHTML = `
+          <div class="lesson-icon">${isCompleted ? '✓' : isLocked ? '🔒' : '📚'}</div>
+          <div class="lesson-info">
+            <h3>${lesson.titleLT}</h3>
+            <p>${lesson.descriptionLT}</p>
+            <div class="lesson-meta">
+              <span class="xp-badge">+${lesson.xp} XP</span>
+              <span class="difficulty-badge">${lesson.difficulty}</span>
+            </div>
+          </div>
+        `;
+
+        if (!isLocked) {
+          lessonCard.style.cursor = 'pointer';
+          lessonCard.onclick = () => this.startLesson(lesson.id);
+        }
+
+        lessonPath.appendChild(lessonCard);
+      });
+
+      const reviewCard = document.createElement('div');
+      reviewCard.className = 'lesson-card review-card';
+      reviewCard.innerHTML = `
+        <div class="lesson-icon">🔁</div>
         <div class="lesson-info">
-          <h3>${lesson.titleLT}</h3>
-          <p>${lesson.descriptionLT}</p>
+          <h3>Unit ${unitIndex + 1} Review</h3>
+          <p>Practice what you learned in this unit</p>
           <div class="lesson-meta">
-            <span class="xp-badge">+${lesson.xp} XP</span>
-            <span class="difficulty-badge">${lesson.difficulty}</span>
+            <span class="xp-badge">+10 XP</span>
+            <span class="difficulty-badge">review</span>
           </div>
         </div>
       `;
 
-      if (!isLocked) {
-        lessonCard.style.cursor = 'pointer';
-        lessonCard.onclick = () => this.startLesson(lesson.id);
-      }
+      reviewCard.onclick = () => this.startUnitReview(unitLessons.map(lesson => lesson.id));
+      lessonPath.appendChild(reviewCard);
+    }
+  },
 
-      lessonPath.appendChild(lessonCard);
-    });
+  getUnitTitle(unitIndex) {
+    const unitTitles = [
+      'Basics & Greetings',
+      'Numbers & Essentials',
+      'Everyday Life',
+      'Grammar Foundations',
+      'Real Conversations'
+    ];
+    return unitTitles[unitIndex] || 'Practice & Progress';
+  },
+
+  startUnitReview(lessonIds) {
+    const unitLessons = this.lessons.filter(lesson => lessonIds.includes(lesson.id));
+    const exercises = unitLessons.flatMap(lesson => lesson.exercises || []);
+    if (exercises.length === 0) {
+      alert('No exercises available for this unit yet.');
+      return;
+    }
+    const shuffled = [...exercises].sort(() => Math.random() - 0.5).slice(0, 10);
+    LessonManager.startReviewSession(shuffled);
   },
 
   // Display user stats
   displayUserStats() {
+    this.userData = Storage.getUserData();
     document.getElementById('total-xp').textContent = this.userData.totalXP;
     document.getElementById('streak-count').textContent = this.userData.streak;
     this.updateDailyGoal();
     this.updateReviewSection();
+    if (window.QuestManager) {
+      QuestManager.renderDailyQuests();
+    }
+    this.updateProfile();
   },
 
   // Update daily goal progress
@@ -258,7 +324,83 @@ const App = {
       PracticeManager.init();
     } else if (screenName === 'sentences' && typeof SentenceManager !== 'undefined') {
       SentenceManager.init();
+    } else if (screenName === 'profile') {
+      this.updateProfile();
     }
+  },
+
+  updateProfile() {
+    const userData = Storage.getUserData();
+    const level = this.getUserLevel(userData.totalXP);
+    const lessonsCompleted = userData.lessonsCompleted.length;
+    const vocabCount = Object.keys(userData.vocabulary || {}).length;
+    const dailyXP = Storage.getDailyXP();
+    const dailyGoal = userData.settings.dailyGoal;
+    const goalPct = Math.min(Math.round((dailyXP / dailyGoal) * 100), 100);
+
+    const setText = (id, value) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    };
+
+    setText('profile-xp', userData.totalXP);
+    setText('profile-streak', userData.streak);
+    setText('profile-lessons', lessonsCompleted);
+    setText('profile-vocab', vocabCount);
+    setText('user-level', level);
+    setText('profile-daily-xp', `${dailyXP}/${dailyGoal}`);
+    setText('profile-goal-percent', `${goalPct}%`);
+
+    const goalFill = document.getElementById('profile-goal-fill');
+    if (goalFill) goalFill.style.width = `${goalPct}%`;
+
+    const recentList = document.getElementById('profile-recent-list');
+    if (recentList) {
+      const recentLessons = [...userData.lessonsCompleted]
+        .slice(-3)
+        .reverse()
+        .map(lesson => {
+          const lessonInfo = this.lessons.find(l => l.id === lesson.id);
+          const title = lessonInfo?.titleLT || `Lesson ${lesson.id}`;
+          const date = new Date(lesson.completedAt).toLocaleDateString();
+          return `<li><strong>${title}</strong><span>${date}</span></li>`;
+        });
+
+      recentList.innerHTML = recentLessons.length > 0
+        ? recentLessons.join('')
+        : '<li class="empty">Complete lessons to see your recent activity.</li>';
+    }
+
+    const achievementsContainer = document.getElementById('achievements-container');
+    if (achievementsContainer && typeof AchievementManager !== 'undefined') {
+      const unlocked = AchievementManager.getUnlockedAchievements();
+      const locked = AchievementManager.getLockedAchievements();
+      const cards = [
+        ...unlocked.map(achievement => `
+          <div class="achievement-card unlocked">
+            <div class="achievement-icon">${achievement.icon}</div>
+            <div>
+              <h4>${achievement.name}</h4>
+              <p>${achievement.descriptionLT}</p>
+            </div>
+          </div>
+        `),
+        ...locked.map(achievement => `
+          <div class="achievement-card locked">
+            <div class="achievement-icon">🔒</div>
+            <div>
+              <h4>${achievement.name}</h4>
+              <p>${achievement.descriptionLT}</p>
+            </div>
+          </div>
+        `)
+      ];
+      achievementsContainer.innerHTML = cards.join('') || '<p class="empty">Unlock achievements as you learn.</p>';
+    }
+  },
+
+  getUserLevel(totalXP) {
+    return Math.floor(totalXP / 100) + 1;
   },
 
   // Set up install prompt for PWA

@@ -115,6 +115,9 @@ const ReviewManager = {
       
       userData.vocabulary[word].lastReviewed = new Date().toISOString();
       Storage.saveUserData(userData);
+      if (window.QuestManager) {
+        window.QuestManager.recordReviewWord();
+      }
     }
   },
   

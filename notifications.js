@@ -1,4 +1,5 @@
 const NotificationManager = {
+  iconData: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🇱🇹</text></svg>",
   // Request notification permission
   async requestPermission() {
     if ('Notification' in window) {
@@ -47,8 +48,8 @@ const NotificationManager = {
     if ('Notification' in window && Notification.permission === 'granted') {
       new Notification('Laikas mokytis! 📚', {
         body: 'Nepamirški savo serijos! Praktikuok lietuvių kalbą šiandien.',
-        icon: 'images/icons/icon-192x192.png',
-        badge: 'images/icons/icon-72x72.png',
+        icon: this.iconData,
+        badge: this.iconData,
         tag: 'daily-reminder'
       });
     }
