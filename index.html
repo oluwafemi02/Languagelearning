@@ -107,6 +107,101 @@
             margin-bottom: 24px;
         }
 
+        .daily-quests {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .daily-quests-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .daily-quests-header h3 {
+            font-size: 18px;
+        }
+
+        .bonus-badge {
+            background: #E8F7E1;
+            color: var(--primary-dark);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .bonus-badge.claimed {
+            background: #FFF7E6;
+            color: var(--warning-color);
+        }
+
+        .quests-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .quest-card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            background: var(--bg-light);
+        }
+
+        .quest-card.completed {
+            border-color: var(--success-color);
+            background: #F0FDF4;
+        }
+
+        .quest-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .quest-header h4 {
+            font-size: 14px;
+        }
+
+        .quest-reward {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--warning-color);
+        }
+
+        .quest-progress {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .quest-progress-bar {
+            flex: 1;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .quest-progress-fill {
+            height: 100%;
+            background: var(--secondary-color);
+            border-radius: 999px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
         .section-header {
             background: var(--white);
             padding: 16px;
@@ -157,6 +252,11 @@
 
         .lesson-card.completed {
             border: 2px solid var(--success-color);
+        }
+
+        .lesson-card.review-card {
+            border: 2px dashed var(--secondary-color);
+            background: #f0f9ff;
         }
 
         .lesson-icon {
@@ -526,6 +626,41 @@
             opacity: 0.9;
         }
 
+        .profile-highlight {
+            background: linear-gradient(135deg, #ecfdf3 0%, #f0f9ff 100%);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-highlight h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .profile-goal-bar {
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .profile-goal-fill {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .profile-goal-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -552,43 +687,62 @@
             color: var(--text-light);
         }
 
-        .achievements {
+        .profile-section {
             background: var(--white);
-            padding: 24px;
+            padding: 16px;
             border-radius: 16px;
             box-shadow: var(--shadow);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
-        .achievements h3 {
-            margin-bottom: 16px;
+        .profile-section h3 {
+            margin-bottom: 12px;
+        }
+
+        .profile-recent-list {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        .profile-recent-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-light);
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .profile-recent-list li.empty {
+            justify-content: center;
+            color: var(--text-light);
         }
 
         .achievement-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 12px;
         }
 
-        .achievement {
-            text-align: center;
+        .achievement-card {
+            display: flex;
+            gap: 12px;
+            align-items: center;
             padding: 12px;
             border-radius: 12px;
+            border: 1px solid var(--border-color);
             background: var(--bg-light);
         }
 
-        .achievement.unlocked {
-            background: #FFF7E6;
+        .achievement-card.unlocked {
+            border-color: var(--success-color);
+            background: #f0fdf4;
         }
 
-        .achievement-icon {
-            font-size: 32px;
-            margin-bottom: 4px;
-        }
-
-        .achievement-name {
-            font-size: 11px;
-            color: var(--text-dark);
+        .achievement-card.locked {
+            opacity: 0.7;
         }
 
         .settings-section {
@@ -733,6 +887,8 @@
                         </div>
                     </div>
 
+                    <div class="daily-quests" id="daily-quests"></div>
+
                     <!-- Review Section -->
                     <div class="review-section" id="review-section" style="display: none;">
                         <h3>📝 Review Time!</h3>
@@ -768,108 +924,6 @@
                 </div>
             </section>
             
-
-            <!-- Practice Screen -->
-            <section id="practice-screen" class="screen">
-                <div class="container">
-                    <h2 style="margin-bottom: 24px;">Practice</h2>
-                    
-                    <div class="practice-grid">
-                        <div class="practice-card" id="practice-weak-words">
-                            <div class="practice-icon">🎯</div>
-                            <h3>Weak Words</h3>
-                            <p>Review difficult vocabulary</p>
-                        </div>
-                        
-                        <div class="practice-card" id="practice-review">
-                            <div class="practice-icon">🔄</div>
-                            <h3>Review</h3>
-                            <p>Practice all learned words</p>
-                        </div>
-                        
-                        <div class="practice-card" id="practice-speaking">
-                            <div class="practice-icon">🎤</div>
-                            <h3>Speaking</h3>
-                            <p>Practice pronunciation</p>
-                        </div>
-                        
-                        <div class="practice-card" id="practice-listening">
-                            <div class="practice-icon">👂</div>
-                            <h3>Listening</h3>
-                            <p>Test your comprehension</p>
-                        </div>
-                    </div>
-
-                    <div class="progress-overview">
-                        <h3>Vocabulary Progress</h3>
-                        <div style="margin-top: 16px;">
-                            <p style="color: var(--text-light); margin-bottom: 8px;">
-                                Words Learned: <strong id="vocab-count">0</strong>
-                            </p>
-                            <p style="color: var(--text-light);">
-                                Words to Review: <strong id="review-count">0</strong>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-<!-- Practice Exercise Screen -->
-<section id="practice-exercise-screen" class="screen">
-    <div class="lesson-header">
-        <button id="exit-practice-btn" class="btn-icon">✕</button>
-        <div class="progress-bar">
-            <div id="practice-progress" class="progress-fill"></div>
-        </div>
-        <span id="practice-counter" style="margin-left: 12px; font-weight: 600;">0/10</span>
-    </div>
-
-    <div class="lesson-content">
-        <div id="practice-question-container"></div>
-
-        <div class="answer-section">
-            <div id="practice-answer-options"></div>
-            <button id="practice-check-btn" class="btn btn-primary" disabled>
-                Check
-            </button>
-        </div>
-    </div>
-
-    <div id="practice-feedback-panel" class="feedback-panel hidden">
-        <div class="feedback-content">
-            <h3 id="practice-feedback-title"></h3>
-            <p id="practice-feedback-message"></p>
-            <button id="practice-continue-btn" class="btn btn-success">
-                Continue
-            </button>
-        </div>
-    </div>
-</section>
-
-<!-- Practice Results Screen -->
-<section id="practice-results-screen" class="screen">
-    <div class="container">
-        <div class="results-content">
-            <h2 id="practice-results-title">Practice Complete! 🎉</h2>
-            <div class="results-stats">
-                <div class="stat">
-                    <span class="stat-value" id="practice-correct-answers">0</span>
-                    <span class="stat-label">Correct</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-value" id="practice-xp-earned">0</span>
-                    <span class="stat-label">XP Earned</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-value" id="practice-accuracy">0</span>
-                    <span class="stat-label">Accuracy</span>
-                </div>
-            </div>
-            <button id="back-to-practice-btn" class="btn btn-primary">
-                Back to Practice
-            </button>
-        </div>
-    </div>
-</section>
     <!-- Analytics Screen -->
 <section id="analytics-screen" class="screen">
     <div class="container">
@@ -921,6 +975,17 @@
                         <div class="profile-level">Level <span id="user-level">1</span></div>
                     </div>
 
+                    <div class="profile-highlight">
+                        <h3>🎯 Daily Goal Progress</h3>
+                        <div class="profile-goal-bar">
+                            <div class="profile-goal-fill" id="profile-goal-fill"></div>
+                        </div>
+                        <div class="profile-goal-meta">
+                            <span id="profile-daily-xp">0/50</span>
+                            <span id="profile-goal-percent">0%</span>
+                        </div>
+                    </div>
+
                     <div class="stats-grid">
                         <div class="stat-card">
                             <div class="stat-card-value" id="profile-xp">0</div>
@@ -940,7 +1005,12 @@
                         </div>
                     </div>
 
-                    <div class="achievements">
+                    <div class="profile-section">
+                        <h3>🕒 Recent Activity</h3>
+                        <ul class="profile-recent-list" id="profile-recent-list"></ul>
+                    </div>
+
+                    <div class="profile-section">
                         <h3>Achievements</h3>
                         <div class="achievement-grid" id="achievements-container"></div>
                     </div>
@@ -1202,6 +1272,7 @@
     <script src="achievements.js"></script>
     <script src="streak.js"></script>
     <script src="notifications.js"></script>
+    <script src="quests.js"></script>
     <script src="lessons.js"></script>
     <script src="sentences.js"></script>
     <script src="wordbank.js"></script>

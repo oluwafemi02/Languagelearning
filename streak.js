@@ -1,4 +1,5 @@
 const StreakManager = {
+  iconData: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🇱🇹</text></svg>",
   // Check and update streak
   updateStreak() {
     const data = Storage.getUserData();
@@ -61,8 +62,8 @@ const StreakManager = {
     if ('Notification' in window && Notification.permission === 'granted') {
       new Notification('Mokykis Lietuvių', {
         body: message,
-        icon: 'images/icons/icon-192x192.png',
-        badge: 'images/icons/icon-72x72.png'
+        icon: this.iconData,
+        badge: this.iconData
       });
     }
   },
