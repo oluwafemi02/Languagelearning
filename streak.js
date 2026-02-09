@@ -3,34 +3,10 @@ const StreakManager = {
   // Check and update streak
   updateStreak() {
     const data = Storage.getUserData();
-    const today = new Date().toDateString();
-    const lastDate = data.lastStudyDate ? new Date(data.lastStudyDate).toDateString() : null;
-    
-    if (lastDate === today) {
-      // Already studied today
-      return data.streak;
-    }
-    
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdayStr = yesterday.toDateString();
-    
-    if (lastDate === yesterdayStr) {
-      // Continue streak
-      data.streak += 1;
-    } else if (lastDate === null) {
-      // First time
-      data.streak = 1;
-    } else {
-      // Streak broken
-      data.streak = 1;
-    }
-    
-    data.lastStudyDate = new Date().toISOString();
+    StateLogic.updateStreakForGoal(data);
     Storage.saveUserData(data);
-    
-    this.displayStreak(data.streak);
-    return data.streak;
+    this.displayStreak(data.streakCount);
+    return data.streakCount;
   },
 
   // Display streak
@@ -71,6 +47,6 @@ const StreakManager = {
   // Initialize streak display
   init() {
     const data = Storage.getUserData();
-    this.displayStreak(data.streak);
+    this.displayStreak(data.streakCount);
   }
 };

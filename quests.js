@@ -89,8 +89,7 @@ const QuestManager = {
   rewardQuest(xp) {
     if (!xp) return;
     this.isRewarding = true;
-    Storage.addXP(xp);
-    Storage.addDailyXP(xp);
+    Storage.awardXP(xp);
     this.isRewarding = false;
   },
 

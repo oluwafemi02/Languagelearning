@@ -277,8 +277,9 @@ const SentenceManager = {
       
       // Award XP
       const xpEarned = 5;
-      Storage.addXP(xpEarned);
-      Storage.addDailyXP(xpEarned);
+      Storage.awardXP(xpEarned);
+
+      Storage.addSrsItem({ id: `sentence:${sentence.id}`, kind: 'sentence' });
       
       Storage.saveUserData(userData);
     }
@@ -483,8 +484,7 @@ const SentenceManager = {
       accuracy: accuracy
     });
     
-    Storage.addXP(xpEarned);
-    Storage.addDailyXP(xpEarned);
+    Storage.awardXP(xpEarned);
     Storage.saveUserData(userData);
     
     document.getElementById('sentence-review-screen').classList.remove('active');

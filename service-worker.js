@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lithuanian-learning-v2';
+const CACHE_NAME = 'lithuanian-learning-v3';
 const urlsToCache = [
   './',
   './index.html',
@@ -9,6 +9,8 @@ const urlsToCache = [
   './streak.js',
   './achievements.js',
   './storage.js',
+  './state-logic.js',
+  './srs.js',
   './practice.js',
   './sentences.js',
   './sentencebuilder.js',

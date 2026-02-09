@@ -35,9 +35,29 @@ python -m http.server 8000
 npx serve
 ```
 
+Open `http://localhost:8000` and the app will load from `index.html`.
+
+### Tests
+```bash
+npm test
+```
+
+The test runner is a lightweight Node script in `tests/run-tests.js` that validates streak logic, daily XP resets, SRS updates, and lesson unlocking.
+
 ## Adding Content
 
-Edit `data/vocabulary.json` to add more lessons, vocabulary, and exercises.
+Edit `vocabulary.json` to add more lessons, vocabulary, and exercises. Each lesson contains:
+
+- `vocabulary`: Lithuanian/English pairs with pronunciation and optional audio.
+- `exercises`: exercise objects with a `type` and the prompts/answers for that type.
+
+Supported exercise types include:
+- `translation`
+- `listening`
+- `multiple-choice`
+- `typing`
+- `sentence-build`
+- `fill-blank`
 
 ## Lithuanian Language Features
 
@@ -49,3 +69,20 @@ Edit `data/vocabulary.json` to add more lessons, vocabulary, and exercises.
 ## License
 
 MIT License - feel free to modify and use for your learning journey!
+## Progress & State
+
+Progress is stored in `localStorage` under the key `lithuanianLearner`, with a versioned state schema. Key fields include:
+
+- `xpTotal`, `xpToday`, `dailyGoalXP`
+- `streakCount`, `lastActiveDate`, `lastGoalMetDate`
+- `lessonsCompleted`
+- `srsItems` (spaced repetition scheduling data)
+- `settings` (sound, reminders, diacritics toggle)
+
+State is loaded and migrated in `storage.js`.
+
+## Deployment Notes (GitHub Pages)
+
+1. Push to the `main` branch.
+2. In GitHub → Settings → Pages, select the `main` branch.
+3. The app will deploy at `https://<username>.github.io/Languagelearning/`.

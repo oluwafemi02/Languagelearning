@@ -1,61 +1,38 @@
 const ReviewManager = {
-  // Get words that are due for review
-  getDueWords() {
-    const userData = Storage.getUserData();
-    const dueWords = [];
-    const now = Date.now();
-    
-    Object.entries(userData.vocabulary).forEach(([word, data]) => {
-      const lastReview = new Date(data.lastReviewed).getTime();
-      const daysSince = (now - lastReview) / (1000 * 60 * 60 * 24);
-      const nextInterval = this.getNextInterval(data.timesReviewed);
-      
-      if (daysSince >= nextInterval) {
-        dueWords.push({
-          word: word,
-          data: data
-        });
-      }
-    });
-    
-    return dueWords;
+  getDueItems() {
+    return Storage.getDueSrsItems();
   },
-  
-  // Simple spaced repetition intervals (1, 3, 7, 14, 30, 60, 120 days)
-  getNextInterval(reviewCount) {
-    const intervals = [1, 3, 7, 14, 30, 60, 120];
-    return intervals[Math.min(reviewCount - 1, intervals.length - 1)] || 1;
+
+  getDueWordsCount() {
+    return this.getDueItems().filter(item => item.kind === 'word').length;
   },
-  
-  // Get review exercises from due words
+
   async generateReviewExercises(limit = 10) {
-    const dueWords = this.getDueWords();
+    const dueItems = this.getDueItems();
     const lessons = await LessonManager.loadLessons();
     const exercises = [];
-    
-    // Limit to prevent overwhelming users
-    const reviewWords = dueWords.slice(0, limit);
-    
-    reviewWords.forEach(({word}) => {
-      // Find the word in lessons to get full data
+    const reviewItems = dueItems.slice(0, limit);
+
+    reviewItems.forEach(({ id, kind }) => {
       let wordData = null;
-      for (const lesson of lessons) {
-        wordData = lesson.vocabulary.find(v => v.lithuanian === word);
-        if (wordData) break;
+      if (kind === 'word') {
+        for (const lesson of lessons) {
+          wordData = lesson.vocabulary.find(v => v.lithuanian === id);
+          if (wordData) break;
+        }
       }
-      
+
       if (wordData) {
-        // Create a translation exercise
         exercises.push({
           type: 'translation',
           question: `What does '${wordData.lithuanian}' mean?`,
           answer: wordData.english,
           options: this.generateDistractors(wordData.english, wordData.type, lessons),
-          reviewWord: word
+          reviewItemId: id
         });
       }
     });
-    
+
     return exercises;
   },
   
@@ -95,34 +72,10 @@ const ReviewManager = {
     return [correctAnswer, ...distractors].sort(() => Math.random() - 0.5);
   },
   
-  // Update word strength after review
-  updateWordStrength(word, correct) {
-    const userData = Storage.getUserData();
-    
-    if (userData.vocabulary[word]) {
-      if (correct) {
-        userData.vocabulary[word].timesReviewed += 1;
-        userData.vocabulary[word].strength = Math.min(
-          (userData.vocabulary[word].strength || 1) + 0.2, 
-          5
-        );
-      } else {
-        userData.vocabulary[word].strength = Math.max(
-          (userData.vocabulary[word].strength || 1) - 0.5, 
-          0
-        );
-      }
-      
-      userData.vocabulary[word].lastReviewed = new Date().toISOString();
-      Storage.saveUserData(userData);
-      if (window.QuestManager) {
-        window.QuestManager.recordReviewWord();
-      }
+  updateReviewItem(itemId, correct) {
+    Storage.updateSrsItem(itemId, correct);
+    if (window.QuestManager) {
+      window.QuestManager.recordReviewWord();
     }
-  },
-  
-  // Get count of due words
-  getDueWordsCount() {
-    return this.getDueWords().length;
   }
 };
