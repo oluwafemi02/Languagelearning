@@ -115,6 +115,7 @@ const PracticeManager = {
       // Add word exercises
       const learnedWordIds = userData.wordBankLearned || [];
       const wordData = await this.loadWordData();
+      this.wordBankWords = wordData;
       
       // If no learned words, use first 20 words from the bank for practice
       const wordsToUse = learnedWordIds.length > 0 
@@ -192,7 +193,9 @@ const PracticeManager = {
 
   // Generate word options
   generateWordOptions(correctWord, exerciseType) {
-    const allWords = WordBankManager.words || [];
+    const allWords = (this.wordBankWords && this.wordBankWords.length > 0)
+      ? this.wordBankWords
+      : (WordBankManager.words || []);
     const targetField = exerciseType === 'translation-lt-en' ? 'english' : 'lithuanian';
     const correctAnswer = correctWord[targetField];
     
@@ -202,6 +205,15 @@ const PracticeManager = {
       .sort(() => Math.random() - 0.5)
       .slice(0, 3)
       .map(w => w[targetField]);
+
+    if (wrongOptions.length < 3) {
+      const fallbackOptions = allWords
+        .filter(w => w[targetField] !== correctAnswer)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3 - wrongOptions.length)
+        .map(w => w[targetField]);
+      wrongOptions = [...wrongOptions, ...fallbackOptions];
+    }
     
     const options = [correctAnswer, ...wrongOptions];
     return this.shuffleArray(options);

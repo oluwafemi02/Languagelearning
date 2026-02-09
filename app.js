@@ -85,37 +85,96 @@ const App = {
   displayLessonPath() {
     const lessonPath = document.querySelector('.lesson-path');
     lessonPath.innerHTML = '';
+    const unitSize = 5;
+    const totalUnits = Math.ceil(this.lessons.length / unitSize);
 
-    this.lessons.forEach((lesson, index) => {
-      const isCompleted = this.userData.lessonsCompleted.some(l => l.id === lesson.id);
-      const isLocked = index > 0 && !this.userData.lessonsCompleted.some(l => l.id === this.lessons[index - 1].id);
+    for (let unitIndex = 0; unitIndex < totalUnits; unitIndex++) {
+      const unitStart = unitIndex * unitSize;
+      const unitLessons = this.lessons.slice(unitStart, unitStart + unitSize);
+      const unitCompleted = unitLessons.filter(lesson =>
+        this.userData.lessonsCompleted.some(l => l.id === lesson.id)
+      ).length;
 
-      const lessonCard = document.createElement('div');
-      lessonCard.className = `lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
-      
-      lessonCard.innerHTML = `
-        <div class="lesson-icon">${isCompleted ? '✓' : isLocked ? '🔒' : '📚'}</div>
+      const sectionHeader = document.createElement('div');
+      sectionHeader.className = 'section-header';
+      sectionHeader.innerHTML = `
+        <h3>Unit ${unitIndex + 1} · ${this.getUnitTitle(unitIndex)}</h3>
+        <div class="section-progress">${unitCompleted}/${unitLessons.length} lessons completed</div>
+      `;
+      lessonPath.appendChild(sectionHeader);
+
+      unitLessons.forEach((lesson, index) => {
+        const globalIndex = unitStart + index;
+        const isCompleted = this.userData.lessonsCompleted.some(l => l.id === lesson.id);
+        const isLocked = globalIndex > 0 && !this.userData.lessonsCompleted.some(l => l.id === this.lessons[globalIndex - 1].id);
+
+        const lessonCard = document.createElement('div');
+        lessonCard.className = `lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
+        
+        lessonCard.innerHTML = `
+          <div class="lesson-icon">${isCompleted ? '✓' : isLocked ? '🔒' : '📚'}</div>
+          <div class="lesson-info">
+            <h3>${lesson.titleLT}</h3>
+            <p>${lesson.descriptionLT}</p>
+            <div class="lesson-meta">
+              <span class="xp-badge">+${lesson.xp} XP</span>
+              <span class="difficulty-badge">${lesson.difficulty}</span>
+            </div>
+          </div>
+        `;
+
+        if (!isLocked) {
+          lessonCard.style.cursor = 'pointer';
+          lessonCard.onclick = () => this.startLesson(lesson.id);
+        }
+
+        lessonPath.appendChild(lessonCard);
+      });
+
+      const reviewCard = document.createElement('div');
+      reviewCard.className = 'lesson-card review-card';
+      reviewCard.innerHTML = `
+        <div class="lesson-icon">🔁</div>
         <div class="lesson-info">
-          <h3>${lesson.titleLT}</h3>
-          <p>${lesson.descriptionLT}</p>
+          <h3>Unit ${unitIndex + 1} Review</h3>
+          <p>Practice what you learned in this unit</p>
           <div class="lesson-meta">
-            <span class="xp-badge">+${lesson.xp} XP</span>
-            <span class="difficulty-badge">${lesson.difficulty}</span>
+            <span class="xp-badge">+10 XP</span>
+            <span class="difficulty-badge">review</span>
           </div>
         </div>
       `;
 
-      if (!isLocked) {
-        lessonCard.style.cursor = 'pointer';
-        lessonCard.onclick = () => this.startLesson(lesson.id);
-      }
+      reviewCard.onclick = () => this.startUnitReview(unitLessons.map(lesson => lesson.id));
+      lessonPath.appendChild(reviewCard);
+    }
+  },
 
-      lessonPath.appendChild(lessonCard);
-    });
+  getUnitTitle(unitIndex) {
+    const unitTitles = [
+      'Basics & Greetings',
+      'Numbers & Essentials',
+      'Everyday Life',
+      'Grammar Foundations',
+      'Real Conversations'
+    ];
+    return unitTitles[unitIndex] || 'Practice & Progress';
+  },
+
+  startUnitReview(lessonIds) {
+    const unitLessons = this.lessons.filter(lesson => lessonIds.includes(lesson.id));
+    const exercises = unitLessons.flatMap(lesson => lesson.exercises || []);
+    if (exercises.length === 0) {
+      alert('No exercises available for this unit yet.');
+      return;
+    }
+    const shuffled = [...exercises].sort(() => Math.random() - 0.5).slice(0, 10);
+    LessonManager.startReviewSession(shuffled);
   },
 
   // Display user stats
   displayUserStats() {
+    this.userData = Storage.getUserData();
     document.getElementById('total-xp').textContent = this.userData.totalXP;
     document.getElementById('streak-count').textContent = this.userData.streak;
     this.updateDailyGoal();
