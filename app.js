@@ -182,6 +182,10 @@ const App = {
     if (window.QuestManager) {
       QuestManager.renderDailyQuests();
     }
+<<<<<<< codex/review-language-learning-repo-for-improvements-hs14zh
+    this.updateProfile();
+=======
+>>>>>>> main
   },
 
   // Update daily goal progress
@@ -323,7 +327,83 @@ const App = {
       PracticeManager.init();
     } else if (screenName === 'sentences' && typeof SentenceManager !== 'undefined') {
       SentenceManager.init();
+    } else if (screenName === 'profile') {
+      this.updateProfile();
     }
+  },
+
+  updateProfile() {
+    const userData = Storage.getUserData();
+    const level = this.getUserLevel(userData.totalXP);
+    const lessonsCompleted = userData.lessonsCompleted.length;
+    const vocabCount = Object.keys(userData.vocabulary || {}).length;
+    const dailyXP = Storage.getDailyXP();
+    const dailyGoal = userData.settings.dailyGoal;
+    const goalPct = Math.min(Math.round((dailyXP / dailyGoal) * 100), 100);
+
+    const setText = (id, value) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    };
+
+    setText('profile-xp', userData.totalXP);
+    setText('profile-streak', userData.streak);
+    setText('profile-lessons', lessonsCompleted);
+    setText('profile-vocab', vocabCount);
+    setText('user-level', level);
+    setText('profile-daily-xp', `${dailyXP}/${dailyGoal}`);
+    setText('profile-goal-percent', `${goalPct}%`);
+
+    const goalFill = document.getElementById('profile-goal-fill');
+    if (goalFill) goalFill.style.width = `${goalPct}%`;
+
+    const recentList = document.getElementById('profile-recent-list');
+    if (recentList) {
+      const recentLessons = [...userData.lessonsCompleted]
+        .slice(-3)
+        .reverse()
+        .map(lesson => {
+          const lessonInfo = this.lessons.find(l => l.id === lesson.id);
+          const title = lessonInfo?.titleLT || `Lesson ${lesson.id}`;
+          const date = new Date(lesson.completedAt).toLocaleDateString();
+          return `<li><strong>${title}</strong><span>${date}</span></li>`;
+        });
+
+      recentList.innerHTML = recentLessons.length > 0
+        ? recentLessons.join('')
+        : '<li class="empty">Complete lessons to see your recent activity.</li>';
+    }
+
+    const achievementsContainer = document.getElementById('achievements-container');
+    if (achievementsContainer && typeof AchievementManager !== 'undefined') {
+      const unlocked = AchievementManager.getUnlockedAchievements();
+      const locked = AchievementManager.getLockedAchievements();
+      const cards = [
+        ...unlocked.map(achievement => `
+          <div class="achievement-card unlocked">
+            <div class="achievement-icon">${achievement.icon}</div>
+            <div>
+              <h4>${achievement.name}</h4>
+              <p>${achievement.descriptionLT}</p>
+            </div>
+          </div>
+        `),
+        ...locked.map(achievement => `
+          <div class="achievement-card locked">
+            <div class="achievement-icon">🔒</div>
+            <div>
+              <h4>${achievement.name}</h4>
+              <p>${achievement.descriptionLT}</p>
+            </div>
+          </div>
+        `)
+      ];
+      achievementsContainer.innerHTML = cards.join('') || '<p class="empty">Unlock achievements as you learn.</p>';
+    }
+  },
+
+  getUserLevel(totalXP) {
+    return Math.floor(totalXP / 100) + 1;
   },
 
   // Set up install prompt for PWA

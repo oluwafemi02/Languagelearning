@@ -626,6 +626,41 @@
             opacity: 0.9;
         }
 
+        .profile-highlight {
+            background: linear-gradient(135deg, #ecfdf3 0%, #f0f9ff 100%);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-highlight h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .profile-goal-bar {
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .profile-goal-fill {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .profile-goal-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -652,43 +687,62 @@
             color: var(--text-light);
         }
 
-        .achievements {
+        .profile-section {
             background: var(--white);
-            padding: 24px;
+            padding: 16px;
             border-radius: 16px;
             box-shadow: var(--shadow);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
-        .achievements h3 {
-            margin-bottom: 16px;
+        .profile-section h3 {
+            margin-bottom: 12px;
+        }
+
+        .profile-recent-list {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        .profile-recent-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-light);
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .profile-recent-list li.empty {
+            justify-content: center;
+            color: var(--text-light);
         }
 
         .achievement-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 12px;
         }
 
-        .achievement {
-            text-align: center;
+        .achievement-card {
+            display: flex;
+            gap: 12px;
+            align-items: center;
             padding: 12px;
             border-radius: 12px;
+            border: 1px solid var(--border-color);
             background: var(--bg-light);
         }
 
-        .achievement.unlocked {
-            background: #FFF7E6;
+        .achievement-card.unlocked {
+            border-color: var(--success-color);
+            background: #f0fdf4;
         }
 
-        .achievement-icon {
-            font-size: 32px;
-            margin-bottom: 4px;
-        }
-
-        .achievement-name {
-            font-size: 11px;
-            color: var(--text-dark);
+        .achievement-card.locked {
+            opacity: 0.7;
         }
 
         .settings-section {
@@ -921,6 +975,17 @@
                         <div class="profile-level">Level <span id="user-level">1</span></div>
                     </div>
 
+                    <div class="profile-highlight">
+                        <h3>🎯 Daily Goal Progress</h3>
+                        <div class="profile-goal-bar">
+                            <div class="profile-goal-fill" id="profile-goal-fill"></div>
+                        </div>
+                        <div class="profile-goal-meta">
+                            <span id="profile-daily-xp">0/50</span>
+                            <span id="profile-goal-percent">0%</span>
+                        </div>
+                    </div>
+
                     <div class="stats-grid">
                         <div class="stat-card">
                             <div class="stat-card-value" id="profile-xp">0</div>
@@ -940,7 +1005,12 @@
                         </div>
                     </div>
 
-                    <div class="achievements">
+                    <div class="profile-section">
+                        <h3>🕒 Recent Activity</h3>
+                        <ul class="profile-recent-list" id="profile-recent-list"></ul>
+                    </div>
+
+                    <div class="profile-section">
                         <h3>Achievements</h3>
                         <div class="achievement-grid" id="achievements-container"></div>
                     </div>
