@@ -17,6 +17,7 @@ const App = {
     }
 
     // Initialize components
+    await this.registerServiceWorker();
     StreakManager.init();
     await NotificationManager.init();
     if (window.QuestManager) {
@@ -74,7 +75,7 @@ const App = {
     if (overlay) overlay.classList.add('hidden');
     
     if (enableNotifications) {
-      NotificationManager.requestPermission();
+      NotificationManager.updateFromSettings(true);
     }
     
     // Continue initialization
@@ -175,9 +176,10 @@ const App = {
 
   // Display user stats
   displayUserStats() {
+    const streak = StreakManager.updateStreak();
     this.userData = Storage.getUserData();
     document.getElementById('total-xp').textContent = this.userData.xpTotal;
-    document.getElementById('streak-count').textContent = this.userData.streakCount;
+    document.getElementById('streak-count').textContent = streak;
     this.updateDailyGoal();
     this.updateReviewSection();
     if (window.QuestManager) {
@@ -297,6 +299,10 @@ const App = {
         this.navigateToScreen(screen);
       });
     });
+
+    document.getElementById('save-profile-settings')?.addEventListener('click', () => {
+      this.saveProfileSettings();
+    });
   },
 
   // Get next lesson to study
@@ -361,6 +367,22 @@ const App = {
     const goalFill = document.getElementById('profile-goal-fill');
     if (goalFill) goalFill.style.width = `${goalPct}%`;
 
+    const dailyGoalInput = document.getElementById('profile-daily-goal-input');
+    const reminderInput = document.getElementById('profile-reminder-time');
+    const notificationsInput = document.getElementById('profile-notifications-enabled');
+    const soundInput = document.getElementById('profile-sound-enabled');
+    const autoFreezeInput = document.getElementById('profile-auto-freeze');
+    const settingsStatus = document.getElementById('profile-settings-status');
+
+    if (dailyGoalInput) dailyGoalInput.value = userData.dailyGoalXP;
+    if (reminderInput) reminderInput.value = userData.settings.reminderTime || '19:00';
+    if (notificationsInput) notificationsInput.checked = !!userData.settings.notificationsEnabled;
+    if (soundInput) soundInput.checked = !!userData.settings.soundEffects;
+    if (autoFreezeInput) autoFreezeInput.checked = !!userData.settings.autoUseStreakFreeze;
+    if (settingsStatus) {
+      settingsStatus.textContent = `Streak freeze cost: ${userData.streakFreezeCost || 100} XP · Used: ${userData.streakFreezesUsed || 0}. For reminders while app is closed, keep iOS notifications enabled.`;
+    }
+
     const recentList = document.getElementById('profile-recent-list');
     if (recentList) {
       const recentLessons = [...userData.lessonsCompleted]
@@ -406,8 +428,51 @@ const App = {
     }
   },
 
+  async saveProfileSettings() {
+    const userData = Storage.getUserData();
+    const dailyGoalInput = document.getElementById('profile-daily-goal-input');
+    const reminderInput = document.getElementById('profile-reminder-time');
+    const notificationInput = document.getElementById('profile-notifications-enabled');
+    const soundInput = document.getElementById('profile-sound-enabled');
+    const autoFreezeInput = document.getElementById('profile-auto-freeze');
+    const statusEl = document.getElementById('profile-settings-status');
+
+    const nextGoal = Math.min(500, Math.max(10, parseInt(dailyGoalInput?.value || userData.dailyGoalXP, 10)));
+
+    userData.dailyGoalXP = nextGoal;
+    userData.settings.reminderTime = reminderInput?.value || userData.settings.reminderTime;
+    userData.settings.notificationsEnabled = Boolean(notificationInput?.checked);
+    userData.settings.soundEffects = Boolean(soundInput?.checked);
+    userData.settings.autoUseStreakFreeze = Boolean(autoFreezeInput?.checked);
+
+    Storage.saveUserData(userData);
+    const hasPermission = await NotificationManager.updateFromSettings(userData.settings.notificationsEnabled);
+
+    if (statusEl) {
+      if (userData.settings.notificationsEnabled && !hasPermission) {
+        statusEl.textContent = 'Settings saved. Enable notifications in iPhone Settings > Notifications for this app.';
+      } else {
+        statusEl.textContent = 'Settings saved successfully. Keep notifications enabled in iPhone Settings for this PWA.';
+      }
+    }
+
+    this.displayUserStats();
+  },
+
   getUserLevel(totalXP) {
     return Math.floor(totalXP / 100) + 1;
+  },
+
+  async registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+      return;
+    }
+
+    try {
+      await navigator.serviceWorker.register('./service-worker.js');
+    } catch (error) {
+      console.warn('Service worker registration failed', error);
+    }
   },
 
   // Set up install prompt for PWA
