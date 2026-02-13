@@ -380,7 +380,8 @@ const App = {
     if (soundInput) soundInput.checked = !!userData.settings.soundEffects;
     if (autoFreezeInput) autoFreezeInput.checked = !!userData.settings.autoUseStreakFreeze;
     if (settingsStatus) {
-      settingsStatus.textContent = `Streak freeze cost: ${userData.streakFreezeCost || 100} XP · Used: ${userData.streakFreezesUsed || 0}. For reminders while app is closed, keep iOS notifications enabled.`;
+      const permission = typeof Notification !== 'undefined' ? Notification.permission : 'unsupported';
+      settingsStatus.textContent = `Streak freeze cost: ${userData.streakFreezeCost || 100} XP · Used: ${userData.streakFreezesUsed || 0}. Notification permission: ${permission}.`;
     }
 
     const recentList = document.getElementById('profile-recent-list');
@@ -449,8 +450,11 @@ const App = {
     const hasPermission = await NotificationManager.updateFromSettings(userData.settings.notificationsEnabled);
 
     if (statusEl) {
+      const notificationStatus = await NotificationManager.getNotificationStatus();
       if (userData.settings.notificationsEnabled && !hasPermission) {
         statusEl.textContent = 'Settings saved. Enable notifications in iPhone Settings > Notifications for this app.';
+      } else if (!notificationStatus.serviceWorkerReady && notificationStatus.supportsServiceWorker) {
+        statusEl.textContent = 'Settings saved. Service worker is still initializing; reopen the app once to finalize reminders.';
       } else {
         statusEl.textContent = 'Settings saved successfully. Keep notifications enabled in iPhone Settings for this PWA.';
       }
