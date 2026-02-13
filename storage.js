@@ -1,6 +1,6 @@
 const Storage = {
   STORAGE_KEY: 'lithuanianLearner',
-  STATE_VERSION: 2,
+  STATE_VERSION: 3,
 
   getDefaultState() {
     return {
@@ -9,6 +9,8 @@ const Storage = {
       xpToday: 0,
       dailyGoalXP: 50,
       streakCount: 0,
+      streakFreezesUsed: 0,
+      streakFreezeCost: 100,
       lastActiveDate: StateLogic.dateKey(),
       lastGoalMetDate: null,
       lessonsCompleted: [],
@@ -18,7 +20,8 @@ const Storage = {
         soundEffects: true,
         notificationsEnabled: true,
         reminderTime: '19:00',
-        ignoreDiacritics: true
+        ignoreDiacritics: true,
+        autoUseStreakFreeze: true
       },
       onboardingCompleted: false,
       dailyQuests: {
@@ -68,6 +71,13 @@ const Storage = {
       migrated.settings.notificationsEnabled = state.settings.notificationsEnabled ?? migrated.settings.notificationsEnabled;
       migrated.settings.soundEffects = state.settings.soundEnabled ?? migrated.settings.soundEffects;
       migrated.settings.reminderTime = state.settings.reminderTime ?? migrated.settings.reminderTime;
+      migrated.settings.autoUseStreakFreeze = state.settings.autoUseStreakFreeze ?? migrated.settings.autoUseStreakFreeze;
+    }
+    if (state.streakFreezeCost !== undefined) {
+      migrated.streakFreezeCost = state.streakFreezeCost;
+    }
+    if (state.streakFreezesUsed !== undefined) {
+      migrated.streakFreezesUsed = state.streakFreezesUsed;
     }
     if (state.onboardingCompleted !== undefined) {
       migrated.onboardingCompleted = state.onboardingCompleted;
