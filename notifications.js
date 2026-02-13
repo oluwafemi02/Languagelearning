@@ -149,19 +149,6 @@ const NotificationManager = {
   },
 
 
-  async getNotificationStatus() {
-    const supportsNotifications = 'Notification' in window;
-    const supportsServiceWorker = 'serviceWorker' in navigator;
-    const permission = supportsNotifications ? Notification.permission : 'unsupported';
-    const registration = supportsServiceWorker ? await this.getServiceWorkerRegistration() : null;
-
-    return {
-      supportsNotifications,
-      supportsServiceWorker,
-      permission,
-      serviceWorkerReady: Boolean(registration)
-    };
-  },
   async updateFromSettings(requestPermission = false) {
     if (!('Notification' in window)) {
       return false;
