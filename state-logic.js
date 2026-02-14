@@ -4,6 +4,37 @@ const StateLogic = (() => {
   const resetDailyXPIfNeeded = (state, now = new Date()) => {
     const todayKey = dateKey(now);
     if (state.lastActiveDate !== todayKey) {
+      const oneDayMs = 24 * 60 * 60 * 1000;
+      const lastDate = state.lastActiveDate ? new Date(`${state.lastActiveDate}T00:00:00`) : null;
+      const todayDate = new Date(`${todayKey}T00:00:00`);
+      const missedDays = lastDate
+        ? Math.max(Math.floor((todayDate - lastDate) / oneDayMs) - 1, 0)
+        : 0;
+
+      if (state.streakCount > 0 && missedDays > 0) {
+        const freezeCost = state.streakFreezeCost || 100;
+        let remainingMissedDays = missedDays;
+
+        while (
+          remainingMissedDays > 0
+          && state.settings?.autoUseStreakFreeze
+          && state.xpTotal >= freezeCost
+        ) {
+          state.xpTotal -= freezeCost;
+          state.streakFreezesUsed = (state.streakFreezesUsed || 0) + 1;
+          remainingMissedDays -= 1;
+        }
+
+        if (remainingMissedDays > 0) {
+          state.streakCount = 0;
+          state.lastGoalMetDate = null;
+        } else {
+          const yesterday = new Date(todayDate);
+          yesterday.setDate(yesterday.getDate() - 1);
+          state.lastGoalMetDate = dateKey(yesterday);
+        }
+      }
+
       state.xpToday = 0;
       state.lastActiveDate = todayKey;
     }
@@ -20,7 +51,7 @@ const StateLogic = (() => {
   const updateStreakForGoal = (state, now = new Date()) => {
     resetDailyXPIfNeeded(state, now);
     const todayKey = dateKey(now);
-    if (state.xpToday < state.dailyGoalXP) {
+    if (state.xpToday <= 0) {
       return state;
     }
     if (state.lastGoalMetDate === todayKey) {
