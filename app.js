@@ -303,10 +303,6 @@ const App = {
     document.getElementById('save-profile-settings')?.addEventListener('click', () => {
       this.saveProfileSettings();
     });
-
-    document.getElementById('debug-lessons-btn')?.addEventListener('click', () => {
-      this.debugCompleteLessons();
-    });
   },
 
   // Get next lesson to study
@@ -376,7 +372,6 @@ const App = {
     const goalFill = document.getElementById('profile-goal-fill');
     if (goalFill) goalFill.style.width = `${goalPct}%`;
 
-    const profileNameInput = document.getElementById('profile-name-input');
     const dailyGoalInput = document.getElementById('profile-daily-goal-input');
     const reminderInput = document.getElementById('profile-reminder-time');
     const notificationsInput = document.getElementById('profile-notifications-enabled');
@@ -384,16 +379,13 @@ const App = {
     const autoFreezeInput = document.getElementById('profile-auto-freeze');
     const settingsStatus = document.getElementById('profile-settings-status');
 
-    if (profileNameInput) profileNameInput.value = userData.profileName || 'Lithuanian Learner';
     if (dailyGoalInput) dailyGoalInput.value = userData.dailyGoalXP;
     if (reminderInput) reminderInput.value = userData.settings.reminderTime || '19:00';
     if (notificationsInput) notificationsInput.checked = !!userData.settings.notificationsEnabled;
     if (soundInput) soundInput.checked = !!userData.settings.soundEffects;
     if (autoFreezeInput) autoFreezeInput.checked = !!userData.settings.autoUseStreakFreeze;
     if (settingsStatus) {
-      const reliability = NotificationManager.getReminderReliabilityMessage?.();
-      const base = `Streak freeze cost: ${userData.streakFreezeCost || 100} XP · Used: ${userData.streakFreezesUsed || 0}`;
-      settingsStatus.textContent = reliability ? `${base}. ${reliability}` : base;
+      settingsStatus.textContent = `Streak freeze cost: ${userData.streakFreezeCost || 100} XP · Used: ${userData.streakFreezesUsed || 0}`;
     }
 
     const recentList = document.getElementById('profile-recent-list');
@@ -443,7 +435,6 @@ const App = {
 
   async saveProfileSettings() {
     const userData = Storage.getUserData();
-    const profileNameInput = document.getElementById('profile-name-input');
     const dailyGoalInput = document.getElementById('profile-daily-goal-input');
     const reminderInput = document.getElementById('profile-reminder-time');
     const notificationInput = document.getElementById('profile-notifications-enabled');
@@ -453,7 +444,6 @@ const App = {
 
     const nextGoal = Math.min(500, Math.max(10, parseInt(dailyGoalInput?.value || userData.dailyGoalXP, 10)));
 
-    userData.profileName = (profileNameInput?.value || userData.profileName || 'Lithuanian Learner').trim().slice(0, 40) || 'Lithuanian Learner';
     userData.dailyGoalXP = nextGoal;
     userData.settings.reminderTime = reminderInput?.value || userData.settings.reminderTime;
     userData.settings.notificationsEnabled = Boolean(notificationInput?.checked);
@@ -464,38 +454,14 @@ const App = {
     const hasPermission = await NotificationManager.updateFromSettings(userData.settings.notificationsEnabled);
 
     if (statusEl) {
-      const reliability = NotificationManager.getReminderReliabilityMessage?.();
       if (userData.settings.notificationsEnabled && !hasPermission) {
         statusEl.textContent = 'Settings saved. Enable notifications in iPhone Settings > Notifications for this app.';
       } else {
-        statusEl.textContent = reliability ? `Settings saved. ${reliability}` : 'Settings saved successfully.';
+        statusEl.textContent = 'Settings saved successfully.';
       }
     }
 
     this.displayUserStats();
-  },
-
-  debugCompleteLessons() {
-    const userData = Storage.getUserData();
-    if (!Array.isArray(this.lessons) || this.lessons.length === 0) {
-      alert('Lessons are still loading. Try again in a second.');
-      return;
-    }
-
-    this.lessons.slice(0, 5).forEach((lesson, index) => {
-      if (!userData.lessonsCompleted.find(entry => String(entry.id) === String(lesson.id))) {
-        userData.lessonsCompleted.push({
-          id: lesson.id,
-          completedAt: new Date(Date.now() - index * 3600 * 1000).toISOString(),
-          accuracy: 100
-        });
-      }
-    });
-
-    Storage.saveUserData(userData);
-    this.displayLessonPath();
-    this.displayUserStats();
-    alert('Debug: Added up to 5 completed lessons.');
   },
 
   getUserLevel(totalXP) {

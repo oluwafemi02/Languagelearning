@@ -20,18 +20,6 @@ const NotificationManager = {
     return permission === 'granted';
   },
 
-  async getServiceWorkerRegistration() {
-    if (!('serviceWorker' in navigator)) {
-      return null;
-    }
-
-    try {
-      return await navigator.serviceWorker.ready;
-    } catch (error) {
-      return null;
-    }
-  },
-
   clearScheduledReminder() {
     if (this.reminderTimeoutId) {
       clearTimeout(this.reminderTimeoutId);
@@ -41,18 +29,6 @@ const NotificationManager = {
       clearInterval(this.reminderIntervalId);
       this.reminderIntervalId = null;
     }
-  },
-
-  getReminderReliabilityMessage() {
-    const ua = navigator.userAgent || '';
-    const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    const hasWebPush = 'PushManager' in window && 'serviceWorker' in navigator;
-
-    if (isIOS && !hasWebPush) {
-      return 'iPhone limitation: reminders may be delayed until app reopen unless Web Push is configured.';
-    }
-
-    return null;
   },
 
   scheduleDailyReminder() {
@@ -73,27 +49,16 @@ const NotificationManager = {
     const [hours, minutes] = (data.settings.reminderTime || '19:00').split(':').map(Number);
     const reminderTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
 
-    if (Number.isNaN(reminderTime.getTime())) {
-      return;
-    }
-
     if (now > reminderTime) {
       reminderTime.setDate(reminderTime.getDate() + 1);
     }
 
-    const reminderAt = reminderTime.getTime();
-    const timeUntilReminder = reminderAt - now.getTime();
+    const timeUntilReminder = reminderTime - now;
 
     this.reminderTimeoutId = setTimeout(() => {
-      const delayMs = Date.now() - reminderAt;
-      const resumedLate = typeof document !== 'undefined' && document.visibilityState === 'visible' && delayMs > (2 * 60 * 1000);
-
-      if (!resumedLate) {
-        sendNotification();
-      }
-
+      sendNotification();
       this.reminderIntervalId = setInterval(sendNotification, 24 * 60 * 60 * 1000);
-    }, Math.max(timeUntilReminder, 0));
+    }, timeUntilReminder);
   },
 
   buildReminderMessage(data) {
@@ -113,14 +78,9 @@ const NotificationManager = {
     return 'Great work! Keep momentum with a quick Lithuanian review today.';
   },
 
-  async sendReminder(message) {
-    if (!('Notification' in window) || Notification.permission !== 'granted') {
-      return;
-    }
-
-    const registration = await this.getServiceWorkerRegistration();
-    if (registration && registration.showNotification) {
-      await registration.showNotification('Laikas mokytis! 📚', {
+  sendReminder(message) {
+    if ('Notification' in window && Notification.permission === 'granted') {
+      new Notification('Laikas mokytis! 📚', {
         body: message,
         icon: this.iconData,
         badge: this.iconData,
