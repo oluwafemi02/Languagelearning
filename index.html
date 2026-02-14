@@ -768,6 +768,21 @@
             border-bottom: none;
         }
 
+        .setting-item-input {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .settings-section input[type="number"],
+        .settings-section input[type="time"] {
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -976,8 +991,8 @@
                 <div class="container">
                     <div class="profile-header">
                         <div class="profile-avatar">👤</div>
-                        <div class="profile-name">Lithuanian Learner</div>
-                        <div class="profile-level">Level <span id="user-level">1</span></div>
+                        <div class="profile-name" id="profile-name-display">Lithuanian Learner</div>
+                        <div class="profile-level">Level <span id="user-level">1</span> · <span id="next-level-xp">100 XP to next</span></div>
                     </div>
 
                     <div class="profile-highlight">
@@ -1022,18 +1037,32 @@
 
                     <div class="settings-section">
                         <h3>Settings</h3>
-                        <div class="setting-item">
-                            <span>Daily Goal</span>
-                            <span id="daily-goal">50 XP</span>
+                        <div class="setting-item setting-item-input">
+                            <label for="profile-name-input">Profile Name</label>
+                            <input id="profile-name-input" type="text" maxlength="40" placeholder="Your name" />
+                        </div>
+                        <div class="setting-item setting-item-input">
+                            <label for="profile-daily-goal-input">Daily Goal (XP)</label>
+                            <input id="profile-daily-goal-input" type="number" min="10" max="500" step="5" />
+                        </div>
+                        <div class="setting-item setting-item-input">
+                            <label for="profile-reminder-time">Daily Reminder Time</label>
+                            <input id="profile-reminder-time" type="time" />
                         </div>
                         <div class="setting-item">
-                            <span>Sound Effects</span>
-                            <span>✓ Enabled</span>
+                            <label for="profile-notifications-enabled">Reminder Notifications</label>
+                            <input id="profile-notifications-enabled" type="checkbox" />
                         </div>
                         <div class="setting-item">
-                            <span>Daily Reminder</span>
-                            <span>19:00</span>
+                            <label for="profile-sound-enabled">Sound Effects</label>
+                            <input id="profile-sound-enabled" type="checkbox" />
                         </div>
+                        <div class="setting-item">
+                            <label for="profile-auto-freeze">Auto Streak Freeze</label>
+                            <input id="profile-auto-freeze" type="checkbox" />
+                        </div>
+                        <button id="save-profile-settings" class="btn btn-primary" style="margin-top: 16px; width: 100%;">Save Settings</button>
+                        <p id="profile-settings-status" style="margin-top: 12px; color: var(--text-light);"></p>
                     </div>
                 </div>
             </section>
