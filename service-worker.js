@@ -35,13 +35,24 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
+  const requestUrl = new URL(event.request.url);
+  const cacheableProtocol = requestUrl.protocol === 'http:' || requestUrl.protocol === 'https:';
+
+  if (event.request.method !== 'GET' || !cacheableProtocol) {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
       const networkFetch = fetch(event.request)
         .then(response => {
           if (response && response.status === 200) {
             const responseClone = response.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseClone));
+            event.waitUntil(
+              caches.open(CACHE_NAME)
+                .then(cache => cache.put(event.request, responseClone))
+                .catch(() => null)
+            );
           }
           return response;
         })
