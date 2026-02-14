@@ -86,7 +86,15 @@ const NotificationManager = {
         badge: this.iconData,
         tag: 'daily-reminder'
       });
+      return;
     }
+
+    new Notification('Laikas mokytis! 📚', {
+      body: message,
+      icon: this.iconData,
+      badge: this.iconData,
+      tag: 'daily-reminder'
+    });
   },
 
   async updateFromSettings(requestPermission = false) {

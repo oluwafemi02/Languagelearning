@@ -61,6 +61,9 @@ const Storage = {
     if (state.streak !== undefined) {
       migrated.streakCount = state.streak;
     }
+    if (state.profileName !== undefined) {
+      migrated.profileName = state.profileName;
+    }
     if (state.lastStudyDate) {
       migrated.lastActiveDate = new Date(state.lastStudyDate).toISOString().slice(0, 10);
     }

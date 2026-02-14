@@ -363,6 +363,11 @@ const App = {
     setText('user-level', level);
     setText('profile-daily-xp', `${dailyXP}/${dailyGoal}`);
     setText('profile-goal-percent', `${goalPct}%`);
+    setText('profile-name-display', userData.profileName || 'Lithuanian Learner');
+
+    const nextLevelAt = level * 100;
+    const xpToNext = Math.max(nextLevelAt - userData.xpTotal, 0);
+    setText('next-level-xp', xpToNext === 0 ? 'Level up ready!' : `${xpToNext} XP to next`);
 
     const goalFill = document.getElementById('profile-goal-fill');
     if (goalFill) goalFill.style.width = `${goalPct}%`;
@@ -389,7 +394,7 @@ const App = {
         .slice(-3)
         .reverse()
         .map(lesson => {
-          const lessonInfo = this.lessons.find(l => l.id === lesson.id);
+          const lessonInfo = this.lessons.find(l => String(l.id) === String(lesson.id));
           const title = lessonInfo?.titleLT || `Lesson ${lesson.id}`;
           const date = new Date(lesson.completedAt).toLocaleDateString();
           return `<li><strong>${title}</strong><span>${date}</span></li>`;
