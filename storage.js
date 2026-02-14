@@ -112,13 +112,44 @@ const Storage = {
     return migrated;
   },
 
+
+  ensureStateShape(state) {
+    const defaults = this.getDefaultState();
+    const merged = {
+      ...defaults,
+      ...state,
+      settings: {
+        ...defaults.settings,
+        ...(state.settings || {})
+      },
+      dailyQuests: {
+        ...defaults.dailyQuests,
+        ...(state.dailyQuests || {})
+      },
+      sentences: {
+        ...defaults.sentences,
+        ...(state.sentences || {})
+      }
+    };
+
+    if (!Array.isArray(merged.lessonsCompleted)) {
+      merged.lessonsCompleted = [];
+    }
+    if (!merged.srsItems || typeof merged.srsItems !== 'object') {
+      merged.srsItems = {};
+    }
+
+    return merged;
+  },
+
   loadState() {
     const raw = localStorage.getItem(this.STORAGE_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     const migrated = this.migrateState(parsed);
-    StateLogic.resetDailyXPIfNeeded(migrated);
-    this.saveState(migrated);
-    return migrated;
+    const normalized = this.ensureStateShape(migrated);
+    StateLogic.resetDailyXPIfNeeded(normalized);
+    this.saveState(normalized);
+    return normalized;
   },
 
   saveState(state) {
