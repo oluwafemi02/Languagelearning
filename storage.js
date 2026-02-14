@@ -9,7 +9,6 @@ const Storage = {
       xpToday: 0,
       dailyGoalXP: 50,
       streakCount: 0,
-      profileName: 'Lithuanian Learner',
       streakFreezesUsed: 0,
       streakFreezeCost: 100,
       lastActiveDate: StateLogic.dateKey(),
