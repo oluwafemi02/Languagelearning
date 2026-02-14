@@ -17,6 +17,7 @@ const App = {
     }
 
     // Initialize components
+    await this.registerServiceWorker();
     StreakManager.init();
     await NotificationManager.init();
     if (window.QuestManager) {
@@ -460,6 +461,18 @@ const App = {
 
   getUserLevel(totalXP) {
     return Math.floor(totalXP / 100) + 1;
+  },
+
+  async registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+      return;
+    }
+
+    try {
+      await navigator.serviceWorker.register('./service-worker.js');
+    } catch (error) {
+      console.warn('Service worker registration failed', error);
+    }
   },
 
   // Set up install prompt for PWA
