@@ -17,6 +17,7 @@ const App = {
     }
 
     // Initialize components
+    await this.registerServiceWorker();
     StreakManager.init();
     await NotificationManager.init();
     if (window.QuestManager) {
@@ -74,7 +75,7 @@ const App = {
     if (overlay) overlay.classList.add('hidden');
     
     if (enableNotifications) {
-      NotificationManager.requestPermission();
+      NotificationManager.updateFromSettings(true);
     }
     
     // Continue initialization
@@ -175,9 +176,10 @@ const App = {
 
   // Display user stats
   displayUserStats() {
+    const streak = StreakManager.updateStreak();
     this.userData = Storage.getUserData();
     document.getElementById('total-xp').textContent = this.userData.xpTotal;
-    document.getElementById('streak-count').textContent = this.userData.streakCount;
+    document.getElementById('streak-count').textContent = streak;
     this.updateDailyGoal();
     this.updateReviewSection();
     if (window.QuestManager) {
@@ -297,6 +299,14 @@ const App = {
         this.navigateToScreen(screen);
       });
     });
+
+    document.getElementById('save-profile-settings')?.addEventListener('click', () => {
+      this.saveProfileSettings();
+    });
+
+    document.getElementById('debug-lessons-btn')?.addEventListener('click', () => {
+      this.debugCompleteLessons();
+    });
   },
 
   // Get next lesson to study
@@ -357,9 +367,34 @@ const App = {
     setText('user-level', level);
     setText('profile-daily-xp', `${dailyXP}/${dailyGoal}`);
     setText('profile-goal-percent', `${goalPct}%`);
+    setText('profile-name-display', userData.profileName || 'Lithuanian Learner');
+
+    const nextLevelAt = level * 100;
+    const xpToNext = Math.max(nextLevelAt - userData.xpTotal, 0);
+    setText('next-level-xp', xpToNext === 0 ? 'Level up ready!' : `${xpToNext} XP to next`);
 
     const goalFill = document.getElementById('profile-goal-fill');
     if (goalFill) goalFill.style.width = `${goalPct}%`;
+
+    const profileNameInput = this.ensureProfileNameInput();
+    const dailyGoalInput = document.getElementById('profile-daily-goal-input');
+    const reminderInput = document.getElementById('profile-reminder-time');
+    const notificationsInput = document.getElementById('profile-notifications-enabled');
+    const soundInput = document.getElementById('profile-sound-enabled');
+    const autoFreezeInput = document.getElementById('profile-auto-freeze');
+    const settingsStatus = document.getElementById('profile-settings-status');
+
+    if (profileNameInput) profileNameInput.value = userData.profileName || 'Lithuanian Learner';
+    if (dailyGoalInput) dailyGoalInput.value = userData.dailyGoalXP;
+    if (reminderInput) reminderInput.value = userData.settings.reminderTime || '19:00';
+    if (notificationsInput) notificationsInput.checked = !!userData.settings.notificationsEnabled;
+    if (soundInput) soundInput.checked = !!userData.settings.soundEffects;
+    if (autoFreezeInput) autoFreezeInput.checked = !!userData.settings.autoUseStreakFreeze;
+    if (settingsStatus) {
+      const reliability = NotificationManager.getReminderReliabilityMessage?.();
+      const base = `Streak freeze cost: ${userData.streakFreezeCost || 100} XP · Used: ${userData.streakFreezesUsed || 0}`;
+      settingsStatus.textContent = reliability ? `${base}. ${reliability}` : base;
+    }
 
     const recentList = document.getElementById('profile-recent-list');
     if (recentList) {
@@ -367,7 +402,7 @@ const App = {
         .slice(-3)
         .reverse()
         .map(lesson => {
-          const lessonInfo = this.lessons.find(l => l.id === lesson.id);
+          const lessonInfo = this.lessons.find(l => String(l.id) === String(lesson.id));
           const title = lessonInfo?.titleLT || `Lesson ${lesson.id}`;
           const date = new Date(lesson.completedAt).toLocaleDateString();
           return `<li><strong>${title}</strong><span>${date}</span></li>`;
@@ -406,8 +441,102 @@ const App = {
     }
   },
 
+  ensureProfileNameInput() {
+    let input = document.getElementById('profile-name-input');
+    if (input) return input;
+
+    const settingsSection = document.querySelector('#profile-screen .settings-section');
+    if (!settingsSection) return null;
+
+    const firstSetting = settingsSection.querySelector('.setting-item');
+    const wrapper = document.createElement('div');
+    wrapper.className = 'setting-item setting-item-input';
+    wrapper.innerHTML = `
+      <label for="profile-name-input">Profile Name</label>
+      <input id="profile-name-input" type="text" maxlength="40" placeholder="Your name" />
+    `;
+
+    if (firstSetting) {
+      settingsSection.insertBefore(wrapper, firstSetting);
+    } else {
+      const saveBtn = settingsSection.querySelector('#save-profile-settings');
+      settingsSection.insertBefore(wrapper, saveBtn || null);
+    }
+
+    return document.getElementById('profile-name-input');
+  },
+
+  async saveProfileSettings() {
+    const userData = Storage.getUserData();
+    const profileNameInput = this.ensureProfileNameInput();
+    const dailyGoalInput = document.getElementById('profile-daily-goal-input');
+    const reminderInput = document.getElementById('profile-reminder-time');
+    const notificationInput = document.getElementById('profile-notifications-enabled');
+    const soundInput = document.getElementById('profile-sound-enabled');
+    const autoFreezeInput = document.getElementById('profile-auto-freeze');
+    const statusEl = document.getElementById('profile-settings-status');
+
+    const nextGoal = Math.min(500, Math.max(10, parseInt(dailyGoalInput?.value || userData.dailyGoalXP, 10)));
+
+    userData.profileName = (profileNameInput?.value || userData.profileName || 'Lithuanian Learner').trim().slice(0, 40) || 'Lithuanian Learner';
+    userData.dailyGoalXP = nextGoal;
+    userData.settings.reminderTime = reminderInput?.value || userData.settings.reminderTime;
+    userData.settings.notificationsEnabled = Boolean(notificationInput?.checked);
+    userData.settings.soundEffects = Boolean(soundInput?.checked);
+    userData.settings.autoUseStreakFreeze = Boolean(autoFreezeInput?.checked);
+
+    Storage.saveUserData(userData);
+    const hasPermission = await NotificationManager.updateFromSettings(userData.settings.notificationsEnabled);
+
+    if (statusEl) {
+      const reliability = NotificationManager.getReminderReliabilityMessage?.();
+      if (userData.settings.notificationsEnabled && !hasPermission) {
+        statusEl.textContent = 'Settings saved. Enable notifications in iPhone Settings > Notifications for this app.';
+      } else {
+        statusEl.textContent = reliability ? `Settings saved. ${reliability}` : 'Settings saved successfully.';
+      }
+    }
+
+    this.displayUserStats();
+  },
+
+  debugCompleteLessons() {
+    const userData = Storage.getUserData();
+    if (!Array.isArray(this.lessons) || this.lessons.length === 0) {
+      alert('Lessons are still loading. Try again in a second.');
+      return;
+    }
+
+    this.lessons.slice(0, 5).forEach((lesson, index) => {
+      if (!userData.lessonsCompleted.find(entry => String(entry.id) === String(lesson.id))) {
+        userData.lessonsCompleted.push({
+          id: lesson.id,
+          completedAt: new Date(Date.now() - index * 3600 * 1000).toISOString(),
+          accuracy: 100
+        });
+      }
+    });
+
+    Storage.saveUserData(userData);
+    this.displayLessonPath();
+    this.displayUserStats();
+    alert('Debug: Added up to 5 completed lessons.');
+  },
+
   getUserLevel(totalXP) {
     return Math.floor(totalXP / 100) + 1;
+  },
+
+  async registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+      return;
+    }
+
+    try {
+      await navigator.serviceWorker.register('./service-worker.js');
+    } catch (error) {
+      console.warn('Service worker registration failed', error);
+    }
   },
 
   // Set up install prompt for PWA
