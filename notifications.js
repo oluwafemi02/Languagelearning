@@ -72,7 +72,7 @@ const NotificationManager = {
     }
 
     if (dailyXP < data.dailyGoalXP) {
-      return `You are ${data.dailyGoalXP - dailyXP} XP away from today's goal. Keep going!`;
+      return `You are ${data.dailyGoalXP - dailyXP} XP away from today\'s goal. Keep going!`;
     }
 
     return 'Great work! Keep momentum with a quick Lithuanian review today.';
