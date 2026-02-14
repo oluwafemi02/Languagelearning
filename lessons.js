@@ -138,9 +138,13 @@ const LessonManager = {
     const questionContainer = document.getElementById('question-container');
     const answerOptions = document.getElementById('answer-options');
 
+    const fallbackText = [exercise.text, exercise.answerLT, exercise.questionLT, exercise.answer, exercise.question]
+      .find(value => typeof value === 'string' && value.trim().length > 0) || '';
+    const safeText = fallbackText.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+
     questionContainer.innerHTML = `
       <div class="question">
-        <button class="audio-btn" onclick="LessonManager.playAudio('${exercise.audio || ''}', '${exercise.text || ''}')">
+        <button class="audio-btn" onclick="LessonManager.playAudio('${exercise.audio || ''}', '${safeText}')">
           🔊 Klausyti
         </button>
         <p>${exercise.question}</p>
@@ -402,16 +406,23 @@ const LessonManager = {
 
   // Play audio
   playAudio(audioPath, text) {
+    const speakFallback = () => {
+      if ('speechSynthesis' in window && text) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'lt-LT';
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+      }
+    };
+
     if (audioPath) {
       const audio = new Audio(audioPath);
-      audio.play().catch(err => console.log('Audio playback failed:', err));
+      audio.addEventListener('error', () => speakFallback(), { once: true });
+      audio.play().catch(() => speakFallback());
       return;
     }
-    if ('speechSynthesis' in window && text) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'lt-LT';
-      window.speechSynthesis.speak(utterance);
-    }
+
+    speakFallback();
   },
 
   normalizeAnswer(value) {

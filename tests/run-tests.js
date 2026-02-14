@@ -18,7 +18,9 @@ runTest('daily XP resets when date changes', () => {
     xpTotal: 100,
     xpToday: 30,
     dailyGoalXP: 50,
-    lastActiveDate: '2024-01-01'
+    streakCount: 0,
+    lastActiveDate: '2024-01-01',
+    settings: { autoUseStreakFreeze: true }
   };
   const now = new Date('2024-01-02T10:00:00Z');
   StateLogic.resetDailyXPIfNeeded(state, now);
@@ -26,10 +28,10 @@ runTest('daily XP resets when date changes', () => {
   assert.strictEqual(state.lastActiveDate, '2024-01-02');
 });
 
-runTest('streak increments only when daily goal met on consecutive days', () => {
+runTest('streak increments when user practices on consecutive days', () => {
   const state = {
     xpTotal: 0,
-    xpToday: 50,
+    xpToday: 10,
     dailyGoalXP: 50,
     streakCount: 2,
     lastActiveDate: '2024-01-03',
@@ -41,16 +43,43 @@ runTest('streak increments only when daily goal met on consecutive days', () => 
   assert.strictEqual(state.lastGoalMetDate, '2024-01-03');
 });
 
-runTest('streak resets when goal missed the previous day', () => {
+runTest('streak freeze spends XP and preserves streak after missed day', () => {
   const state = {
-    xpTotal: 0,
-    xpToday: 50,
+    xpTotal: 250,
+    xpToday: 20,
     dailyGoalXP: 50,
     streakCount: 4,
-    lastActiveDate: '2024-01-06',
-    lastGoalMetDate: '2024-01-04'
+    streakFreezeCost: 100,
+    streakFreezesUsed: 0,
+    lastActiveDate: '2024-01-02',
+    lastGoalMetDate: '2024-01-02',
+    settings: { autoUseStreakFreeze: true }
   };
-  const now = new Date('2024-01-06T12:00:00Z');
+  const now = new Date('2024-01-04T12:00:00Z');
+  StateLogic.resetDailyXPIfNeeded(state, now);
+  StateLogic.applyXp(state, 20, now);
+  StateLogic.updateStreakForGoal(state, now);
+  assert.strictEqual(state.xpTotal, 170);
+  assert.strictEqual(state.streakFreezesUsed, 1);
+  assert.strictEqual(state.streakCount, 5);
+  assert.strictEqual(state.lastGoalMetDate, '2024-01-04');
+});
+
+runTest('streak resets when missed day and freeze unavailable', () => {
+  const state = {
+    xpTotal: 30,
+    xpToday: 20,
+    dailyGoalXP: 50,
+    streakCount: 4,
+    streakFreezeCost: 100,
+    streakFreezesUsed: 0,
+    lastActiveDate: '2024-01-02',
+    lastGoalMetDate: '2024-01-02',
+    settings: { autoUseStreakFreeze: true }
+  };
+  const now = new Date('2024-01-04T12:00:00Z');
+  StateLogic.resetDailyXPIfNeeded(state, now);
+  StateLogic.applyXp(state, 20, now);
   StateLogic.updateStreakForGoal(state, now);
   assert.strictEqual(state.streakCount, 1);
 });
