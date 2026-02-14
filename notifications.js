@@ -20,19 +20,6 @@ const NotificationManager = {
     return permission === 'granted';
   },
 
-  async getServiceWorkerRegistration() {
-    if (!('serviceWorker' in navigator)) {
-      return null;
-    }
-
-    try {
-      return await navigator.serviceWorker.ready;
-    } catch (error) {
-      console.warn('Service worker not ready for notifications.', error);
-      return null;
-    }
-  },
-
   clearScheduledReminder() {
     if (this.reminderTimeoutId) {
       clearTimeout(this.reminderTimeoutId);
@@ -56,16 +43,11 @@ const NotificationManager = {
       const latestState = Storage.getUserData();
       const message = this.buildReminderMessage(latestState);
       this.sendReminder(message);
-      this.saveExpectedReminderTime();
     };
 
     const now = new Date();
     const [hours, minutes] = (data.settings.reminderTime || '19:00').split(':').map(Number);
     const reminderTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
-
-    if (Number.isNaN(reminderTime.getTime())) {
-      return;
-    }
 
     if (now > reminderTime) {
       reminderTime.setDate(reminderTime.getDate() + 1);
@@ -77,33 +59,6 @@ const NotificationManager = {
       sendNotification();
       this.reminderIntervalId = setInterval(sendNotification, 24 * 60 * 60 * 1000);
     }, timeUntilReminder);
-
-    this.saveExpectedReminderTime(reminderTime);
-  },
-
-  saveExpectedReminderTime(date = null) {
-    const next = date || new Date(Date.now() + 24 * 60 * 60 * 1000);
-    localStorage.setItem('nextReminderAt', next.toISOString());
-  },
-
-  checkMissedReminder() {
-    const nextReminderAt = localStorage.getItem('nextReminderAt');
-    if (!nextReminderAt) {
-      return;
-    }
-
-    const dueDate = new Date(nextReminderAt);
-    if (Number.isNaN(dueDate.getTime())) {
-      return;
-    }
-
-    if (Date.now() > dueDate.getTime()) {
-      const data = Storage.getUserData();
-      if (data.settings.notificationsEnabled && Notification.permission === 'granted' && (data.xpToday || 0) === 0) {
-        const message = this.buildReminderMessage(data);
-        this.sendReminder(message);
-      }
-    }
   },
 
   buildReminderMessage(data) {
@@ -123,31 +78,16 @@ const NotificationManager = {
     return 'Great work! Keep momentum with a quick Lithuanian review today.';
   },
 
-  async sendReminder(message) {
-    if (!('Notification' in window) || Notification.permission !== 'granted') {
-      return;
-    }
-
-    const registration = await this.getServiceWorkerRegistration();
-    if (registration) {
-      await registration.showNotification('Laikas mokytis! 📚', {
+  sendReminder(message) {
+    if ('Notification' in window && Notification.permission === 'granted') {
+      new Notification('Laikas mokytis! 📚', {
         body: message,
         icon: this.iconData,
         badge: this.iconData,
-        tag: 'daily-reminder',
-        data: { url: '/index.html' }
+        tag: 'daily-reminder'
       });
-      return;
     }
-
-    new Notification('Laikas mokytis! 📚', {
-      body: message,
-      icon: this.iconData,
-      badge: this.iconData,
-      tag: 'daily-reminder'
-    });
   },
-
 
   async updateFromSettings(requestPermission = false) {
     if (!('Notification' in window)) {
@@ -174,11 +114,9 @@ const NotificationManager = {
 
   async init() {
     await this.updateFromSettings(false);
-    this.checkMissedReminder();
 
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') {
-        this.checkMissedReminder();
         this.scheduleDailyReminder();
       }
     });
