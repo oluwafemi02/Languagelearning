@@ -30,24 +30,39 @@
           "exercises": [
             {
               "type": "case-transform",
-              "instruction": "Put the word in the correct form: Aš esu ___",
+              "instruction": "Type the full sentence: Aš esu ___",
               "baseForm": "parduotuvė",
-              "answer": "parduotuvėje",
-              "caseNote": "Location with 'esu' needs locative."
+              "answer": "Aš esu parduotuvėje",
+              "caseNote": "Location with 'esu' needs locative.",
+              "template": "Aš esu ___",
+              "answerPart": "parduotuvėje"
             },
             {
               "type": "scenario-dialogue",
-              "instruction": "Complete your turn in Lithuanian.",
+              "instruction": "Type your full response in Lithuanian.",
               "dialogue": [
-                { "speaker": "Rūta", "lt": "Kur tu esi?", "en": "Where are you?" },
-                { "speaker": "You", "prompt": "Say: I am in the shop", "template": "Aš esu ___." }
+                {
+                  "speaker": "Rūta",
+                  "lt": "Kur tu esi?",
+                  "en": "Where are you?"
+                },
+                {
+                  "speaker": "You",
+                  "prompt": "Say: I am in the shop",
+                  "template": "Aš esu ___."
+                }
               ],
-              "answer": "Aš esu parduotuvėje",
-              "caseNote": "The place answer needs locative ending -ėje."
+              "caseNote": "The place answer needs locative ending -ėje.",
+              "answerPart": "parduotuvėje",
+              "answer": "Aš esu parduotuvėje"
             }
           ]
         }
-      ]
+      ],
+      "aiGeneration": {
+        "enabled": true,
+        "endpoint": "/api/chat"
+      }
     }
   ],
   "aiConversationScenarios": [],
