@@ -271,10 +271,11 @@ const App = {
     });
 
     // Continue learning button in results
-    document.getElementById('continue-learning-btn')?.addEventListener('click', () => {
+    document.getElementById('continue-learning-btn')?.addEventListener('click', async () => {
       document.getElementById('results-screen').classList.remove('active');
       document.getElementById('home-screen').classList.add('active');
       this.userData = Storage.getUserData();
+      this.lessons = await LessonManager.loadLessons();
       this.displayLessonPath();
       this.displayUserStats();
     });
@@ -302,6 +303,18 @@ const App = {
 
     document.getElementById('save-profile-settings')?.addEventListener('click', () => {
       this.saveProfileSettings();
+    });
+
+    document.getElementById('scenario-check-answer-btn')?.addEventListener('click', () => {
+      ScenarioLearningManager.checkAnswer();
+    });
+
+    document.getElementById('scenario-continue-btn')?.addEventListener('click', () => {
+      ScenarioLearningManager.continueLesson();
+    });
+
+    document.getElementById('exit-scenario-lesson-btn')?.addEventListener('click', () => {
+      ScenarioLearningManager.exitLesson();
     });
   },
 
@@ -337,6 +350,8 @@ const App = {
       PracticeManager.init();
     } else if (screenName === 'sentences' && typeof SentenceManager !== 'undefined') {
       SentenceManager.init();
+    } else if (screenName === 'scenario' && typeof ScenarioLearningManager !== 'undefined') {
+      ScenarioLearningManager.init();
     } else if (screenName === 'profile') {
       this.updateProfile();
     }
