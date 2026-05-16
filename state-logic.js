@@ -73,7 +73,13 @@ const StateLogic = (() => {
 
   const isLessonUnlocked = (lessonsCompleted, lessonIndex) => {
     if (lessonIndex === 0) return true;
-    const completedIds = new Set(lessonsCompleted.map(entry => entry.id));
+
+    // Primary unlock rule: linear path progression by completion count.
+    // This supports numeric IDs, string IDs, and generated lessons.
+    if ((lessonsCompleted || []).length >= lessonIndex) return true;
+
+    // Backward compatibility for older saved states that tracked numeric IDs.
+    const completedIds = new Set((lessonsCompleted || []).map(entry => entry.id));
     return completedIds.has(lessonIndex);
   };
 

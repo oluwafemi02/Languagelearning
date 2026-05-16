@@ -1,0 +1,73 @@
+{
+  "scenarios": [
+    {
+      "id": "scenario_01",
+      "title": "At the Shop",
+      "goal": "Choose the correct case while speaking in context.",
+      "lessons": [
+        {
+          "id": "L01",
+          "title": "Where are you? (Locative)",
+          "description": "Use nominative vs. locative in real sentence production.",
+          "xp": 15,
+          "focusCase": "locative",
+          "vocabulary": [
+            {
+              "id": "v_shop",
+              "lithuanian": "parduotuvė",
+              "english": "shop",
+              "scenarioSentence": "Aš esu parduotuvėje.",
+              "scenarioSentenceEN": "I am in the shop.",
+              "srsProductionPrompt": "Say: I am in the shop.",
+              "caseInSentence": "locative",
+              "caseNote": "After 'esu', use locative for place: parduotuvė → parduotuvėje.",
+              "productionForms": {
+                "nominative": "parduotuvė",
+                "locative": "parduotuvėje"
+              }
+            }
+          ],
+          "exercises": [
+            {
+              "type": "case-transform",
+              "instruction": "Type the full sentence: Aš esu ___",
+              "baseForm": "parduotuvė",
+              "answer": "Aš esu parduotuvėje",
+              "caseNote": "Location with 'esu' needs locative.",
+              "template": "Aš esu ___",
+              "answerPart": "parduotuvėje"
+            },
+            {
+              "type": "scenario-dialogue",
+              "instruction": "Type your full response in Lithuanian.",
+              "dialogue": [
+                {
+                  "speaker": "Rūta",
+                  "lt": "Kur tu esi?",
+                  "en": "Where are you?"
+                },
+                {
+                  "speaker": "You",
+                  "prompt": "Say: I am in the shop",
+                  "template": "Aš esu ___."
+                }
+              ],
+              "caseNote": "The place answer needs locative ending -ėje.",
+              "answerPart": "parduotuvėje",
+              "answer": "Aš esu parduotuvėje"
+            }
+          ]
+        }
+      ],
+      "aiGeneration": {
+        "enabled": true,
+        "endpoint": "/api/chat"
+      }
+    }
+  ],
+  "aiConversationScenarios": [],
+  "personas": [],
+  "srsConfig": {
+    "mode": "production"
+  }
+}
