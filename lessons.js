@@ -11,10 +11,101 @@ const LessonManager = {
     try {
       const response = await fetch('vocabulary.json');
       const data = await response.json();
-      return data.lessons;
+      return [...data.lessons, ...this.getGeneratedLessons()];
     } catch (error) {
       console.error('Error loading lessons:', error);
       return [];
+    }
+  },
+
+
+
+  getGeneratedLessons() {
+    try {
+      return JSON.parse(localStorage.getItem('generatedLessonsV1')) || [];
+    } catch {
+      return [];
+    }
+  },
+
+  saveGeneratedLessons(lessons) {
+    localStorage.setItem('generatedLessonsV1', JSON.stringify(lessons));
+  },
+
+  getLearnedWords() {
+    const userData = Storage.getUserData();
+    return new Set(Object.values(userData.srsItems || {})
+      .filter(item => item.kind === 'word')
+      .map(item => this.normalizeAnswer(item.id)));
+  },
+
+  async generateLessonWithAI(baseLessons) {
+    try {
+      const learnedWords = Array.from(this.getLearnedWords());
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mode: 'legacy_lesson_generation',
+          constraints: {
+            onlyUseLearnedVocabulary: true,
+            learnedVocabulary: learnedWords,
+            supportedExerciseTypes: ['translation', 'multiple-choice', 'typing', 'fill-blank'],
+            maxExercises: 5
+          },
+          context: {
+            completedLessonIds: (Storage.getUserData().lessonsCompleted || []).map(x => x.id),
+            recentLesson: this.currentLesson,
+            availableLessonTitles: baseLessons.map(l => l.titleLT || l.title)
+          }
+        })
+      });
+      if (!response.ok) return null;
+      const payload = await response.json();
+      const lesson = payload.lesson || payload.generatedLesson;
+      if (!lesson || !Array.isArray(lesson.exercises) || lesson.exercises.length === 0) return null;
+      lesson.exercises = lesson.exercises.filter(ex => ex.answer && ex.question);
+      if (!lesson.exercises.length) return null;
+      lesson.xp = lesson.xp || 10;
+      lesson.difficulty = lesson.difficulty || 'adaptive';
+      lesson.titleLT = lesson.titleLT || lesson.title || 'AI Pamoka';
+      lesson.descriptionLT = lesson.descriptionLT || 'Sugeneruota pagal jūsų išmoktus žodžius';
+      return lesson;
+    } catch (error) {
+      console.warn('Legacy AI lesson generation failed:', error);
+      return null;
+    }
+  },
+
+  createTemplateLesson(baseLessons) {
+    const learnedWords = Array.from(this.getLearnedWords());
+    const fallbackWord = learnedWords[0] || 'labas';
+    const nextId = `gen_${Date.now()}`;
+    return {
+      id: nextId,
+      title: 'Adaptive Review',
+      titleLT: 'Prisitaikanti pamoka',
+      descriptionLT: 'Kartojimas su tavo jau išmoktais žodžiais',
+      difficulty: 'adaptive',
+      xp: 10,
+      vocabulary: [{ lithuanian: fallbackWord }],
+      exercises: [
+        { type: 'typing', question: `Type this word in Lithuanian: ${fallbackWord}`, answer: fallbackWord },
+        { type: 'multiple-choice', question: `Select the Lithuanian word: ${fallbackWord}`, answer: fallbackWord, options: [fallbackWord, 'ačiū', 'ne', 'taip'] }
+      ]
+    };
+  },
+
+  async maybeGenerateNextLesson(baseLessons) {
+    if (!this.currentLesson || this.currentLesson.id === 'review') return;
+    const aiLesson = await this.generateLessonWithAI(baseLessons);
+    const lesson = aiLesson || this.createTemplateLesson(baseLessons);
+    const generated = this.getGeneratedLessons();
+    const id = lesson.id || `gen_${Date.now()}`;
+    lesson.id = id;
+    if (!generated.some(l => String(l.id) === String(id))) {
+      generated.push(lesson);
+      this.saveGeneratedLessons(generated);
     }
   },
 
@@ -365,7 +456,7 @@ const LessonManager = {
   },
 
   // Complete lesson
-  completeLesson() {
+  async completeLesson() {
     const accuracy = Math.round((this.correctAnswers / this.totalExercises) * 100);
     const passed = accuracy >= this.minAccuracy;
     const xpEarned = passed ? this.currentLesson.xp : 0;
@@ -383,6 +474,7 @@ const LessonManager = {
     // Always add XP and update streak
     if (xpEarned > 0) {
       Storage.awardXP(xpEarned);
+      await this.maybeGenerateNextLesson(await this.loadLessons());
     }
     StreakManager.updateStreak();
 
