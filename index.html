@@ -986,6 +986,39 @@
         </div>
     </div>
 </section>        
+
+            <!-- Scenario Learning Screen -->
+            <section id="scenario-screen" class="screen">
+                <div class="container">
+                    <div id="scenario-content"></div>
+                </div>
+            </section>
+
+            <!-- Scenario Lesson Screen -->
+            <section id="scenario-lesson-screen" class="screen">
+                <div class="lesson-header">
+                    <button id="exit-scenario-lesson-btn" class="btn-icon">✕</button>
+                    <div class="progress-bar">
+                        <div id="scenario-lesson-progress" class="progress-fill"></div>
+                    </div>
+                </div>
+                <div class="lesson-content">
+                    <div id="scenario-question-container"></div>
+                    <div class="answer-section">
+                        <div id="scenario-answer-options"></div>
+                        <button id="scenario-check-answer-btn" class="btn btn-primary" disabled>
+                            Check
+                        </button>
+                    </div>
+                </div>
+                <div id="scenario-feedback-panel" class="feedback-panel hidden">
+                    <div class="feedback-content">
+                        <h3 id="scenario-feedback-title"></h3>
+                        <p id="scenario-feedback-message"></p>
+                        <button id="scenario-continue-btn" class="btn btn-success">Continue</button>
+                    </div>
+                </div>
+            </section>
             <!-- Profile Screen -->
             <section id="profile-screen" class="screen">
                 <div class="container">
@@ -1253,6 +1286,10 @@
                 <span class="nav-icon">🧠</span>
                 <span class="nav-label">Practice</span>
             </button>
+            <button class="nav-item" data-screen="scenario">
+                <span class="nav-icon">🎭</span>
+                <span class="nav-label">Scenarios</span>
+            </button>
             <button class="nav-item" data-screen="profile">
                 <span class="nav-icon">👤</span>
                 <span class="nav-label">Profile</span>
@@ -1310,6 +1347,7 @@
     <script src="wordbank.js"></script>
     <script src="sentencebuilder.js"></script>
     <script src="practice.js"></script>
+    <script src="scenario-learning.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
