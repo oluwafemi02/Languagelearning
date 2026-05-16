@@ -303,6 +303,18 @@ const App = {
     document.getElementById('save-profile-settings')?.addEventListener('click', () => {
       this.saveProfileSettings();
     });
+
+    document.getElementById('scenario-check-answer-btn')?.addEventListener('click', () => {
+      ScenarioLearningManager.checkAnswer();
+    });
+
+    document.getElementById('scenario-continue-btn')?.addEventListener('click', () => {
+      ScenarioLearningManager.continueLesson();
+    });
+
+    document.getElementById('exit-scenario-lesson-btn')?.addEventListener('click', () => {
+      ScenarioLearningManager.exitLesson();
+    });
   },
 
   // Get next lesson to study
@@ -337,6 +349,8 @@ const App = {
       PracticeManager.init();
     } else if (screenName === 'sentences' && typeof SentenceManager !== 'undefined') {
       SentenceManager.init();
+    } else if (screenName === 'scenario' && typeof ScenarioLearningManager !== 'undefined') {
+      ScenarioLearningManager.init();
     } else if (screenName === 'profile') {
       this.updateProfile();
     }
