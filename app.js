@@ -271,10 +271,11 @@ const App = {
     });
 
     // Continue learning button in results
-    document.getElementById('continue-learning-btn')?.addEventListener('click', () => {
+    document.getElementById('continue-learning-btn')?.addEventListener('click', async () => {
       document.getElementById('results-screen').classList.remove('active');
       document.getElementById('home-screen').classList.add('active');
       this.userData = Storage.getUserData();
+      this.lessons = await LessonManager.loadLessons();
       this.displayLessonPath();
       this.displayUserStats();
     });
