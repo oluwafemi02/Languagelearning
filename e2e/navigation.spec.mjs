@@ -53,7 +53,7 @@ test('the narrowest iPhone (320px) has no sideways scroll on any screen', async 
   for (const s of ['home', 'sentences', 'practicemode', 'wordbank', 'profile', 'sentencebuilder', 'scenario']) {
     await page.evaluate((name) => App.navigateToScreen(name), s);
     await page.waitForTimeout(250);
-    await noSideScroll(page);
+    await noSideScroll(page, `on ${s}:`);
   }
   await context.close();
 });

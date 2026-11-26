@@ -65,7 +65,14 @@ export async function boot(page, { state = learner(), now = NOW, path = 'index.h
 export const tab = (page, name) => page.locator('.tabbar').getByRole('button', { name, exact: true });
 
 // The page must never scroll sideways at phone width.
-export async function noSideScroll(page) {
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-  expect(overflow, 'no horizontal overflow').toBeLessThanOrEqual(0);
+export async function noSideScroll(page, where = '') {
+  const { overflow, culprits } = await page.evaluate(() => {
+    const w = window.innerWidth;
+    const culprits = [...document.querySelectorAll('body *')]
+      .filter((el) => el.offsetParent !== null && el.getBoundingClientRect().right > w + 0.5)
+      .slice(0, 5)
+      .map((el) => `${el.tagName.toLowerCase()}${el.id ? '#' + el.id : ''}.${[...el.classList].join('.')} right=${Math.round(el.getBoundingClientRect().right)}`);
+    return { overflow: document.documentElement.scrollWidth - w, culprits };
+  });
+  expect(overflow, `no horizontal overflow ${where} ${culprits.join(' | ')}`).toBeLessThanOrEqual(0);
 }
