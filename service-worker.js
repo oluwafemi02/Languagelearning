@@ -1,4 +1,5 @@
-const CACHE_NAME = 'lithuanian-learning-v4';
+const CACHE_NAME = 'lithuanian-learning-v5';
+const ICON = './icons/icon-192.png';
 const urlsToCache = [
   './',
   './index.html',
@@ -23,7 +24,10 @@ const urlsToCache = [
   './wordbank-data.json',
   './sentence-builder-data.json',
   './sentences-data.json',
-  './manifest.json'
+  './manifest.json',
+  './scenario-learning.js',
+  './icons/icon-192.png',
+  './icons/apple-touch-icon.png'
 ];
 
 self.addEventListener('install', event => {
@@ -82,7 +86,7 @@ self.addEventListener('push', event => {
   let payload = {
     title: 'Laikas mokytis! 📚',
     body: 'Your streak is waiting. Practice Lithuanian today.',
-    url: '/index.html'
+    url: './'
   };
 
   if (event.data) {
@@ -96,23 +100,24 @@ self.addEventListener('push', event => {
   event.waitUntil(
     self.registration.showNotification(payload.title, {
       body: payload.body,
-      icon: payload.icon || "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🇱🇹</text></svg>",
-      badge: payload.badge || "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🇱🇹</text></svg>",
+      icon: ICON,
+      badge: ICON,
       tag: payload.tag || 'daily-reminder',
-      data: { url: payload.url || '/index.html' }
+      data: { url: payload.url || './' }
     })
   );
 });
 
 self.addEventListener('notificationclick', event => {
   event.notification.close();
-  const targetUrl = event.notification.data?.url || '/index.html';
+  // Resolve against the app's scope so it works under a GitHub Pages sub-path.
+  const targetUrl = new URL(event.notification.data?.url || './', self.registration.scope).href;
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
       for (const client of clientList) {
-        if (client.url.includes(targetUrl) && 'focus' in client) {
-          return client.focus();
+        if (client.url.startsWith(self.registration.scope) && 'focus' in client) {
+          return client.focus().then(c => (c && 'navigate' in c ? c.navigate(targetUrl) : c));
         }
       }
       if (clients.openWindow) {

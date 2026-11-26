@@ -13,6 +13,9 @@ const Storage = {
       streakFreezeCost: 100,
       lastActiveDate: StateLogic.dateKey(),
       lastGoalMetDate: null,
+      longestStreak: 0,
+      practiceDays: [],
+      frozenDays: [],
       lessonsCompleted: [],
       accuracyRolling7d: 0,
       srsItems: {},
@@ -20,8 +23,18 @@ const Storage = {
         soundEffects: true,
         notificationsEnabled: true,
         reminderTime: '19:00',
+        nudgeTime: '21:30',
+        nudgeEnabled: true,
         ignoreDiacritics: true,
-        autoUseStreakFreeze: true
+        autoUseStreakFreeze: true,
+        push: {
+          enabled: false,
+          url: '',
+          deviceId: '',
+          secret: '',
+          lastSync: null,
+          lastError: null
+        }
       },
       onboardingCompleted: false,
       dailyQuests: {
@@ -65,7 +78,7 @@ const Storage = {
       migrated.profileName = state.profileName;
     }
     if (state.lastStudyDate) {
-      migrated.lastActiveDate = new Date(state.lastStudyDate).toISOString().slice(0, 10);
+      migrated.lastActiveDate = StateLogic.dateKey(new Date(state.lastStudyDate));
     }
     if (Array.isArray(state.lessonsCompleted)) {
       migrated.lessonsCompleted = state.lessonsCompleted;
@@ -120,7 +133,11 @@ const Storage = {
       ...state,
       settings: {
         ...defaults.settings,
-        ...(state.settings || {})
+        ...(state.settings || {}),
+        push: {
+          ...defaults.settings.push,
+          ...((state.settings && state.settings.push) || {})
+        }
       },
       dailyQuests: {
         ...defaults.dailyQuests,
@@ -138,6 +155,18 @@ const Storage = {
     if (!merged.srsItems || typeof merged.srsItems !== 'object') {
       merged.srsItems = {};
     }
+    // Older saves have no practice history: rebuild it from finished lessons so the
+    // week strip is not empty on first launch after the update.
+    if (!Array.isArray(merged.practiceDays) || merged.practiceDays.length === 0) {
+      const days = new Set();
+      merged.lessonsCompleted.forEach(entry => {
+        if (entry && entry.completedAt) days.add(StateLogic.dateKey(new Date(entry.completedAt)));
+      });
+      if (merged.lastGoalMetDate) days.add(merged.lastGoalMetDate);
+      merged.practiceDays = [...days].sort().slice(-120);
+    }
+    if (!Array.isArray(merged.frozenDays)) merged.frozenDays = [];
+    merged.longestStreak = Math.max(merged.longestStreak || 0, merged.streakCount || 0);
 
     return merged;
   },
@@ -147,6 +176,10 @@ const Storage = {
     const parsed = raw ? JSON.parse(raw) : null;
     const migrated = this.migrateState(parsed);
     const normalized = this.ensureStateShape(migrated);
+    if (!normalized.localDayKeys) {
+      if (parsed) StateLogic.migrateUtcDayKeys(normalized);
+      normalized.localDayKeys = true;
+    }
     StateLogic.resetDailyXPIfNeeded(normalized);
     this.saveState(normalized);
     return normalized;
@@ -183,6 +216,10 @@ const Storage = {
     this.saveState(state);
     if (window.QuestManager && !window.QuestManager.isRewarding) {
       window.QuestManager.updateProgress('xp', amount);
+    }
+    // Tell the reminder server you practised, so tonight's reminder is skipped.
+    if (window.NotificationManager) {
+      window.NotificationManager.scheduleSync();
     }
     return state;
   },

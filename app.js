@@ -38,6 +38,17 @@ const App = {
 
     // Check for install prompt
     this.setupInstallPrompt();
+    this.showIOSInstallHint();
+
+    // Opened from a reminder: go straight into today's practice.
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('start') === 'today') {
+      history.replaceState(null, '', window.location.pathname);
+      this.startTodayPractice();
+    } else if (this.openRemindersAfterInit) {
+      this.openRemindersAfterInit = false;
+      this.openReminderSettings();
+    }
 
     console.log('App initialized successfully');
   },
@@ -74,10 +85,9 @@ const App = {
     const overlay = document.getElementById('onboarding-overlay');
     if (overlay) overlay.classList.add('hidden');
     
-    if (enableNotifications) {
-      NotificationManager.updateFromSettings(true);
-    }
-    
+    // Reminders need a tap on "Turn on reminders" in Profile (iOS asks for permission there).
+    this.openRemindersAfterInit = !!enableNotifications;
+
     // Continue initialization
     this.init();
   },
@@ -180,6 +190,9 @@ const App = {
     this.userData = Storage.getUserData();
     document.getElementById('total-xp').textContent = this.userData.xpTotal;
     document.getElementById('streak-count').textContent = streak;
+    const streakCardCount = document.getElementById('streak-card-count');
+    if (streakCardCount) streakCardCount.textContent = streak;
+    StreakManager.renderWeek();
     this.updateDailyGoal();
     this.updateReviewSection();
     if (window.QuestManager) {
@@ -245,6 +258,82 @@ const App = {
     }
   },
 
+  // One tap for today's practice: due reviews first, otherwise the next lesson.
+  async startTodayPractice() {
+    const dueCount = ReviewManager.getDueWordsCount();
+    if (dueCount > 0) {
+      const exercises = await ReviewManager.generateReviewExercises(10);
+      if (exercises.length > 0) {
+        LessonManager.startReviewSession(exercises);
+        return;
+      }
+    }
+    const nextLesson = this.getNextLesson();
+    if (nextLesson) {
+      this.startLesson(nextLesson.id);
+    }
+  },
+
+  openReminderSettings() {
+    this.navigateToScreen('profile');
+    setTimeout(() => document.getElementById('push-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  },
+
+  showIOSInstallHint() {
+    const banner = document.getElementById('ios-install-banner');
+    if (!banner) return;
+    let dismissed = false;
+    try { dismissed = localStorage.getItem('iosInstallHintDismissed') === '1'; } catch (e) { /* ignore */ }
+    if (NotificationManager.isIOS() && !NotificationManager.isStandalone() && !dismissed) {
+      banner.classList.remove('hidden');
+    }
+  },
+
+  renderPushStatus() {
+    const userData = Storage.getUserData();
+    const status = NotificationManager.status();
+    const statusEl = document.getElementById('push-status');
+    const urlInput = document.getElementById('push-server-url');
+    const connectBtn = document.getElementById('push-connect-btn');
+    const testBtn = document.getElementById('push-test-btn');
+    const offBtn = document.getElementById('push-disconnect-btn');
+    if (statusEl) {
+      statusEl.textContent = status.text;
+      statusEl.dataset.state = status.state;
+    }
+    if (urlInput && !urlInput.value) urlInput.value = userData.settings.push.url || '';
+    const connected = !!userData.settings.push.enabled;
+    const blocked = status.state === 'install' || status.state === 'unsupported';
+    if (connectBtn) {
+      connectBtn.textContent = connected ? 'Reconnect' : 'Turn on reminders';
+      connectBtn.disabled = blocked;
+    }
+    testBtn?.classList.toggle('hidden', !connected);
+    offBtn?.classList.toggle('hidden', !connected);
+  },
+
+  async handlePushAction(action) {
+    const statusEl = document.getElementById('push-status');
+    const say = (text) => { if (statusEl) statusEl.textContent = text; };
+    try {
+      if (action === 'connect') {
+        say('Connecting…');
+        await NotificationManager.connect(document.getElementById('push-server-url')?.value);
+        this.renderPushStatus();
+        say('Reminders are on. Tap "Send test reminder" and lock your phone to check.');
+      } else if (action === 'test') {
+        say('Sending…');
+        await NotificationManager.sendTest();
+        say('Test sent. It should arrive within a few seconds.');
+      } else if (action === 'disconnect') {
+        await NotificationManager.disconnect();
+        this.renderPushStatus();
+      }
+    } catch (err) {
+      say(err.message || 'Something went wrong.');
+    }
+  },
+
   // Start lesson
   startLesson(lessonId) {
     LessonManager.startLesson(lessonId);
@@ -303,6 +392,15 @@ const App = {
 
     document.getElementById('save-profile-settings')?.addEventListener('click', () => {
       this.saveProfileSettings();
+    });
+
+    document.getElementById('today-practice-btn')?.addEventListener('click', () => this.startTodayPractice());
+    document.getElementById('push-connect-btn')?.addEventListener('click', () => this.handlePushAction('connect'));
+    document.getElementById('push-test-btn')?.addEventListener('click', () => this.handlePushAction('test'));
+    document.getElementById('push-disconnect-btn')?.addEventListener('click', () => this.handlePushAction('disconnect'));
+    document.getElementById('ios-install-dismiss')?.addEventListener('click', () => {
+      document.getElementById('ios-install-banner')?.classList.add('hidden');
+      try { localStorage.setItem('iosInstallHintDismissed', '1'); } catch (e) { /* ignore */ }
     });
 
     document.getElementById('scenario-check-answer-btn')?.addEventListener('click', () => {
@@ -397,6 +495,11 @@ const App = {
     if (dailyGoalInput) dailyGoalInput.value = userData.dailyGoalXP;
     if (reminderInput) reminderInput.value = userData.settings.reminderTime || '19:00';
     if (notificationsInput) notificationsInput.checked = !!userData.settings.notificationsEnabled;
+    const nudgeTimeInput = document.getElementById('profile-nudge-time');
+    const nudgeEnabledInput = document.getElementById('profile-nudge-enabled');
+    if (nudgeTimeInput) nudgeTimeInput.value = userData.settings.nudgeTime || '21:30';
+    if (nudgeEnabledInput) nudgeEnabledInput.checked = userData.settings.nudgeEnabled !== false;
+    this.renderPushStatus();
     if (soundInput) soundInput.checked = !!userData.settings.soundEffects;
     if (autoFreezeInput) autoFreezeInput.checked = !!userData.settings.autoUseStreakFreeze;
     if (settingsStatus) {
@@ -464,16 +567,18 @@ const App = {
     userData.settings.notificationsEnabled = Boolean(notificationInput?.checked);
     userData.settings.soundEffects = Boolean(soundInput?.checked);
     userData.settings.autoUseStreakFreeze = Boolean(autoFreezeInput?.checked);
+    const nudgeTimeInput = document.getElementById('profile-nudge-time');
+    const nudgeEnabledInput = document.getElementById('profile-nudge-enabled');
+    userData.settings.nudgeTime = nudgeTimeInput?.value || userData.settings.nudgeTime || '21:30';
+    userData.settings.nudgeEnabled = nudgeEnabledInput ? Boolean(nudgeEnabledInput.checked) : userData.settings.nudgeEnabled;
 
     Storage.saveUserData(userData);
-    const hasPermission = await NotificationManager.updateFromSettings(userData.settings.notificationsEnabled);
+    await NotificationManager.sync();
 
     if (statusEl) {
-      if (userData.settings.notificationsEnabled && !hasPermission) {
-        statusEl.textContent = 'Settings saved. Enable notifications in iPhone Settings > Notifications for this app.';
-      } else {
-        statusEl.textContent = 'Settings saved successfully.';
-      }
+      statusEl.textContent = userData.settings.push.enabled || !userData.settings.notificationsEnabled
+        ? 'Settings saved.'
+        : 'Settings saved. Turn on reminders below to get them on this phone.';
     }
 
     this.displayUserStats();
@@ -503,8 +608,9 @@ const App = {
       e.preventDefault();
       deferredPrompt = e;
 
-      // Show install prompt
+      // Show install prompt (Android / desktop Chrome only; iOS uses the Share menu)
       const installPrompt = document.getElementById('install-prompt');
+      if (!installPrompt) return;
       installPrompt.classList.remove('hidden');
 
       // Install button

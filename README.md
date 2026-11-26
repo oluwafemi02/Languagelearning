@@ -7,7 +7,8 @@ A Progressive Web App for learning Lithuanian language with daily lessons, strea
 - ✅ Daily lessons with multiple exercise types
 - 🔥 Streak tracking to maintain motivation
 - 📱 Progressive Web App (works offline)
-- 🔔 Daily reminders
+- 🔔 Daily reminders and a streak-at-risk nudge that work on iPhone (Web Push, see `push-worker/README.md`)
+- 📅 Week view of the days you practised, with streak freezes shown
 - ⭐ XP and progress tracking
 - 🎯 Gamified learning experience
 - 📚 Linguistically accurate Lithuanian content
@@ -39,8 +40,15 @@ Open `http://localhost:8000` and the app will load from `index.html`.
 
 ### Tests
 ```bash
-npm test
+npm test                      # app logic, run in three time zones
+cd push-worker && npm test    # reminder server
 ```
+
+### Reminders on iPhone
+
+iOS web apps cannot schedule notifications themselves, so reminders come from a small free
+Cloudflare Worker in `push-worker/`. Setup takes a few minutes: see
+[push-worker/README.md](push-worker/README.md).
 
 The test runner is a lightweight Node script in `tests/run-tests.js` that validates streak logic, daily XP resets, SRS updates, and lesson unlocking.
 
