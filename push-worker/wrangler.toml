@@ -1,0 +1,20 @@
+name = "lithuanian-push"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+
+# Check every 15 minutes whether it is time to remind you.
+[triggers]
+crons = ["*/15 * * * *"]
+
+# The deploy workflow fills in the id. By hand: npx wrangler kv namespace create DEVICES
+[[kv_namespaces]]
+binding = "DEVICES"
+id = "PASTE_YOUR_KV_NAMESPACE_ID_HERE"
+
+[vars]
+# Contact for push services (Apple requires a mailto: or https: address).
+VAPID_SUBJECT = "https://oluwafemi02.github.io/Languagelearning/"
+# Only accept requests from your app. Change if you host it elsewhere.
+ALLOWED_ORIGIN = "https://oluwafemi02.github.io"
+MAX_DEVICES = "3"
+# VAPID_PUBLIC_KEY and VAPID_PRIVATE_JWK are Cloudflare secrets, created on the first deploy.

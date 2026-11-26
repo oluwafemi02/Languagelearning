@@ -6,7 +6,13 @@
     <meta name="theme-color" content="#58CC02">
     <meta name="description" content="Learn Lithuanian with daily lessons and streak tracking">
     <title>Learn Lithuanian - Mokykis Lietuvių</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🇱🇹</text></svg>">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Lietuvių">
     <style>
         * {
             margin: 0;
@@ -887,6 +893,24 @@
             <!-- Home Screen -->
             <section id="home-screen" class="screen active">
                 <div class="container">
+                    <div id="ios-install-banner" class="ios-install-banner hidden">
+                        <strong>Install for reminders</strong>
+                        <p>Tap the Share button, then <em>Add to Home Screen</em>. Open the app from there to turn on daily reminders.</p>
+                        <button class="btn btn-secondary" id="ios-install-dismiss">Got it</button>
+                    </div>
+
+                    <div class="streak-card">
+                        <div class="streak-card-header">
+                            <div>
+                                <div class="streak-card-count"><span class="fire-icon">🔥</span> <span id="streak-card-count">0</span> day streak</div>
+                                <div class="streak-card-best">Best: <span id="streak-best">0</span> days</div>
+                            </div>
+                        </div>
+                        <div class="streak-week" id="streak-week"></div>
+                        <p class="streak-today-status" id="streak-today-status"></p>
+                        <button class="btn btn-primary streak-card-cta" id="today-practice-btn">Practise now</button>
+                    </div>
+
                     <div class="progress-overview">
                         <h2>Your Progress</h2>
                         <div class="xp-display">
@@ -1085,8 +1109,16 @@
                             <input id="profile-reminder-time" type="time" />
                         </div>
                         <div class="setting-item">
-                            <label for="profile-notifications-enabled">Reminder Notifications</label>
+                            <label for="profile-notifications-enabled">Daily Reminder</label>
                             <input id="profile-notifications-enabled" type="checkbox" />
+                        </div>
+                        <div class="setting-item setting-item-input">
+                            <label for="profile-nudge-time">Streak-at-risk Nudge</label>
+                            <input id="profile-nudge-time" type="time" />
+                        </div>
+                        <div class="setting-item">
+                            <label for="profile-nudge-enabled">Nudge if I haven't practised</label>
+                            <input id="profile-nudge-enabled" type="checkbox" />
                         </div>
                         <div class="setting-item">
                             <label for="profile-sound-enabled">Sound Effects</label>
@@ -1098,6 +1130,19 @@
                         </div>
                         <button id="save-profile-settings" class="btn btn-primary" style="margin-top: 16px; width: 100%;">Save Settings</button>
                         <p id="profile-settings-status" style="margin-top: 12px; color: var(--text-light);"></p>
+                    </div>
+
+                    <div class="settings-section push-section" id="push-section">
+                        <h3>🔔 Reminders on this phone</h3>
+                        <p class="push-status" id="push-status">Checking…</p>
+                        <div class="setting-item setting-item-input push-url-row">
+                            <label for="push-server-url">Server address</label>
+                            <input id="push-server-url" type="url" inputmode="url" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="https://lithuanian-push.….workers.dev" />
+                        </div>
+                        <button id="push-connect-btn" class="btn btn-primary" style="width: 100%;">Turn on reminders</button>
+                        <button id="push-test-btn" class="btn btn-secondary hidden" style="width: 100%; margin-top: 10px;">Send test reminder</button>
+                        <button id="push-disconnect-btn" class="btn btn-secondary hidden" style="width: 100%; margin-top: 10px;">Turn off on this phone</button>
+                        <p class="push-help">Reminders come from your own small server, so they arrive even when the app is closed. You won't get one on days you've already practised.</p>
                     </div>
                 </div>
             </section>

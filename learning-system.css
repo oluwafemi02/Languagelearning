@@ -808,3 +808,56 @@
         align-items: stretch;
     }
 }
+
+/* ---------- Streak card and week strip ---------- */
+.streak-card {
+  background: var(--white, #fff);
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow, 0 2px 8px rgba(0, 0, 0, 0.1));
+}
+.streak-card-count { font-size: 22px; font-weight: 700; color: var(--text-dark, #3c3c3c); }
+.streak-card-best { font-size: 13px; color: var(--text-light, #777); margin-top: 2px; }
+.streak-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin: 16px 0 10px; }
+.streak-day { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.streak-day-dot {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700; color: #fff;
+  background: var(--border-color, #e5e5e5);
+}
+.streak-day.done .streak-day-dot { background: #ff9600; }
+.streak-day.frozen .streak-day-dot { background: #1cb0f6; }
+.streak-day.today .streak-day-dot { box-shadow: 0 0 0 3px rgba(88, 204, 2, 0.45); }
+.streak-day-label { font-size: 12px; color: var(--text-light, #777); }
+.streak-day.today .streak-day-label { font-weight: 700; color: var(--text-dark, #3c3c3c); }
+.streak-today-status { font-size: 15px; margin: 6px 0 12px; color: var(--text-dark, #3c3c3c); }
+.streak-today-status.done { color: var(--primary-dark, #46a302); font-weight: 600; }
+.streak-card-cta { width: 100%; }
+
+.streak-toast {
+  position: fixed; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 16px);
+  transform: translateX(-50%);
+  background: #3c3c3c; color: #fff; padding: 12px 18px; border-radius: 12px;
+  font-weight: 600; z-index: 2000; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* ---------- iPhone install hint ---------- */
+.ios-install-banner {
+  background: #fff8e1; border: 2px solid #ffc800; border-radius: 16px;
+  padding: 14px 16px; margin-bottom: 16px; color: #3c3c3c;
+}
+.ios-install-banner p { margin: 6px 0 10px; font-size: 14px; }
+.ios-install-banner.hidden { display: none; }
+
+/* ---------- Push reminders section ---------- */
+.push-section .push-status { margin: 4px 0 12px; font-size: 14px; color: var(--text-light, #777); }
+.push-section .push-status[data-state="on"] { color: var(--primary-dark, #46a302); font-weight: 600; }
+.push-section .push-status[data-state="error"],
+.push-section .push-status[data-state="denied"] { color: var(--danger-color, #ff4b4b); }
+.push-section .push-url-row { flex-direction: column; align-items: stretch; gap: 6px; }
+.push-section .push-url-row input { width: 100%; font-size: 16px; padding: 10px; border: 2px solid var(--border-color, #e5e5e5); border-radius: 10px; }
+.push-section .push-help { margin-top: 12px; font-size: 13px; color: var(--text-light, #777); }
+.push-section .hidden { display: none; }
+.push-section button:disabled { opacity: 0.5; }
