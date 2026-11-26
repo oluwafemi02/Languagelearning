@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lithuanian-learning-v5';
+const CACHE_NAME = 'lithuanian-learning-v6';
 const ICON = './icons/icon-192.png';
 const urlsToCache = [
   './',
@@ -17,13 +17,12 @@ const urlsToCache = [
   './sentencebuilder.js',
   './wordbank.js',
   './quests.js',
-  './styles.css',
-  './learning-system.css',
-  './sentences.css',
   './vocabulary.json',
   './wordbank-data.json',
   './sentence-builder-data.json',
   './sentences-data.json',
+  './css/app.css',
+  './fonts/bricolage.woff2',
   './manifest.json',
   './scenario-learning.js',
   './icons/icon-192.png',

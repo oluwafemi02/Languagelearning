@@ -41,8 +41,23 @@ Open `http://localhost:8000` and the app will load from `index.html`.
 ### Tests
 ```bash
 npm test                      # app logic, run in three time zones
+npm run test:e2e              # the app in a phone-sized browser (iPhone 13, Vilnius time)
 cd push-worker && npm test    # reminder server
 ```
+
+The end-to-end tests (`e2e/`) drive the real app with Playwright on a fixed clock and seeded
+progress: home, streak and week strip, finishing a lesson, practice, word bank, profile
+settings, onboarding, dark mode, and no sideways scrolling at 320px. CI runs them in Chromium
+and WebKit (Safari's engine). Run `npx playwright install chromium webkit` once first, and
+`npm run test:e2e:live` to point them at the published site.
+
+### Design
+
+All styles live in `css/app.css`. It follows the same design language as the Tracker app:
+a calm paper background, white cards, pine green for done, marigold for today and streaks,
+brick red only for mistakes, the Bricolage display font (`fonts/bricolage.woff2`) for headings
+and numbers, a frosted bottom tab bar, and a dark palette that follows the phone setting.
+Lessons and practice sessions open in a focus mode with the tab bar hidden.
 
 ### Reminders on iPhone
 

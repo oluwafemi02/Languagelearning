@@ -144,7 +144,7 @@ const SentenceBuilderManager = {
 
     container.innerHTML = `
       <div class="lesson-intro">
-        <button class="btn-icon" onclick="SentenceBuilderManager.exitLesson()">✕ Back</button>
+        <button class="back" onclick="SentenceBuilderManager.exitLesson()">Lessons</button>
         
         <h2>${this.currentLesson.title}</h2>
         <h3>${this.currentLesson.titleLT}</h3>
@@ -190,7 +190,7 @@ const SentenceBuilderManager = {
     container.innerHTML = `
       <div class="exercise-screen">
         <div class="exercise-header">
-          <button class="btn-icon" onclick="SentenceBuilderManager.exitLesson()">✕</button>
+          <button class="close-btn" aria-label="Close" onclick="SentenceBuilderManager.exitLesson()"></button>
           <div class="exercise-progress">
             <div class="progress-bar">
               <div class="progress-fill" style="width: ${progress}%"></div>
@@ -376,7 +376,8 @@ const SentenceBuilderManager = {
     const container = document.getElementById('sentencebuilder-content');
     container.innerHTML = `
       <div class="lesson-complete">
-        <h2>🎉 Lesson Complete!</h2>
+        <div class="results-badge" aria-hidden="true">✓</div>
+        <h2>Lesson complete</h2>
         <h3>${this.currentLesson.title}</h3>
         
         <div class="results-stats">

@@ -23,8 +23,9 @@ const PracticeManager = {
 
     container.innerHTML = `
       <div class="practice-home">
-        <h2>🧠 Practice Mode</h2>
-        <p class="practice-subtitle">Strengthen your Lithuanian skills with adaptive exercises</p>
+        <p class="top-date practice-kicker">Praktika</p>
+        <h2>Practice</h2>
+        <p class="practice-subtitle">Short sessions that mix what you know with what you're learning.</p>
         
         <div class="practice-stats">
           <div class="stat-box">
@@ -249,7 +250,7 @@ const PracticeManager = {
     container.innerHTML = `
       <div class="practice-screen">
         <div class="practice-header">
-          <button class="btn-icon" onclick="PracticeManager.exitPractice()">✕ Exit</button>
+          <button class="close-btn" aria-label="Close" onclick="PracticeManager.exitPractice()"></button>
           <div class="practice-progress">
             <div class="progress-bar">
               <div class="progress-fill" style="width: ${progress}%"></div>
@@ -490,7 +491,8 @@ const PracticeManager = {
     const container = document.getElementById('practice-content');
     container.innerHTML = `
       <div class="practice-complete">
-        <h2>🎉 Practice Complete!</h2>
+        <div class="results-badge" aria-hidden="true">✓</div>
+        <h2>Practice complete</h2>
         
         <div class="results-stats">
           <div class="stat">

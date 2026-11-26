@@ -67,7 +67,7 @@ const ScenarioLearningManager = {
       return;
     }
 
-    container.innerHTML = '<div class="progress-overview"><h2>🗣️ Scenario-Based Learning</h2><p>Context-first production drills for real Lithuanian usage.</p></div><div class="lesson-path" id="scenario-list"></div>';
+    container.innerHTML = '<div class="progress-overview"><h2>Real-life scenarios</h2><p>Say the right thing in the shop, the café and small talk, with the correct case.</p></div><div class="lesson-path" id="scenario-list"></div>';
     const list = document.getElementById('scenario-list');
 
     scenarios.forEach((scenario) => {
@@ -88,7 +88,7 @@ const ScenarioLearningManager = {
     const lessons = this.getScenarioLessons(scenario);
     const state = this.getState();
     const container = document.getElementById('scenario-content');
-    container.innerHTML = '<div class="progress-overview"><button class="btn btn-secondary" id="scenario-back-btn" style="margin-bottom:12px;">← Back</button><h2>' + scenario.title + '</h2><p>' + (scenario.goal || '') + '</p></div><div class="lesson-path" id="scenario-lessons"></div>';
+    container.innerHTML = '<div class="progress-overview"><button class="link-btn scenario-back" id="scenario-back-btn">All scenarios</button><h2>' + scenario.title + '</h2><p>' + (scenario.goal || '') + '</p></div><div class="lesson-path" id="scenario-lessons"></div>';
     document.getElementById('scenario-back-btn').onclick = () => this.renderScenarioList();
 
     const lessonsEl = document.getElementById('scenario-lessons');
@@ -97,7 +97,7 @@ const ScenarioLearningManager = {
       const buildsOnLearned = this.lessonUsesLearnedWords(lesson);
       const lessonCard = document.createElement('div');
       lessonCard.className = `lesson-card ${done ? 'completed' : ''}`;
-      lessonCard.innerHTML = `<div class="lesson-icon">${done ? '✓' : '🧩'}</div><div class="lesson-info"><h3>${lesson.id} · ${lesson.title}</h3><p>${lesson.description || ''} ${buildsOnLearned ? '✅ Uses your learned words' : '🆕 New words ahead'}</p><div class="lesson-meta"><span class="xp-badge">+${lesson.xp || 10} XP</span><span class="difficulty-badge">${lesson.focusCase || 'grammar'}</span></div></div>`;
+      lessonCard.innerHTML = `<div class="lesson-icon">${done ? '✓' : '🧩'}</div><div class="lesson-info"><h3>${lesson.id} · ${lesson.title}</h3><p>${lesson.description || ''} ${buildsOnLearned ? '· Uses words you know' : '· New words'}</p><div class="lesson-meta"><span class="xp-badge">+${lesson.xp || 10} XP</span><span class="difficulty-badge">${lesson.focusCase || 'grammar'}</span></div></div>`;
       lessonCard.onclick = () => this.startLesson(lesson.id);
       lessonsEl.appendChild(lessonCard);
     });
@@ -133,8 +133,8 @@ const ScenarioLearningManager = {
       if (exercise.type === 'scenario-dialogue') {
         const dialogueHtml = (exercise.dialogue || []).map(turn => turn.speaker === 'You'
           ? `<p><strong>You:</strong> ${turn.prompt || 'Respond'} <em>${turn.template || ''}</em></p>`
-          : `<p><strong>${turn.speaker}:</strong> ${turn.lt || ''} <span style="color:var(--text-light)">(${turn.en || ''})</span></p>`).join('');
-        question.querySelector('.question').innerHTML += `<div style="text-align:left">${dialogueHtml}</div>`;
+          : `<p><strong>${turn.speaker}:</strong> ${turn.lt || ''} <span class="en">(${turn.en || ''})</span></p>`).join('');
+        question.querySelector('.question').innerHTML += `<div class="dialogue">${dialogueHtml}</div>`;
       }
       question.querySelector('.question').innerHTML += `<p class="hint">Type the full sentence. Focus target: <strong>${template}</strong></p>`;
       answers.innerHTML = `<input id="scenario-typing" class="typing-input" placeholder="Type full Lithuanian sentence..." />`;
@@ -172,8 +172,9 @@ const ScenarioLearningManager = {
     if (isCorrect) this.correctAnswers += 1;
 
     const panel = document.getElementById('scenario-feedback-panel');
-    panel.classList.remove('hidden');
-    document.getElementById('scenario-feedback-title').textContent = isCorrect ? 'Correct! ✅' : 'Try again ❌';
+    panel.classList.remove('hidden', 'correct', 'incorrect');
+    panel.classList.add(isCorrect ? 'correct' : 'incorrect');
+    document.getElementById('scenario-feedback-title').textContent = isCorrect ? 'Teisingai!' : 'Not quite';
     document.getElementById('scenario-feedback-message').textContent = isCorrect ? (exercise.caseNote || 'Great context production.') : `Expected full sentence: ${expectedRaw}. ${exercise.caseNote || ''}`;
   },
 

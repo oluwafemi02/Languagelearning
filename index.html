@@ -1,1390 +1,358 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#58CC02">
-    <meta name="description" content="Learn Lithuanian with daily lessons and streak tracking">
-    <title>Learn Lithuanian - Mokykis Lietuvių</title>
-    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-    <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Lietuvių: learn Lithuanian</title>
+    <meta name="description" content="Learn Lithuanian with daily practice, reminders and streak tracking">
+    <meta name="theme-color" content="#eef2f0" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#12201c" media="(prefers-color-scheme: dark)">
+    <meta name="color-scheme" content="light dark">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Lietuvių">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #58CC02;
-            --primary-dark: #46A302;
-            --secondary-color: #1CB0F6;
-            --danger-color: #FF4B4B;
-            --success-color: #58CC02;
-            --warning-color: #FFC800;
-            --text-dark: #3C3C3C;
-            --text-light: #777777;
-            --bg-light: #F7F7F7;
-            --border-color: #E5E5E5;
-            --white: #FFFFFF;
-            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.15);
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-            padding-bottom: 80px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .app-header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            color: var(--white);
-            padding: 20px 0;
-            box-shadow: var(--shadow);
-        }
-
-        .app-header h1 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .streak-display {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .fire-icon {
-            font-size: 28px;
-            animation: flame 1.5s ease-in-out infinite;
-        }
-
-        @keyframes flame {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .progress-overview {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow);
-        }
-
-        .progress-overview h2 {
-            font-size: 20px;
-            margin-bottom: 16px;
-            color: var(--text-dark);
-        }
-
-        .xp-display {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--warning-color);
-        }
-
-        .lesson-path {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .daily-quests {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow);
-        }
-
-        .daily-quests-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .daily-quests-header h3 {
-            font-size: 18px;
-        }
-
-        .bonus-badge {
-            background: #E8F7E1;
-            color: var(--primary-dark);
-            padding: 6px 10px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .bonus-badge.claimed {
-            background: #FFF7E6;
-            color: var(--warning-color);
-        }
-
-        .quests-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        .quest-card {
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px;
-            background: var(--bg-light);
-        }
-
-        .quest-card.completed {
-            border-color: var(--success-color);
-            background: #F0FDF4;
-        }
-
-        .quest-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 6px;
-        }
-
-        .quest-header h4 {
-            font-size: 14px;
-        }
-
-        .quest-reward {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--warning-color);
-        }
-
-        .quest-progress {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-top: 8px;
-            font-size: 12px;
-            color: var(--text-light);
-        }
-
-        .quest-progress-bar {
-            flex: 1;
-            height: 6px;
-            background: var(--border-color);
-            border-radius: 999px;
-            overflow: hidden;
-        }
-
-        .quest-progress-fill {
-            height: 100%;
-            background: var(--secondary-color);
-            border-radius: 999px;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .section-header {
-            background: var(--white);
-            padding: 16px;
-            border-radius: 12px;
-            margin-top: 16px;
-            box-shadow: var(--shadow);
-        }
-
-        .section-header h3 {
-            font-size: 18px;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .section-progress {
-            margin-top: 8px;
-            font-size: 14px;
-            color: var(--text-light);
-        }
-
-        .lesson-card {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 20px;
-            display: flex;
-            gap: 16px;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-        }
-
-        .lesson-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .lesson-card.locked {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .lesson-card.locked:hover {
-            transform: none;
-            box-shadow: var(--shadow);
-        }
-
-        .lesson-card.completed {
-            border: 2px solid var(--success-color);
-        }
-
-        .lesson-card.review-card {
-            border: 2px dashed var(--secondary-color);
-            background: #f0f9ff;
-        }
-
-        .lesson-icon {
-            font-size: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 50px;
-        }
-
-        .lesson-info {
-            flex: 1;
-        }
-
-        .lesson-info h3 {
-            font-size: 18px;
-            margin-bottom: 4px;
-            color: var(--text-dark);
-        }
-
-        .lesson-info p {
-            font-size: 14px;
-            color: var(--text-light);
-            margin-bottom: 8px;
-        }
-
-        .lesson-meta {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .xp-badge, .difficulty-badge {
-            padding: 4px 8px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .xp-badge {
-            background: #FFF7E6;
-            color: var(--warning-color);
-        }
-
-        .difficulty-badge {
-            background: var(--bg-light);
-            color: var(--text-light);
-            text-transform: capitalize;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 14px 28px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .btn-primary {
-            background: var(--primary-color);
-            color: var(--white);
-            box-shadow: 0 4px 0 var(--primary-dark);
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-primary:active:not(:disabled) {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 var(--primary-dark);
-        }
-
-        .btn-primary:disabled {
-            background: var(--border-color);
-            color: var(--text-light);
-            box-shadow: none;
-            cursor: not-allowed;
-        }
-
-        .btn-success {
-            background: var(--success-color);
-            color: var(--white);
-        }
-
-        .btn-secondary {
-            background: var(--white);
-            color: var(--text-dark);
-            border: 2px solid var(--border-color);
-        }
-
-        #start-lesson-btn {
-            margin: 0 auto;
-            display: block;
-        }
-
-        .screen {
-            display: none;
-        }
-
-        .screen.active {
-            display: block;
-        }
-
-        #lesson-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 80px;
-            background: var(--white);
-            z-index: 100;
-            overflow-y: auto;
-        }
-
-        .lesson-header {
-            display: flex;
-            align-items: center;
-            padding: 16px;
-            gap: 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .btn-icon {
-            background: transparent;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 8px;
-            color: var(--text-dark);
-        }
-
-        .progress-bar {
-            flex: 1;
-            height: 16px;
-            background: var(--bg-light);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--primary-color);
-            transition: width 0.3s ease;
-            width: 0;
-        }
-
-        .lesson-content {
-            padding: 32px 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        #question-container {
-            margin-bottom: 32px;
-        }
-
-        .question {
-            text-align: center;
-        }
-
-        .question h3 {
-            font-size: 20px;
-            margin-bottom: 24px;
-            color: var(--text-dark);
-        }
-
-        #answer-options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .answer-option {
-            background: var(--white);
-            border: 3px solid var(--border-color);
-            padding: 16px 20px;
-            border-radius: 12px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: left;
-        }
-
-        .answer-option:hover:not(:disabled) {
-            border-color: var(--text-light);
-            background: var(--bg-light);
-        }
-
-        .answer-option.selected {
-            border-color: var(--secondary-color);
-            background: #E8F5FE;
-        }
-
-        .answer-option.correct {
-            border-color: var(--success-color);
-            background: #E8F7E8;
-        }
-
-        .answer-option.incorrect {
-            border-color: var(--danger-color);
-            background: #FFE8E8;
-        }
-
-        .answer-option:disabled {
-            cursor: not-allowed;
-        }
-
-        .feedback-panel {
-            position: fixed;
-            bottom: 80px;
-            left: 0;
-            right: 0;
-            background: var(--white);
-            padding: 24px;
-            box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .feedback-panel:not(.hidden) {
-            transform: translateY(0);
-        }
-
-        .feedback-panel.correct {
-            background: #E8F7E8;
-            border-top: 4px solid var(--success-color);
-        }
-
-        .feedback-panel.incorrect {
-            background: #FFE8E8;
-            border-top: 4px solid var(--danger-color);
-        }
-
-        .feedback-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        #feedback-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        #feedback-message {
-            font-size: 16px;
-            margin-bottom: 16px;
-        }
-
-        #results-screen {
-            padding-top: 60px;
-        }
-
-        .results-content {
-            text-align: center;
-        }
-
-        .results-content h2 {
-            font-size: 32px;
-            margin-bottom: 32px;
-        }
-
-        .results-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-
-        .stat {
-            background: var(--white);
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-        }
-
-        .stat-value {
-            display: block;
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            display: block;
-            font-size: 14px;
-            color: var(--text-light);
-        }
-
-        .practice-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .practice-card {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .practice-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .practice-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
-
-        .practice-card h3 {
-            font-size: 16px;
-            margin-bottom: 8px;
-        }
-
-        .practice-card p {
-            font-size: 12px;
-            color: var(--text-light);
-        }
-
-        .profile-header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            color: var(--white);
-            padding: 32px;
-            border-radius: 16px;
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            background: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            margin: 0 auto 16px;
-        }
-
-        .profile-name {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .profile-level {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        .profile-highlight {
-            background: linear-gradient(135deg, #ecfdf3 0%, #f0f9ff 100%);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-        }
-
-        .profile-highlight h3 {
-            font-size: 16px;
-            margin-bottom: 12px;
-        }
-
-        .profile-goal-bar {
-            height: 8px;
-            background: var(--border-color);
-            border-radius: 999px;
-            overflow: hidden;
-        }
-
-        .profile-goal-fill {
-            height: 100%;
-            background: var(--primary-color);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .profile-goal-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: var(--text-light);
-            margin-top: 8px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            background: var(--white);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-        }
-
-        .stat-card-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 4px;
-        }
-
-        .stat-card-label {
-            font-size: 14px;
-            color: var(--text-light);
-        }
-
-        .profile-section {
-            background: var(--white);
-            padding: 16px;
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-        }
-
-        .profile-section h3 {
-            margin-bottom: 12px;
-        }
-
-        .profile-recent-list {
-            list-style: none;
-            display: grid;
-            gap: 10px;
-        }
-
-        .profile-recent-list li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-light);
-            padding: 10px 12px;
-            border-radius: 12px;
-            font-size: 14px;
-        }
-
-        .profile-recent-list li.empty {
-            justify-content: center;
-            color: var(--text-light);
-        }
-
-        .achievement-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-        }
-
-        .achievement-card {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-light);
-        }
-
-        .achievement-card.unlocked {
-            border-color: var(--success-color);
-            background: #f0fdf4;
-        }
-
-        .achievement-card.locked {
-            opacity: 0.7;
-        }
-
-        .settings-section {
-            background: var(--white);
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-        }
-
-        .settings-section h3 {
-            margin-bottom: 16px;
-        }
-
-        .setting-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .setting-item:last-child {
-            border-bottom: none;
-        }
-
-        .setting-item-input {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
-        }
-
-        .settings-section input[type="number"],
-        .settings-section input[type="time"] {
-            width: 100%;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 10px;
-            font-size: 16px;
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--white);
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 6px;
-            border-top: 1px solid var(--border-color);
-            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
-            z-index: 1000;
-        }
-
-        .nav-item {
-            background: none;
-            border: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            cursor: pointer;
-            padding: 6px 4px;
-            min-width: 0;
-            flex: 1;
-            color: var(--text-light);
-        }
-
-        .nav-item.active {
-            color: var(--primary-color);
-        }
-
-        .nav-icon {
-            font-size: 20px;
-        }
-
-        .nav-label {
-            font-size: 10px;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 16px;
-            }
-
-            .practice-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        @keyframes slideDown {
-    from {
-        transform: translateX(-50%) translateY(-100px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(-50%) translateY(-100px);
-        opacity: 0;
-    }
-}
-    </style>
-    <link rel="stylesheet" href="learning-system.css">
-    <link rel="stylesheet" href="sentences.css">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
     <div id="app">
-        <header class="app-header">
-            <div class="container">
-                <h1>🇱🇹 Learn Lithuanian</h1>
-                <div class="streak-display">
-                    <span class="fire-icon">🔥</span>
-                    <span id="streak-count">0</span>
-                    <span class="streak-label">day streak</span>
-                </div>
-            </div>
-        </header>
-
-        <main id="main-content">
-            <!-- Home Screen -->
+        <main id="main-content" class="app">
+            <!-- Home -->
             <section id="home-screen" class="screen active">
-                <div class="container">
-                    <div id="ios-install-banner" class="ios-install-banner hidden">
-                        <strong>Install for reminders</strong>
-                        <p>Tap the Share button, then <em>Add to Home Screen</em>. Open the app from there to turn on daily reminders.</p>
-                        <button class="btn btn-secondary" id="ios-install-dismiss">Got it</button>
+                <header class="top">
+                    <div>
+                        <p class="top-date" id="home-date"></p>
+                        <h1 class="top-title" id="home-greeting">Labas!</h1>
                     </div>
-
-                    <div class="streak-card">
-                        <div class="streak-card-header">
-                            <div>
-                                <div class="streak-card-count"><span class="fire-icon">🔥</span> <span id="streak-card-count">0</span> day streak</div>
-                                <div class="streak-card-best">Best: <span id="streak-best">0</span> days</div>
-                            </div>
-                        </div>
-                        <div class="streak-week" id="streak-week"></div>
-                        <p class="streak-today-status" id="streak-today-status"></p>
-                        <button class="btn btn-primary streak-card-cta" id="today-practice-btn">Practise now</button>
-                    </div>
-
-                    <div class="progress-overview">
-                        <h2>Your Progress</h2>
-                        <div class="xp-display">
-                            <span class="xp-icon">⭐</span>
-                            <span id="total-xp">0</span>
-                            <span>XP</span>
-                        </div>
-                        
-                        <!-- Daily Goal Widget -->
-                        <div class="daily-goal-widget">
-                            <h3>🎯 Today's Goal</h3>
-                            <div class="goal-ring-wrapper">
-                                <div class="goal-ring" id="goal-ring">
-                                    <span class="goal-ring-text" id="goal-ring-text">0%</span>
-                                </div>
-                            </div>
-                            <div class="goal-progress-bar">
-                                <div class="goal-progress-fill" id="goal-progress-fill" style="width: 0%"></div>
-                            </div>
-                            <p class="goal-text">
-                                <span id="current-daily-xp">0</span> / <span id="daily-xp-goal">50</span> XP
-                            </p>
-                            <p class="goal-status" id="goal-status">Start learning today! ✨</p>
-                        </div>
-                    </div>
-
-                    <div class="daily-quests" id="daily-quests"></div>
-
-                    <!-- Review Section -->
-                    <div class="review-section" id="review-section" style="display: none;">
-                        <h3>📝 Review Time!</h3>
-                        <p><span id="due-count">0</span> words need review</p>
-                        <button class="btn btn-primary" id="start-review-btn">Start Review</button>
-                    </div>
-
-                    <!-- Learning System Quick Access -->
-                    <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: var(--shadow);">
-                        <h3 style="font-size: 20px; margin-bottom: 16px; color: var(--text-dark);">🎯 Complete Learning System</h3>
-                        <p style="color: var(--text-light); margin-bottom: 16px; font-size: 14px;">Master Lithuanian with our comprehensive learning tools</p>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
-                            <button onclick="App.navigateToScreen('wordbank')" style="background: var(--white); border: 2px solid var(--primary-color); color: var(--text-dark); padding: 16px; border-radius: 12px; cursor: pointer; transition: all 0.2s; font-weight: 600;">
-                                📖 Word Bank<br><small style="font-weight: 400; color: var(--text-light);">200+ words to learn</small>
-                            </button>
-                            <button onclick="App.navigateToScreen('sentencebuilder')" style="background: var(--white); border: 2px solid var(--primary-color); color: var(--text-dark); padding: 16px; border-radius: 12px; cursor: pointer; transition: all 0.2s; font-weight: 600;">
-                                📝 Sentence Builder<br><small style="font-weight: 400; color: var(--text-light);">Grammar lessons</small>
-                            </button>
-                            <button onclick="App.navigateToScreen('practicemode')" style="background: var(--white); border: 2px solid var(--primary-color); color: var(--text-dark); padding: 16px; border-radius: 12px; cursor: pointer; transition: all 0.2s; font-weight: 600;">
-                                🧠 Practice Mode<br><small style="font-weight: 400; color: var(--text-light);">Adaptive exercises</small>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="lesson-path" id="lesson-path"></div>
-
-                    <button id="start-lesson-btn" class="btn btn-primary">
-                        Start Lesson
+                    <button class="streak-pill" onclick="App.navigateToScreen('profile')" aria-label="Streak">
+                        <span class="flame" aria-hidden="true"></span><span id="streak-count">0</span>
                     </button>
-                    <button id="debug-lessons-btn" class="btn btn-secondary" style="margin-top: 10px;">
-    🐛 Debug Lessons
-</button>
-                </div>
-            </section>
-            
-    <!-- Analytics Screen -->
-<section id="analytics-screen" class="screen">
-    <div class="container">
-        <h2 style="margin-bottom: 24px;">📊 Your Progress</h2>
-        
-        <div class="progress-overview">
-            <h3>This Week</h3>
-            <div class="stats-grid" style="margin-top: 16px;">
-                <div class="stat-card">
-                    <div class="stat-card-value" id="week-xp">0</div>
-                    <div class="stat-card-label">XP Earned</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-card-value" id="week-lessons">0</div>
-                    <div class="stat-card-label">Lessons</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-card-value" id="week-accuracy">0%</div>
-                    <div class="stat-card-label">Accuracy</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-card-value" id="week-words">0</div>
-                    <div class="stat-card-label">New Words</div>
-                </div>
-            </div>
-        </div>
+                </header>
 
-        <div class="progress-overview" style="margin-top: 24px;">
-            <h3>Areas to Improve</h3>
-            <div id="weak-areas-list" style="margin-top: 16px;">
-                <!-- Will be populated by JS -->
-            </div>
-        </div>
-
-        <div class="progress-overview" style="margin-top: 24px;">
-            <h3>7-Day Streak</h3>
-            <div id="streak-calendar" style="display: flex; gap: 8px; margin-top: 16px; justify-content: space-around;">
-                <!-- Will be populated by JS -->
-            </div>
-        </div>
-    </div>
-</section>        
-
-            <!-- Scenario Learning Screen -->
-            <section id="scenario-screen" class="screen">
-                <div class="container">
-                    <div id="scenario-content"></div>
-                </div>
-            </section>
-
-            <!-- Scenario Lesson Screen -->
-            <section id="scenario-lesson-screen" class="screen">
-                <div class="lesson-header">
-                    <button id="exit-scenario-lesson-btn" class="btn-icon">✕</button>
-                    <div class="progress-bar">
-                        <div id="scenario-lesson-progress" class="progress-fill"></div>
+                <section class="hero">
+                    <div class="hero-figure">
+                        <div class="hero-amount"><span id="streak-card-count">0</span><small> day streak</small></div>
+                        <p class="hero-caption" id="streak-today-status"></p>
                     </div>
+                    <div class="streak-week" id="streak-week" aria-label="Last 7 days"></div>
+                    <div class="goal-line">
+                        <div class="goal-line-text"><span>Today's goal</span><b><span id="current-daily-xp">0</span> / <span id="daily-xp-goal">50</span> XP</b></div>
+                        <div class="bar"><span id="goal-progress-fill" style="width: 0%"></span></div>
+                    </div>
+                    <dl class="hero-stats">
+                        <div><dt>Best streak</dt><dd><span id="streak-best">0</span> days</dd></div>
+                        <div><dt>Total</dt><dd><span id="total-xp">0</span> XP</dd></div>
+                        <div><dt>Due words</dt><dd id="hero-due">0</dd></div>
+                    </dl>
+                    <button class="btn btn-primary btn-wide hero-cta" id="today-practice-btn">Practise now</button>
+                </section>
+
+                <div id="ios-install-banner" class="nudge hidden">
+                    <b>Add to Home Screen for reminders</b>
+                    <span>Tap Share, then Add to Home Screen. Open the app from there to turn on daily reminders.</span>
+                    <button class="link-btn" id="ios-install-dismiss">Got it</button>
+                </div>
+
+                <button class="nudge nudge-calm review-section" id="review-section" style="display: none;">
+                    <b>Review time</b>
+                    <span><span id="due-count">0</span> words are ready for review. About 5 minutes.</span>
+                    <span class="link-btn" id="start-review-btn">Start review</span>
+                </button>
+
+                <section class="block">
+                    <div class="daily-quests" id="daily-quests"></div>
+                </section>
+
+                <section class="block">
+                    <h2 class="block-title">Learn</h2>
+                    <ul class="list">
+                        <li><button class="row" onclick="App.navigateToScreen('sentences')"><span class="row-icon">💬</span><span class="row-main"><b>Phrases</b><small>10 everyday sentences a day</small></span><span class="chev"></span></button></li>
+                        <li><button class="row" onclick="App.navigateToScreen('wordbank')"><span class="row-icon">📖</span><span class="row-main"><b>Word bank</b><small>200 words by topic</small></span><span class="chev"></span></button></li>
+                        <li><button class="row" onclick="App.navigateToScreen('sentencebuilder')"><span class="row-icon">🧩</span><span class="row-main"><b>Sentence builder</b><small>Grammar, step by step</small></span><span class="chev"></span></button></li>
+                        <li><button class="row" onclick="App.navigateToScreen('scenario')"><span class="row-icon">🛒</span><span class="row-main"><b>Real-life scenarios</b><small>Shop, café, small talk</small></span><span class="chev"></span></button></li>
+                    </ul>
+                </section>
+
+                <section class="block">
+                    <h2 class="block-title">Lessons</h2>
+                    <div class="lesson-path" id="lesson-path"></div>
+                </section>
+            </section>
+
+            <!-- Scenarios -->
+            <section id="scenario-screen" class="screen">
+                <header class="top top-detail">
+                    <button class="back" onclick="App.navigateToScreen('home')">Home</button>
+                </header>
+                <div id="scenario-content"></div>
+            </section>
+
+            <!-- Scenario lesson -->
+            <section id="scenario-lesson-screen" class="screen focus">
+                <div class="lesson-header">
+                    <button id="exit-scenario-lesson-btn" class="close-btn" aria-label="Close"></button>
+                    <div class="progress-bar"><div id="scenario-lesson-progress" class="progress-fill"></div></div>
                 </div>
                 <div class="lesson-content">
                     <div id="scenario-question-container"></div>
                     <div class="answer-section">
                         <div id="scenario-answer-options"></div>
-                        <button id="scenario-check-answer-btn" class="btn btn-primary" disabled>
-                            Check
-                        </button>
+                        <button id="scenario-check-answer-btn" class="btn btn-primary btn-wide" disabled>Check</button>
                     </div>
                 </div>
                 <div id="scenario-feedback-panel" class="feedback-panel hidden">
                     <div class="feedback-content">
                         <h3 id="scenario-feedback-title"></h3>
                         <p id="scenario-feedback-message"></p>
-                        <button id="scenario-continue-btn" class="btn btn-success">Continue</button>
+                        <button id="scenario-continue-btn" class="btn btn-primary btn-wide">Continue</button>
                     </div>
                 </div>
             </section>
-            <!-- Profile Screen -->
+
+            <!-- Profile -->
             <section id="profile-screen" class="screen">
-                <div class="container">
-                    <div class="profile-header">
-                        <div class="profile-avatar">👤</div>
-                        <div class="profile-name" id="profile-name-display">Lithuanian Learner</div>
-                        <div class="profile-level">Level <span id="user-level">1</span> · <span id="next-level-xp">100 XP to next</span></div>
+                <header class="top">
+                    <div>
+                        <p class="top-date">Level <span id="user-level">1</span> · <span id="next-level-xp">100 XP to next</span></p>
+                        <h1 class="top-title" id="profile-name-display">Lithuanian Learner</h1>
                     </div>
+                </header>
 
-                    <div class="profile-highlight">
-                        <h3>🎯 Daily Goal Progress</h3>
-                        <div class="profile-goal-bar">
-                            <div class="profile-goal-fill" id="profile-goal-fill"></div>
-                        </div>
-                        <div class="profile-goal-meta">
-                            <span id="profile-daily-xp">0/50</span>
-                            <span id="profile-goal-percent">0%</span>
-                        </div>
+                <section class="hero">
+                    <div class="goal-line">
+                        <div class="goal-line-text"><span>Today's goal</span><b><span id="profile-daily-xp">0/50</span> · <span id="profile-goal-percent">0%</span></b></div>
+                        <div class="bar"><span class="profile-goal-fill" id="profile-goal-fill"></span></div>
                     </div>
+                    <dl class="hero-stats hero-stats-4">
+                        <div><dt>Total XP</dt><dd id="profile-xp">0</dd></div>
+                        <div><dt>Streak</dt><dd id="profile-streak">0</dd></div>
+                        <div><dt>Lessons</dt><dd id="profile-lessons">0</dd></div>
+                        <div><dt>Words</dt><dd id="profile-vocab">0</dd></div>
+                    </dl>
+                </section>
 
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-card-value" id="profile-xp">0</div>
-                            <div class="stat-card-label">Total XP</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-card-value" id="profile-streak">0</div>
-                            <div class="stat-card-label">Day Streak</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-card-value" id="profile-lessons">0</div>
-                            <div class="stat-card-label">Lessons Completed</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-card-value" id="profile-vocab">0</div>
-                            <div class="stat-card-label">Words Learned</div>
-                        </div>
-                    </div>
+                <section class="block">
+                    <h2 class="block-title">Recent activity</h2>
+                    <ul class="list profile-recent-list" id="profile-recent-list"></ul>
+                </section>
 
-                    <div class="profile-section">
-                        <h3>🕒 Recent Activity</h3>
-                        <ul class="profile-recent-list" id="profile-recent-list"></ul>
-                    </div>
+                <section class="block">
+                    <h2 class="block-title">Achievements</h2>
+                    <div class="achievement-grid" id="achievements-container"></div>
+                </section>
 
-                    <div class="profile-section">
-                        <h3>Achievements</h3>
-                        <div class="achievement-grid" id="achievements-container"></div>
+                <section class="set-block push-section" id="push-section">
+                    <h2 class="set-title">Reminders on this phone</h2>
+                    <p class="push-status" id="push-status">Checking…</p>
+                    <label class="field">
+                        <span>Server address</span>
+                        <input id="push-server-url" class="input" type="url" inputmode="url" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="https://lithuanian-push.….workers.dev">
+                    </label>
+                    <button id="push-connect-btn" class="btn btn-primary btn-wide">Turn on reminders</button>
+                    <div class="row-actions">
+                        <button id="push-test-btn" class="btn btn-quiet hidden">Send test</button>
+                        <button id="push-disconnect-btn" class="btn btn-quiet hidden">Turn off</button>
                     </div>
+                    <p class="muted small">Reminders come from your own small server, so they arrive even when the app is closed. You won't get one on days you've already practised.</p>
+                </section>
 
-                    <div class="settings-section">
-                        <h3>Settings</h3>
-                        <div class="setting-item setting-item-input">
-                            <label for="profile-daily-goal-input">Daily Goal (XP)</label>
-                            <input id="profile-daily-goal-input" type="number" min="10" max="500" step="5" />
-                        </div>
-                        <div class="setting-item setting-item-input">
-                            <label for="profile-reminder-time">Daily Reminder Time</label>
-                            <input id="profile-reminder-time" type="time" />
-                        </div>
-                        <div class="setting-item">
-                            <label for="profile-notifications-enabled">Daily Reminder</label>
-                            <input id="profile-notifications-enabled" type="checkbox" />
-                        </div>
-                        <div class="setting-item setting-item-input">
-                            <label for="profile-nudge-time">Streak-at-risk Nudge</label>
-                            <input id="profile-nudge-time" type="time" />
-                        </div>
-                        <div class="setting-item">
-                            <label for="profile-nudge-enabled">Nudge if I haven't practised</label>
-                            <input id="profile-nudge-enabled" type="checkbox" />
-                        </div>
-                        <div class="setting-item">
-                            <label for="profile-sound-enabled">Sound Effects</label>
-                            <input id="profile-sound-enabled" type="checkbox" />
-                        </div>
-                        <div class="setting-item">
-                            <label for="profile-auto-freeze">Auto Streak Freeze</label>
-                            <input id="profile-auto-freeze" type="checkbox" />
-                        </div>
-                        <button id="save-profile-settings" class="btn btn-primary" style="margin-top: 16px; width: 100%;">Save Settings</button>
-                        <p id="profile-settings-status" style="margin-top: 12px; color: var(--text-light);"></p>
+                <section class="set-block">
+                    <h2 class="set-title">Settings</h2>
+                    <div class="grid-2">
+                        <label class="field"><span>Daily goal (XP)</span><input id="profile-daily-goal-input" class="input" type="number" min="10" max="500" step="5"></label>
+                        <label class="field"><span>Reminder time</span><input id="profile-reminder-time" class="input" type="time"></label>
                     </div>
-
-                    <div class="settings-section push-section" id="push-section">
-                        <h3>🔔 Reminders on this phone</h3>
-                        <p class="push-status" id="push-status">Checking…</p>
-                        <div class="setting-item setting-item-input push-url-row">
-                            <label for="push-server-url">Server address</label>
-                            <input id="push-server-url" type="url" inputmode="url" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="https://lithuanian-push.….workers.dev" />
-                        </div>
-                        <button id="push-connect-btn" class="btn btn-primary" style="width: 100%;">Turn on reminders</button>
-                        <button id="push-test-btn" class="btn btn-secondary hidden" style="width: 100%; margin-top: 10px;">Send test reminder</button>
-                        <button id="push-disconnect-btn" class="btn btn-secondary hidden" style="width: 100%; margin-top: 10px;">Turn off on this phone</button>
-                        <p class="push-help">Reminders come from your own small server, so they arrive even when the app is closed. You won't get one on days you've already practised.</p>
+                    <label class="toggle"><input id="profile-notifications-enabled" type="checkbox"><span class="toggle-ui"></span><span class="toggle-text">Daily reminder<small>Skipped on days you've practised</small></span></label>
+                    <div class="grid-2">
+                        <label class="field"><span>Streak nudge at</span><input id="profile-nudge-time" class="input" type="time"></label>
+                        <div></div>
                     </div>
-                </div>
+                    <label class="toggle"><input id="profile-nudge-enabled" type="checkbox"><span class="toggle-ui"></span><span class="toggle-text">Nudge if my streak is at risk<small>Late evening, only if you haven't practised</small></span></label>
+                    <label class="toggle"><input id="profile-auto-freeze" type="checkbox"><span class="toggle-ui"></span><span class="toggle-text">Auto streak freeze<small>Spends XP to cover a missed day</small></span></label>
+                    <label class="toggle"><input id="profile-sound-enabled" type="checkbox"><span class="toggle-ui"></span><span class="toggle-text">Sound effects</span></label>
+                    <button id="save-profile-settings" class="btn btn-primary btn-wide">Save settings</button>
+                    <p id="profile-settings-status" class="muted small"></p>
+                </section>
             </section>
 
-            <!-- Lesson Screen -->
-            <section id="lesson-screen" class="screen">
+            <!-- Lesson -->
+            <section id="lesson-screen" class="screen focus">
                 <div class="lesson-header">
-                    <button id="exit-lesson-btn" class="btn-icon">✕</button>
-                    <div class="progress-bar">
-                        <div id="lesson-progress" class="progress-fill"></div>
-                    </div>
+                    <button id="exit-lesson-btn" class="close-btn" aria-label="Close"></button>
+                    <div class="progress-bar"><div id="lesson-progress" class="progress-fill"></div></div>
                 </div>
-
                 <div class="lesson-content">
                     <div id="question-container"></div>
-
                     <div class="answer-section">
                         <div id="answer-options"></div>
-                        <button id="check-answer-btn" class="btn btn-primary" disabled>
-                            Check
-                        </button>
+                        <button id="check-answer-btn" class="btn btn-primary btn-wide" disabled>Check</button>
                     </div>
                 </div>
-
                 <div id="feedback-panel" class="feedback-panel hidden">
                     <div class="feedback-content">
                         <h3 id="feedback-title"></h3>
                         <p id="feedback-message"></p>
-                        <button id="continue-btn" class="btn btn-success">
-                            Continue
-                        </button>
+                        <button id="continue-btn" class="btn btn-primary btn-wide">Continue</button>
                     </div>
                 </div>
             </section>
 
-            <!-- Results Screen -->
-            <section id="results-screen" class="screen">
-                <div class="container">
-                    <div class="results-content">
-                        <h2 id="results-title">Lesson Complete! 🎉</h2>
-                        <div class="results-stats">
-                            <div class="stat">
-                                <span class="stat-value" id="correct-answers">0</span>
-                                <span class="stat-label">Correct</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value" id="xp-earned">0</span>
-                                <span class="stat-label">XP Earned</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value" id="accuracy">0</span>
-                                <span class="stat-label">Accuracy</span>
-                            </div>
-                        </div>
-                        <button id="continue-learning-btn" class="btn btn-primary">
-                            Continue Learning
-                        </button>
+            <!-- Results -->
+            <section id="results-screen" class="screen focus">
+                <div class="results-content">
+                    <div class="results-badge" aria-hidden="true">✓</div>
+                    <h2 id="results-title">Lesson complete</h2>
+                    <div class="results-stats">
+                        <div class="stat"><span class="stat-value" id="correct-answers">0</span><span class="stat-label">Correct</span></div>
+                        <div class="stat"><span class="stat-value" id="xp-earned">0</span><span class="stat-label">XP</span></div>
+                        <div class="stat"><span class="stat-value" id="accuracy">0</span><span class="stat-label">Accuracy</span></div>
                     </div>
+                    <button id="continue-learning-btn" class="btn btn-primary btn-wide">Continue</button>
                 </div>
             </section>
 
-            <!-- Word Bank Screen -->
+            <!-- Word bank -->
             <section id="wordbank-screen" class="screen">
-                <div class="container">
-                    <div id="wordbank-content">
-                        <!-- Content dynamically loaded by wordbank.js -->
-                    </div>
-                </div>
+                <header class="top"><div><p class="top-date">Žodžiai</p><h1 class="top-title">Words</h1></div></header>
+                <div id="wordbank-content"></div>
             </section>
 
-            <!-- Sentence Builder Screen -->
+            <!-- Sentence builder -->
             <section id="sentencebuilder-screen" class="screen">
-                <div class="container">
-                    <div id="sentencebuilder-content">
-                        <!-- Content dynamically loaded by sentencebuilder.js -->
-                    </div>
-                </div>
+                <header class="top top-detail">
+                    <button class="back" onclick="App.navigateToScreen('home')">Home</button>
+                </header>
+                <div class="top top-tight"><div><p class="top-date">Gramatika</p><h1 class="top-title">Sentence builder</h1></div></div>
+                <div id="sentencebuilder-content"></div>
             </section>
 
-            <!-- Practice Mode Screen -->
+            <!-- Practice -->
             <section id="practicemode-screen" class="screen">
-                <div class="container">
-                    <div id="practice-content">
-                        <!-- Content dynamically loaded by practice.js -->
-                    </div>
-                </div>
+                <div id="practice-content"></div>
             </section>
 
-            <!-- Sentences Screen -->
+            <!-- Phrases -->
             <section id="sentences-screen" class="screen">
-                <div class="container">
-                    <div id="sentences-content">
-                        <!-- Content dynamically loaded by sentences.js -->
-                    </div>
-                </div>
+                <header class="top"><div><p class="top-date">Frazės</p><h1 class="top-title">Phrases</h1></div></header>
+                <div id="sentences-content"></div>
             </section>
 
-            <!-- Sentence Learning Screen -->
-            <section id="sentence-learning-screen" class="screen">
+            <!-- Phrase learning -->
+            <section id="sentence-learning-screen" class="screen focus">
                 <div class="lesson-header">
-                    <button id="exit-sentence-learning-btn" class="btn-icon" onclick="SentenceManager.exitLearning()">✕</button>
-                    <div class="progress-bar">
-                        <div id="sentence-learning-progress" class="progress-fill"></div>
-                    </div>
+                    <button id="exit-sentence-learning-btn" class="close-btn" aria-label="Close" onclick="SentenceManager.exitLearning()"></button>
+                    <div class="progress-bar"><div id="sentence-learning-progress" class="progress-fill"></div></div>
                 </div>
                 <div class="lesson-content">
                     <div id="sentence-learning-content"></div>
                 </div>
             </section>
 
-            <!-- Sentence Results Screen -->
-            <section id="sentence-results-screen" class="screen">
-                <div class="container">
-                    <div class="results-content">
-                        <h2>🎉 Puikiai! Excellent!</h2>
-                        <div class="results-stats">
-                            <div class="stat">
-                                <span class="stat-value" id="sentences-learned-count">0</span>
-                                <span class="stat-label">Sentences Learned</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value" id="sentences-xp-earned">0</span>
-                                <span class="stat-label">XP Earned</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value" id="sentences-total-count">0</span>
-                                <span class="stat-label">Total Mastered</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" onclick="SentenceManager.backToSentences()">
-                            Continue
-                        </button>
+            <!-- Phrase results -->
+            <section id="sentence-results-screen" class="screen focus">
+                <div class="results-content">
+                    <div class="results-badge" aria-hidden="true">✓</div>
+                    <h2>Puikiai!</h2>
+                    <div class="results-stats">
+                        <div class="stat"><span class="stat-value" id="sentences-learned-count">0</span><span class="stat-label">Learned</span></div>
+                        <div class="stat"><span class="stat-value" id="sentences-xp-earned">0</span><span class="stat-label">XP</span></div>
+                        <div class="stat"><span class="stat-value" id="sentences-total-count">0</span><span class="stat-label">Mastered</span></div>
                     </div>
+                    <button class="btn btn-primary btn-wide" onclick="SentenceManager.backToSentences()">Continue</button>
                 </div>
             </section>
 
-            <!-- Sentence Review Screen -->
-            <section id="sentence-review-screen" class="screen">
+            <!-- Phrase review -->
+            <section id="sentence-review-screen" class="screen focus">
                 <div class="lesson-header">
-                    <button id="exit-sentence-review-btn" class="btn-icon" onclick="SentenceManager.exitReview()">✕</button>
-                    <div class="progress-bar">
-                        <div id="sentence-review-progress" class="progress-fill"></div>
-                    </div>
-                    <span id="sentence-review-counter" style="margin-left: 12px; font-weight: 600;">0/0</span>
+                    <button id="exit-sentence-review-btn" class="close-btn" aria-label="Close" onclick="SentenceManager.exitReview()"></button>
+                    <div class="progress-bar"><div id="sentence-review-progress" class="progress-fill"></div></div>
+                    <span id="sentence-review-counter" class="counter">0/0</span>
                 </div>
                 <div class="lesson-content">
                     <div id="sentence-review-content"></div>
                 </div>
             </section>
 
-            <!-- Sentence Review Results Screen -->
-            <section id="sentence-review-results-screen" class="screen">
-                <div class="container">
-                    <div class="results-content">
-                        <h2>📝 Review Complete!</h2>
-                        <div class="results-stats">
-                            <div class="stat">
-                                <span class="stat-value" id="review-correct-count">0/0</span>
-                                <span class="stat-label">Correct Answers</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value" id="review-xp-earned">0</span>
-                                <span class="stat-label">XP Earned</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value" id="review-accuracy">0%</span>
-                                <span class="stat-label">Accuracy</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" onclick="SentenceManager.backToSentencesFromReview()">
-                            Back to Sentences
-                        </button>
+            <!-- Phrase review results -->
+            <section id="sentence-review-results-screen" class="screen focus">
+                <div class="results-content">
+                    <div class="results-badge" aria-hidden="true">✓</div>
+                    <h2>Review complete</h2>
+                    <div class="results-stats">
+                        <div class="stat"><span class="stat-value" id="review-correct-count">0/0</span><span class="stat-label">Correct</span></div>
+                        <div class="stat"><span class="stat-value" id="review-xp-earned">0</span><span class="stat-label">XP</span></div>
+                        <div class="stat"><span class="stat-value" id="review-accuracy">0%</span><span class="stat-label">Accuracy</span></div>
                     </div>
+                    <button class="btn btn-primary btn-wide" onclick="SentenceManager.backToSentencesFromReview()">Back to phrases</button>
                 </div>
             </section>
         </main>
 
-        <nav class="bottom-nav">
-            <button class="nav-item active" data-screen="home">
-                <span class="nav-icon">🏠</span>
-                <span class="nav-label">Home</span>
-            </button>
-            <button class="nav-item" data-screen="sentences">
-                <span class="nav-icon">📚</span>
-                <span class="nav-label">Sentences</span>
-            </button>
-            <button class="nav-item" data-screen="wordbank">
-                <span class="nav-icon">📖</span>
-                <span class="nav-label">Words</span>
-            </button>
-            <button class="nav-item" data-screen="practicemode">
-                <span class="nav-icon">🧠</span>
-                <span class="nav-label">Practice</span>
-            </button>
-            <button class="nav-item" data-screen="scenario">
-                <span class="nav-icon">🎭</span>
-                <span class="nav-label">Scenarios</span>
-            </button>
-            <button class="nav-item" data-screen="profile">
-                <span class="nav-icon">👤</span>
-                <span class="nav-label">Profile</span>
-            </button>
+        <nav class="tabbar" aria-label="Main">
+            <div class="tabbar-inner">
+                <button class="nav-item active" data-screen="home">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/></svg>
+                    <span>Home</span>
+                </button>
+                <button class="nav-item" data-screen="sentences">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M8 9.5h8M8 12.5h5"/></svg>
+                    <span>Phrases</span>
+                </button>
+                <button class="nav-item" data-screen="practicemode">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/></svg>
+                    <span>Practice</span>
+                </button>
+                <button class="nav-item" data-screen="wordbank">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M5 4.5h10.5A3.5 3.5 0 0 1 19 8v11.5H8.5A3.5 3.5 0 0 1 5 16z"/><path stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M5 16a3.5 3.5 0 0 1 3.5-3.5H19M9 8.5h6"/></svg>
+                    <span>Words</span>
+                </button>
+                <button class="nav-item" data-screen="profile">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.9"/><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></svg>
+                    <span>Me</span>
+                </button>
+            </div>
         </nav>
 
-        <!-- Onboarding Overlay -->
+        <!-- Onboarding -->
         <div id="onboarding-overlay" class="onboarding-overlay hidden">
             <div class="onboarding-screen active" id="onboarding-1">
                 <div class="onboarding-content">
-                    <h2>🇱🇹 Sveiki!</h2>
-                    <h3>Welcome to Lithuanian Learning</h3>
-                    <p>Learn Lithuanian in just 10 minutes a day with bite-sized lessons and fun exercises.</p>
-                    <button class="btn btn-primary" onclick="showOnboardingScreen(2)">Pradėti (Start)</button>
+                    <img class="onboarding-mark" src="icons/icon-192.png" alt="">
+                    <h2>Sveiki!</h2>
+                    <p>Learn Lithuanian in about 10 minutes a day: short lessons, everyday phrases and a review that brings back what you're about to forget.</p>
+                    <button class="btn btn-primary btn-wide" onclick="showOnboardingScreen(2)">Pradėti (Start)</button>
                 </div>
             </div>
-            
             <div class="onboarding-screen" id="onboarding-2">
                 <div class="onboarding-content">
-                    <h2>🎯 Your Daily Goal</h2>
-                    <p>How many minutes per day do you want to learn?</p>
+                    <h2>Your daily goal</h2>
+                    <p>How long do you want to practise each day?</p>
                     <div class="goal-options">
-                        <button class="goal-option" data-minutes="5">5 min<br><small>Casual</small></button>
-                        <button class="goal-option" data-minutes="10">10 min<br><small>Regular</small></button>
-                        <button class="goal-option selected" data-minutes="15">15 min<br><small>Serious</small></button>
-                        <button class="goal-option" data-minutes="20">20 min<br><small>Intense</small></button>
+                        <button class="goal-option" data-minutes="5"><b>5 min</b><small>Casual</small></button>
+                        <button class="goal-option" data-minutes="10"><b>10 min</b><small>Regular</small></button>
+                        <button class="goal-option selected" data-minutes="15"><b>15 min</b><small>Serious</small></button>
+                        <button class="goal-option" data-minutes="20"><b>20 min</b><small>Intense</small></button>
                     </div>
-                    <button class="btn btn-primary" onclick="showOnboardingScreen(3)">Continue</button>
+                    <button class="btn btn-primary btn-wide" onclick="showOnboardingScreen(3)">Continue</button>
                 </div>
             </div>
-            
             <div class="onboarding-screen" id="onboarding-3">
                 <div class="onboarding-content">
-                    <h2>🔔 Stay Motivated</h2>
-                    <p>Get daily reminders to keep your streak alive!</p>
-                    <button class="btn btn-primary" onclick="finishOnboarding(true)">Enable Reminders</button>
-                    <button class="btn btn-secondary" onclick="finishOnboarding(false)" style="margin-top: 10px;">Skip for now</button>
+                    <h2>Stay on track</h2>
+                    <p>Get one reminder a day, and a nudge in the evening if your streak is at risk.</p>
+                    <button class="btn btn-primary btn-wide" onclick="finishOnboarding(true)">Set up reminders</button>
+                    <button class="btn btn-quiet btn-wide" onclick="finishOnboarding(false)">Skip for now</button>
                 </div>
             </div>
         </div>
     </div>
 
-    
-    <!-- External JavaScript Files -->
     <script src="state-logic.js"></script>
     <script src="srs.js"></script>
     <script src="storage.js"></script>
