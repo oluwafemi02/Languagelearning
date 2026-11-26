@@ -147,6 +147,20 @@ runTest('week strip shows practised, frozen and missed days', () => {
   assert.strictEqual(StateLogic.practicedToday({ lastGoalMetDate: '2024-01-04', xpToday: 5 }, new Date(2024, 0, 4, 12)), true);
 });
 
+runTest('old UTC day keys get one day of grace east of UTC', () => {
+  const now = new Date(2024, 0, 4, 9);
+  const state = { streakCount: 5, lastGoalMetDate: '2024-01-02', practiceDays: ['2024-01-02'] };
+  StateLogic.migrateUtcDayKeys(state, now);
+  if (now.getTimezoneOffset() < 0) {
+    assert.strictEqual(state.lastGoalMetDate, '2024-01-03');
+  } else {
+    assert.strictEqual(state.lastGoalMetDate, '2024-01-02');
+  }
+  const longGone = { streakCount: 5, lastGoalMetDate: '2023-12-20' };
+  StateLogic.migrateUtcDayKeys(longGone, now);
+  assert.strictEqual(longGone.lastGoalMetDate, '2023-12-20');
+});
+
 runTest('SRS updates interval after correct answer', () => {
   const item = SRS.createItem({ id: 'labas', kind: 'word', now: new Date('2024-01-01T00:00:00Z') });
   const updated = SRS.updateItem(item, true, new Date('2024-01-01T00:00:00Z'));

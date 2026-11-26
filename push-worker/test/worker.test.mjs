@@ -101,6 +101,16 @@ assert.equal(await runDue(env, at('2026-12-17T17:05:00Z')), 0);
 await call('POST', '/sync', { deviceId, remindersOn: true }, secret);
 ok('reminders can be paused');
 
+// Daily reminder off, nudge on: the nudge still guards the streak.
+await call('POST', '/sync', { deviceId, remindersOn: false, nudgeEnabled: true, lastPracticeDate: '2026-12-17', streak: 3 }, secret);
+assert.equal(await runDue(env, at('2026-12-18T17:05:00Z')), 0);
+assert.equal(await runDue(env, at('2026-12-18T19:35:00Z')), 1);
+assert.equal(delivered.at(-1).tag, 'streak-nudge');
+await call('POST', '/sync', { deviceId, nudgeEnabled: false, lastPracticeDate: '2026-12-18' }, secret);
+assert.equal(await runDue(env, at('2026-12-19T19:35:00Z')), 0);
+await call('POST', '/sync', { deviceId, remindersOn: true, nudgeEnabled: true }, secret);
+ok('nudge works on its own when the daily reminder is off');
+
 r = await call('POST', '/test', { deviceId }, secret);
 assert.equal(r.status, 200);
 assert.match(delivered.at(-1).title, /Reminders work/);

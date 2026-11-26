@@ -93,7 +93,7 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 
 // Decides which notification (if any) is due for one phone right now.
 export function dueMessage(rec, now) {
-  if (!rec.subscription || rec.remindersOn === false) return null;
+  if (!rec.subscription) return null;
   const { day, minutes } = localClock(now, rec.tz);
   if (rec.lastPracticeDate === day) return null; // already practised today: stay quiet
   const sent = rec.sent || {};
@@ -122,7 +122,7 @@ export function dueMessage(rec, now) {
   }
 
   const remindAt = toMinutes(rec.remindTime || DEFAULTS.remindTime);
-  if (sent.reminder !== day && minutes >= remindAt && minutes < remindAt + LATE_WINDOW_MIN) {
+  if (rec.remindersOn !== false && sent.reminder !== day && minutes >= remindAt && minutes < remindAt + LATE_WINDOW_MIN) {
     let body;
     if (atRisk) body = `Keep your ${streak}-day streak going.${due ? ` ${plural(due, 'word is', 'words are')} due for review.` : ''}`;
     else if (due) body = `${plural(due, 'word is', 'words are')} due for review. About 5 minutes.`;

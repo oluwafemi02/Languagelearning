@@ -176,6 +176,10 @@ const Storage = {
     const parsed = raw ? JSON.parse(raw) : null;
     const migrated = this.migrateState(parsed);
     const normalized = this.ensureStateShape(migrated);
+    if (!normalized.localDayKeys) {
+      if (parsed) StateLogic.migrateUtcDayKeys(normalized);
+      normalized.localDayKeys = true;
+    }
     StateLogic.resetDailyXPIfNeeded(normalized);
     this.saveState(normalized);
     return normalized;

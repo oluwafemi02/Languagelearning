@@ -64,6 +64,22 @@ const StateLogic = (() => {
     return state;
   };
 
+  // One-time fix for saves made before day keys were local. Older versions stored UTC
+  // dates, so east of UTC (Lithuania is UTC+2/+3) practice between local midnight and
+  // UTC midnight was saved under the previous day. If that would now look like a missed
+  // day, give the benefit of the doubt once by moving it forward a day.
+  const migrateUtcDayKeys = (state, now = new Date()) => {
+    const eastOfUtc = now.getTimezoneOffset() < 0;
+    if (!eastOfUtc || !state.streakCount || !state.lastGoalMetDate) return state;
+    const todayKey = dateKey(now);
+    if (daysBetween(state.lastGoalMetDate, todayKey) === 2) {
+      const shifted = shiftKey(state.lastGoalMetDate, 1);
+      state.lastGoalMetDate = shifted;
+      state.practiceDays = remember(state.practiceDays, shifted);
+    }
+    return state;
+  };
+
   const resetDailyXPIfNeeded = (state, now = new Date()) => {
     const todayKey = dateKey(now);
     settleStreak(state, now);
@@ -141,6 +157,7 @@ const StateLogic = (() => {
     daysBetween,
     shiftKey,
     settleStreak,
+    migrateUtcDayKeys,
     resetDailyXPIfNeeded,
     applyXp,
     updateStreakForGoal,
