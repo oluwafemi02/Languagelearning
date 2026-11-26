@@ -643,21 +643,23 @@ const App = {
     }
 
     // When a new version takes over, reload once so the update shows on this open, not the next.
-    // Never mid-lesson: then wait until the app goes to the background.
+    // Never during a lesson or practice session (their answers live in memory): wait until it ends.
     const hadController = Boolean(navigator.serviceWorker.controller);
-    let reloading = false;
-    const reloadNow = () => {
-      if (reloading) return;
-      reloading = true;
+    let pending = false;
+    const inSession = () => Boolean(document.querySelector('.screen.focus.active, .screen.active .practice-screen, .screen.active .learning-mode, .screen.active .exercise-screen'));
+    const reloadIfFree = () => {
+      if (!pending || inSession()) return;
+      pending = false;
       window.location.reload();
     };
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (!hadController) return;
-      if (document.querySelector('.screen.focus.active, .practice-screen, .learning-mode')) {
-        document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') reloadNow(); }, { once: true });
-      } else {
-        reloadNow();
-      }
+      pending = true;
+      reloadIfFree();
+    });
+    // Sessions end by changing screens or re-rendering a screen: check again whenever that happens.
+    new MutationObserver(reloadIfFree).observe(document.getElementById('main-content') || document.body, {
+      subtree: true, childList: true, attributes: true, attributeFilter: ['class']
     });
 
     try {
