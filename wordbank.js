@@ -110,10 +110,10 @@ const WordBankManager = {
           </select>
         </div>
         <button class="btn btn-secondary" onclick="WordBankManager.shuffleWords()">
-          🎲 Random
+          Shuffle
         </button>
         <button class="btn btn-primary" onclick="WordBankManager.startLearningMode()">
-          📚 Learning Mode
+          Flashcards
         </button>
       </div>
     `;
@@ -149,12 +149,12 @@ const WordBankManager = {
             <button class="btn btn-success" 
                     onclick="WordBankManager.markAsLearned(${word.id})"
                     ${isLearned ? 'disabled' : ''}>
-              ${isLearned ? '✓ Learned' : 'Mark as Learned'}
+              ${isLearned ? '✓ Learned' : 'Mark as learned'}
             </button>
             <button class="btn btn-secondary" 
                     onclick="WordBankManager.addToReview(${word.id})"
                     ${isReview ? 'disabled' : ''}>
-              ${isReview ? '✓ In Review' : 'Add to Review'}
+              ${isReview ? '✓ In Review' : 'Add to review'}
             </button>
           </div>
         </div>
@@ -267,7 +267,7 @@ const WordBankManager = {
     container.innerHTML = `
       <div class="learning-mode">
         <div class="learning-header">
-          <button class="btn-icon" onclick="WordBankManager.exitLearningMode()">✕ Exit</button>
+          <button class="close-btn" aria-label="Close" onclick="WordBankManager.exitLearningMode()"></button>
           <div class="learning-progress">
             <div class="progress-bar">
               <div class="progress-fill" style="width: ${progress}%"></div>
@@ -303,11 +303,11 @@ const WordBankManager = {
           
           <div class="learning-actions">
             <button class="btn btn-secondary" onclick="WordBankManager.addToReview(${word.id})">
-              Add to Review
+              Add to review
             </button>
             ${!isLearned ? `
               <button class="btn btn-success" onclick="WordBankManager.markAsLearnedAndNext(${word.id})">
-                ✓ Learned & Next
+                Learned, next
               </button>
             ` : ''}
           </div>

@@ -140,7 +140,7 @@ const QuestManager = {
 
     container.innerHTML = `
       <div class="daily-quests-header">
-        <h3>🏆 Daily Quests</h3>
+        <h3>Daily quests</h3>
         <span class="bonus-badge ${bonusClaimed ? 'claimed' : ''}">
           ${bonusClaimed ? 'Bonus claimed!' : `Complete all: +${this.dailyBonusXP} XP`}
         </span>

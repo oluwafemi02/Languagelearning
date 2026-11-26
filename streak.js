@@ -37,16 +37,16 @@ const StreakManager = {
     if (statusEl) {
       if (StateLogic.practicedToday(data)) {
         statusEl.textContent = 'Done for today. Puiku! 🔥';
-        statusEl.className = 'streak-today-status done';
+        statusEl.className = 'hero-caption done';
       } else if (data.streakCount > 0) {
         statusEl.textContent = `Practise today to keep your ${data.streakCount}-day streak.`;
-        statusEl.className = 'streak-today-status pending';
+        statusEl.className = 'hero-caption';
       } else if (data.lastStreakLost && data.lastStreakLost.date === StateLogic.dateKey()) {
         statusEl.textContent = `Your ${data.lastStreakLost.length}-day streak ended. Start a new one today.`;
-        statusEl.className = 'streak-today-status pending';
+        statusEl.className = 'hero-caption';
       } else {
         statusEl.textContent = 'Practise today to start a streak.';
-        statusEl.className = 'streak-today-status pending';
+        statusEl.className = 'hero-caption';
       }
     }
     const bestEl = document.getElementById('streak-best');

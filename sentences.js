@@ -87,7 +87,7 @@ const SentenceManager = {
       ${needsWeeklyReview ? `
         <div class="weekly-review-banner">
           <div class="review-banner-content">
-            <h3>🎉 Weekly Review Time!</h3>
+            <h3>Weekly review</h3>
             <p>Test your knowledge of the sentences you've learned this week</p>
             <button class="btn btn-primary" onclick="SentenceManager.startWeeklyReview()">
               Start Weekly Review (${reviewableSentences.length} sentences)
@@ -97,12 +97,12 @@ const SentenceManager = {
       ` : ''}
 
       <div class="daily-learning-section">
-        <h3>📖 Today's Learning</h3>
+        <h3>Today's phrases</h3>
         ${canLearnMore ? `
           <p class="section-description">Learn ${10 - dailyCount} more sentence${10 - dailyCount !== 1 ? 's' : ''} today to complete your daily goal!</p>
           <button class="btn btn-primary btn-large" onclick="SentenceManager.startDailyLearning()">
-            ${dailyCount === 0 ? 'Start Learning Today' : 'Continue Learning'} 
-            (${10 - dailyCount} remaining)
+            ${dailyCount === 0 ? 'Start today' : 'Continue'} 
+            · ${10 - dailyCount} left
           </button>
         ` : `
           <div class="goal-complete-card">
@@ -115,7 +115,7 @@ const SentenceManager = {
 
       ${reviewableSentences.length > 0 && !needsWeeklyReview ? `
         <div class="quick-review-section">
-          <h3>🔄 Quick Review</h3>
+          <h3>Quick review</h3>
           <p class="section-description">Practice sentences you've already learned</p>
           <button class="btn btn-secondary" onclick="SentenceManager.startQuickReview()">
             Practice ${reviewableSentences.length} Sentences
@@ -125,7 +125,7 @@ const SentenceManager = {
 
       ${totalLearned > 0 ? `
         <div class="progress-timeline">
-          <h3>📊 Your Progress</h3>
+          <h3>Weekly progress</h3>
           <div class="timeline-content">
             ${this.renderProgressTimeline(userData)}
           </div>

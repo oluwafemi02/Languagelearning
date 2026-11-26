@@ -94,7 +94,7 @@ const App = {
 
   // Display lesson path
   displayLessonPath() {
-    const lessonPath = document.querySelector('.lesson-path');
+    const lessonPath = document.getElementById('lesson-path');
     lessonPath.innerHTML = '';
     const unitSize = 5;
     const totalUnits = Math.ceil(this.lessons.length / unitSize);
@@ -112,7 +112,13 @@ const App = {
         <h3>Unit ${unitIndex + 1} · ${this.getUnitTitle(unitIndex)}</h3>
         <div class="section-progress">${unitCompleted}/${unitLessons.length} lessons completed</div>
       `;
-      lessonPath.appendChild(sectionHeader);
+      const unit = document.createElement('div');
+      unit.className = 'unit';
+      const unitList = document.createElement('div');
+      unitList.className = 'list';
+      unit.appendChild(sectionHeader);
+      unit.appendChild(unitList);
+      lessonPath.appendChild(unit);
 
       unitLessons.forEach((lesson, index) => {
         const globalIndex = unitStart + index;
@@ -124,7 +130,7 @@ const App = {
         lessonCard.className = `lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''} ${isCurrent ? 'current' : ''}`;
         
         lessonCard.innerHTML = `
-          <div class="lesson-icon">${isCompleted ? '✓' : isLocked ? '🔒' : '📚'}</div>
+          <div class="lesson-icon">${isCompleted ? '✓' : isLocked ? '🔒' : globalIndex + 1}</div>
           <div class="lesson-info">
             <h3>${lesson.titleLT}</h3>
             <p>${lesson.descriptionLT}</p>
@@ -140,16 +146,16 @@ const App = {
           lessonCard.onclick = () => this.startLesson(lesson.id);
         }
 
-        lessonPath.appendChild(lessonCard);
+        unitList.appendChild(lessonCard);
       });
 
       const reviewCard = document.createElement('div');
       reviewCard.className = 'lesson-card review-card';
       reviewCard.innerHTML = `
-        <div class="lesson-icon">🔁</div>
+        <div class="lesson-icon">↻</div>
         <div class="lesson-info">
-          <h3>Unit ${unitIndex + 1} Review</h3>
-          <p>Practice what you learned in this unit</p>
+          <h3>Unit ${unitIndex + 1} review</h3>
+          <p>Mix of everything in this unit</p>
           <div class="lesson-meta">
             <span class="xp-badge">+10 XP</span>
             <span class="difficulty-badge">review</span>
@@ -158,7 +164,7 @@ const App = {
       `;
 
       reviewCard.onclick = () => this.startUnitReview(unitLessons.map(lesson => lesson.id));
-      lessonPath.appendChild(reviewCard);
+      unitList.appendChild(reviewCard);
     }
   },
 
@@ -192,6 +198,7 @@ const App = {
     document.getElementById('streak-count').textContent = streak;
     const streakCardCount = document.getElementById('streak-card-count');
     if (streakCardCount) streakCardCount.textContent = streak;
+    this.renderHomeHeader();
     StreakManager.renderWeek();
     this.updateDailyGoal();
     this.updateReviewSection();
@@ -250,12 +257,25 @@ const App = {
     
     if (reviewSection) {
       if (dueCount > 0) {
-        reviewSection.style.display = 'block';
+        reviewSection.style.display = 'grid';
         if (dueCountEl) dueCountEl.textContent = dueCount;
       } else {
         reviewSection.style.display = 'none';
       }
     }
+  },
+
+  renderHomeHeader() {
+    const now = new Date();
+    const dateEl = document.getElementById('home-date');
+    if (dateEl) dateEl.textContent = now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+    const greetingEl = document.getElementById('home-greeting');
+    if (greetingEl) {
+      const h = now.getHours();
+      greetingEl.textContent = h < 11 ? 'Labas rytas!' : h < 18 ? 'Laba diena!' : 'Labas vakaras!';
+    }
+    const dueEl = document.getElementById('hero-due');
+    if (dueEl) dueEl.textContent = ReviewManager.getDueWordsCount();
   },
 
   // One tap for today's practice: due reviews first, otherwise the next lesson.
@@ -375,7 +395,7 @@ const App = {
     });
 
     // Start review button
-    document.getElementById('start-review-btn')?.addEventListener('click', async () => {
+    document.getElementById('review-section')?.addEventListener('click', async () => {
       const exercises = await ReviewManager.generateReviewExercises(10);
       if (exercises.length > 0) {
         LessonManager.startReviewSession(exercises);
@@ -514,7 +534,7 @@ const App = {
         .map(lesson => {
           const lessonInfo = this.lessons.find(l => String(l.id) === String(lesson.id));
           const title = lessonInfo?.titleLT || `Lesson ${lesson.id}`;
-          const date = new Date(lesson.completedAt).toLocaleDateString();
+          const date = new Date(lesson.completedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
           return `<li><strong>${title}</strong><span>${date}</span></li>`;
         });
 
@@ -537,7 +557,7 @@ const App = {
             </div>
           </div>
         `),
-        ...locked.map(achievement => `
+        ...locked.slice(0, 3).map(achievement => `
           <div class="achievement-card locked">
             <div class="achievement-icon">🔒</div>
             <div>
@@ -547,7 +567,8 @@ const App = {
           </div>
         `)
       ];
-      achievementsContainer.innerHTML = cards.join('') || '<p class="empty">Unlock achievements as you learn.</p>';
+      const more = locked.length > 3 ? `<p class="achievement-more">${locked.length - 3} more to unlock</p>` : '';
+      achievementsContainer.innerHTML = (cards.join('') + more) || '<p class="empty">Unlock achievements as you learn.</p>';
     }
   },
 
@@ -575,13 +596,14 @@ const App = {
     Storage.saveUserData(userData);
     await NotificationManager.sync();
 
+    // Refresh first: it rewrites the status line, and the confirmation must win.
+    this.displayUserStats();
+
     if (statusEl) {
-      statusEl.textContent = userData.settings.push.enabled || !userData.settings.notificationsEnabled
+      statusEl.textContent = userData.settings.push?.enabled || !userData.settings.notificationsEnabled
         ? 'Settings saved.'
         : 'Settings saved. Turn on reminders below to get them on this phone.';
     }
-
-    this.displayUserStats();
   },
 
   getUserLevel(totalXP) {
@@ -605,12 +627,12 @@ const App = {
     let deferredPrompt;
 
     window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-
-      // Show install prompt (Android / desktop Chrome only; iOS uses the Share menu)
+      // Show install prompt (Android / desktop Chrome only; iOS uses the Share menu).
+      // Without our own banner, leave the browser's install prompt alone.
       const installPrompt = document.getElementById('install-prompt');
       if (!installPrompt) return;
+      e.preventDefault();
+      deferredPrompt = e;
       installPrompt.classList.remove('hidden');
 
       // Install button

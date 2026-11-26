@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test": "node tests/run-tests.js && TZ=Europe/Vilnius node tests/run-tests.js && TZ=America/New_York node tests/run-tests.js"
+    "test": "node tests/run-tests.js && TZ=Europe/Vilnius node tests/run-tests.js && TZ=America/New_York node tests/run-tests.js",
+    "test:e2e": "playwright test -c e2e/playwright.config.mjs",
+    "test:e2e:live": "BASE_URL=https://oluwafemi02.github.io/Languagelearning/ playwright test -c e2e/playwright.config.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
   }
 }
