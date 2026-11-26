@@ -64,6 +64,12 @@
                     <span class="link-btn" id="start-review-btn">Start review</span>
                 </button>
 
+                <button class="journey-card" id="home-journey-card" onclick="App.navigateToScreen('journey')">
+                    <span class="row-icon">🧭</span>
+                    <span class="row-main"><b>Speak Lithuanian in 12 weeks</b><small>A week-by-week plan from a teacher. Start your journey.</small></span>
+                    <span class="chev"></span>
+                </button>
+
                 <section class="block">
                     <div class="daily-quests" id="daily-quests"></div>
                 </section>
@@ -178,6 +184,18 @@
                     <button id="save-profile-settings" class="btn btn-primary btn-wide">Save settings</button>
                     <p id="profile-settings-status" class="muted small"></p>
                 </section>
+                <p class="app-version" id="app-version"></p>
+            </section>
+
+            <!-- Journey: the 12-week plan -->
+            <section id="journey-screen" class="screen">
+                <header class="top">
+                    <div>
+                        <p class="top-date">Kelionė</p>
+                        <h1 class="top-title">Journey</h1>
+                    </div>
+                </header>
+                <div id="journey-content"></div>
             </section>
 
             <!-- Lesson -->
@@ -218,7 +236,10 @@
 
             <!-- Word bank -->
             <section id="wordbank-screen" class="screen">
-                <header class="top"><div><p class="top-date">Žodžiai</p><h1 class="top-title">Words</h1></div></header>
+                <header class="top top-detail">
+                    <button class="back" onclick="App.navigateToScreen('home')">Home</button>
+                </header>
+                <div class="top top-tight"><div><p class="top-date">Žodžiai</p><h1 class="top-title">Words</h1></div></div>
                 <div id="wordbank-content"></div>
             </section>
 
@@ -300,6 +321,10 @@
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/></svg>
                     <span>Home</span>
                 </button>
+                <button class="nav-item" data-screen="journey">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.2" fill="none" stroke="currentColor" stroke-width="1.9"/><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="m15.2 8.8-1.9 4.5-4.5 1.9 1.9-4.5z"/></svg>
+                    <span>Journey</span>
+                </button>
                 <button class="nav-item" data-screen="sentences">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M8 9.5h8M8 12.5h5"/></svg>
                     <span>Phrases</span>
@@ -307,10 +332,6 @@
                 <button class="nav-item" data-screen="practicemode">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/></svg>
                     <span>Practice</span>
-                </button>
-                <button class="nav-item" data-screen="wordbank">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M5 4.5h10.5A3.5 3.5 0 0 1 19 8v11.5H8.5A3.5 3.5 0 0 1 5 16z"/><path stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M5 16a3.5 3.5 0 0 1 3.5-3.5H19M9 8.5h6"/></svg>
-                    <span>Words</span>
                 </button>
                 <button class="nav-item" data-screen="profile">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.9"/><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></svg>
@@ -353,6 +374,7 @@
         </div>
     </div>
 
+    <script src="version.js"></script>
     <script src="state-logic.js"></script>
     <script src="srs.js"></script>
     <script src="storage.js"></script>
@@ -367,6 +389,7 @@
     <script src="sentencebuilder.js"></script>
     <script src="practice.js"></script>
     <script src="scenario-learning.js"></script>
+    <script src="journey.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

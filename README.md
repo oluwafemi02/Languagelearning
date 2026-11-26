@@ -51,6 +51,18 @@ settings, onboarding, dark mode, and no sideways scrolling at 320px. CI runs the
 and WebKit (Safari's engine). Run `npx playwright install chromium webkit` once first, and
 `npm run test:e2e:live` to point them at the published site.
 
+### Versions
+
+Every deploy gets a new version number, shown at the bottom of the Me screen. Before opening a pull
+request, run `npm run bump -- minor` for a feature or `npm run bump -- patch` for a fix, and add a
+line to `CHANGELOG.md`. CI fails a pull request that doesn't raise the version. The new number also
+renames the offline cache, so phones pick up the update the next time the app opens.
+
+### Journey
+
+`journey.js` holds the 12-week plan (weeks, phrases, tasks) and the logic for the current week and
+progress. Progress is stored in the same saved state as everything else, under `journey`.
+
 ### Design
 
 All styles live in `css/app.css`. It follows the same design language as the Tracker app:

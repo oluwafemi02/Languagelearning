@@ -23,10 +23,10 @@ test('a practice session runs in focus mode and can be left', async ({ page }) =
 
 test('word bank flashcards open and close', async ({ page }) => {
   await boot(page);
-  await tab(page, 'Words').click();
+  await page.getByRole('button', { name: /Word bank/ }).click();
   await page.getByRole('button', { name: 'Flashcards' }).click();
   await expect(page.locator('.learning-card')).toBeVisible();
-  await expect(page.locator('#wordbank-screen > .top')).toBeHidden();
+  await expect(page.locator('#wordbank-screen h1')).toBeHidden();
   await expect(page.locator('.tabbar')).toBeHidden();
   await page.locator('.learning-header .close-btn').click();
   await expect(page.locator('.wordbank-list')).toBeVisible();

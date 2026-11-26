@@ -276,6 +276,26 @@ const App = {
     }
     const dueEl = document.getElementById('hero-due');
     if (dueEl) dueEl.textContent = ReviewManager.getDueWordsCount();
+    this.renderJourneyCard();
+  },
+
+  // Home card for the 12-week Journey: this week's theme and progress, or an invitation to start.
+  renderJourneyCard() {
+    const card = document.getElementById('home-journey-card');
+    if (!card || typeof JourneyLogic === 'undefined') return;
+    const data = Storage.getUserData();
+    const journey = data.journey || {};
+    const title = card.querySelector('b');
+    const sub = card.querySelector('small');
+    if (!journey.startedAt) {
+      title.textContent = 'Speak Lithuanian in 12 weeks';
+      sub.textContent = 'A week-by-week plan from a teacher. Start your journey.';
+      return;
+    }
+    const week = JourneyLogic.calendarWeek(journey.startedAt);
+    const p = JourneyLogic.weekProgress(week, journey, data.lessonsCompleted || []);
+    title.textContent = `Week ${week}: ${JOURNEY_WEEKS[week - 1].title}`;
+    sub.textContent = `${p.done} of ${p.total} tasks done this week`;
   },
 
   // One tap for today's practice: due reviews first, otherwise the next lesson.
@@ -470,6 +490,8 @@ const App = {
       SentenceManager.init();
     } else if (screenName === 'scenario' && typeof ScenarioLearningManager !== 'undefined') {
       ScenarioLearningManager.init();
+    } else if (screenName === 'journey' && typeof JourneyManager !== 'undefined') {
+      JourneyManager.init();
     } else if (screenName === 'profile') {
       this.updateProfile();
     }
@@ -477,6 +499,11 @@ const App = {
 
   updateProfile() {
     const userData = Storage.getUserData();
+    const versionEl = document.getElementById('app-version');
+    if (versionEl && typeof APP_VERSION !== 'undefined') {
+      const released = new Date(`${APP_RELEASED}T12:00:00`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      versionEl.textContent = `Version ${APP_VERSION} · ${released}`;
+    }
     const level = this.getUserLevel(userData.xpTotal);
     const lessonsCompleted = userData.lessonsCompleted.length;
     const vocabCount = Object.values(userData.srsItems || {}).filter(item => item.kind === 'word').length;
@@ -615,8 +642,31 @@ const App = {
       return;
     }
 
+    // When a new version takes over, reload once so the update shows on this open, not the next.
+    // Never during a lesson or practice session (their answers live in memory): wait until it ends.
+    const hadController = Boolean(navigator.serviceWorker.controller);
+    let pending = false;
+    const inSession = () => Boolean(document.querySelector('.screen.focus.active, .screen.active .practice-screen, .screen.active .learning-mode, .screen.active .exercise-screen'));
+    const reloadIfFree = () => {
+      if (!pending || inSession()) return;
+      pending = false;
+      window.location.reload();
+    };
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!hadController) return;
+      pending = true;
+      reloadIfFree();
+    });
+    // Sessions end by changing screens or re-rendering a screen: check again whenever that happens.
+    new MutationObserver(reloadIfFree).observe(document.getElementById('main-content') || document.body, {
+      subtree: true, childList: true, attributes: true, attributeFilter: ['class']
+    });
+
     try {
-      await navigator.serviceWorker.register('./service-worker.js');
+      const registration = await navigator.serviceWorker.register('./service-worker.js');
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') registration.update().catch(() => {});
+      });
     } catch (error) {
       console.warn('Service worker registration failed', error);
     }
