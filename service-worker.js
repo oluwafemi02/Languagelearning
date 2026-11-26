@@ -1,4 +1,6 @@
-const CACHE_NAME = 'lithuanian-learning-v6';
+// Keep in step with version.js (npm run bump does this). A new number makes phones fetch the update.
+const APP_VERSION = '3.0.0';
+const CACHE_NAME = `lithuanian-learning-${APP_VERSION}`;
 const ICON = './icons/icon-192.png';
 const urlsToCache = [
   './',
@@ -25,6 +27,9 @@ const urlsToCache = [
   './fonts/bricolage.woff2',
   './manifest.json',
   './scenario-learning.js',
+  './journey.js',
+  './version.js',
+  './vocabulary_v2.json',
   './icons/icon-192.png',
   './icons/apple-touch-icon.png'
 ];
@@ -32,7 +37,8 @@ const urlsToCache = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+      // cache: 'reload' skips the browser's HTTP cache, so a new version never precaches old files.
+      .then(cache => cache.addAll(urlsToCache.map(url => new Request(url, { cache: 'reload' }))))
   );
   self.skipWaiting();
 });

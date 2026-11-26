@@ -1,5 +1,23 @@
 # Changelog - Lithuanian Learning App
 
+Every deploy has a version number, shown at the bottom of the Me screen. Bump it with
+`npm run bump -- minor` (feature) or `npm run bump -- patch` (fix); CI fails a pull request that doesn't.
+
+## 3.0.0 (2026-11-26)
+
+- **Journey tab**: a 12-week plan, written the way a teacher would plan it, from the first "Labas!"
+  to a 15-minute conversation with a native speaker. Three phases (Foundations, Everyday life,
+  Real conversations), a 25-minute daily routine, and for each week a goal, can-do statements, key
+  phrases with audio, one small grammar point, and five tasks with a speaking task. Checkpoints in
+  weeks 4, 8 and 12. Tasks open the matching lesson, phrases, practice or review, and lesson tasks
+  tick themselves when the lesson is done. A Home card shows this week's progress.
+- Words moved from the tab bar to Home's Learn list to make room for Journey.
+- Version number in the app, kept in step across version.js, the service worker and package.json.
+- Updates now show the first time you open the app after a deploy, instead of the second (never in
+  the middle of a lesson).
+- Also in November 2026: Tracker-style redesign with iPhone end-to-end tests (PR #27), and
+  reminders that work on iPhone through Web Push, with a streak that follows your local day (PR #26).
+
 ## Version 2.0.0 - Major Update (2025-11-01)
 
 ### 🎉 Major Features Added

@@ -501,3 +501,50 @@ body:has(#wordbank-screen.active .learning-mode) .tabbar { display: none; }
 .word-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .word-actions .btn { flex: 0 1 auto; max-width: 100%; min-height: 34px; padding: 6px 13px; font-size: 14px; border-radius: 999px; }
 .word-actions .btn-success { background: var(--pine-soft); color: var(--pine); }
+
+/* ---------- Journey (12-week plan) */
+.journey-card { display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; margin-top: 14px; padding: 12px 14px; border: 0; text-align: left; color: var(--ink); background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow), inset 3px 0 0 var(--marigold); }
+.journey-card .row-icon { background: var(--marigold-soft); }
+.j-kicker { font-size: 13px; font-weight: 600; color: var(--marigold); letter-spacing: 0.01em; }
+.j-hero-title { font-family: var(--display); font-size: 25px; line-height: 1.15; margin-top: 4px; letter-spacing: -0.01em; }
+.j-lt { color: var(--ink-3); font-size: 14px; margin-top: 2px; }
+.j-current .goal-line + .goal-line { margin-top: 10px; }
+.j-current .btn, .j-intro .btn { margin-top: 16px; }
+.bar-calm > span { background: var(--marigold); }
+.j-phase-list { list-style: none; margin: 14px 0 0; display: grid; gap: 10px; counter-reset: phase; }
+.j-phase-list li { display: grid; gap: 1px; padding-left: 14px; border-left: 3px solid var(--pine-soft); font-size: 14px; color: var(--ink-2); }
+.j-phase-list b { color: var(--ink); font-weight: 600; }
+.j-routine li { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 11px 14px; border-top: 1px solid var(--line); font-size: 14.5px; }
+.j-routine li:first-child { border-top: 0; }
+.j-min { font-family: var(--display); font-weight: 600; color: var(--pine); font-variant-numeric: tabular-nums; }
+.j-week + .j-week { border-top: 1px solid var(--line); }
+.j-week-row { border-radius: 0; }
+.j-week.current .j-week-no { background: var(--marigold-soft); color: var(--marigold); box-shadow: inset 0 0 0 2px var(--marigold); font-weight: 700; }
+.j-week.complete .j-week-no { background: var(--pine); color: #fff; }
+.j-week-no { font-family: var(--display); font-size: 16px; font-weight: 600; color: var(--ink-2); }
+.j-week.open .chev { transform: rotate(135deg); }
+.j-week-body { padding: 2px 16px 16px; }
+.j-goal { font-size: 15px; color: var(--ink); font-weight: 520; }
+.j-sub { font-size: 12.5px; font-weight: 650; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-3); margin: 16px 0 6px; }
+.j-cando { margin: 0; padding-left: 18px; display: grid; gap: 3px; font-size: 14.5px; color: var(--ink-2); }
+.j-cando li::marker { color: var(--pine); }
+.j-grammar { font-size: 14.5px; color: var(--ink-2); background: var(--paper); border-radius: 12px; padding: 10px 12px; }
+.j-phrases, .j-tasks { list-style: none; margin: 0; display: grid; gap: 2px; }
+.j-phrases li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; align-items: center; padding: 6px 0; }
+.j-phrases span { display: grid; min-width: 0; }
+.j-phrases b { font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
+.j-phrases small { font-size: 13px; color: var(--ink-2); }
+.j-say { width: 34px; height: 34px; border-radius: 50%; border: 0; background: var(--pine-soft); position: relative; cursor: pointer; }
+.j-say::before { content: ''; position: absolute; left: 13px; top: 10px; border-style: solid; border-width: 7px 0 7px 11px; border-color: transparent transparent transparent var(--pine); }
+.j-task { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 0; border-top: 1px solid var(--line); }
+.j-task:first-child { border-top: 0; }
+.j-task-text { font-size: 14.5px; color: var(--ink); min-width: 0; }
+.j-task.done .j-task-text { color: var(--ink-3); text-decoration: line-through; text-decoration-color: var(--ink-3); }
+.j-check { width: 26px; height: 26px; border-radius: 8px; border: 2px solid var(--line); background: var(--card); cursor: pointer; position: relative; }
+.j-task.done .j-check { background: var(--pine); border-color: var(--pine); }
+.j-task.done .j-check::after { content: ''; position: absolute; left: 7px; top: 3px; width: 6px; height: 11px; border: solid #fff; border-width: 0 2.5px 2.5px 0; transform: rotate(45deg); }
+.j-check:disabled { cursor: default; opacity: 1; }
+.j-go { border: 1.5px solid var(--line); background: none; color: var(--pine); font-weight: 600; font-size: 13.5px; border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+.j-tag { display: inline-block; margin-left: 6px; font-size: 11.5px; font-weight: 650; color: var(--pine); background: var(--pine-soft); border-radius: 999px; padding: 1px 8px; vertical-align: 1px; text-decoration: none; }
+.j-tag-check { color: var(--marigold); background: var(--marigold-soft); }
+.app-version { text-align: center; font-size: 12.5px; color: var(--ink-3); margin: 22px 0 6px; font-variant-numeric: tabular-nums; }

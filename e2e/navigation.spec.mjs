@@ -3,7 +3,7 @@ import { test, expect, boot, tab, noSideScroll } from './helpers.mjs';
 const tabs = [
   { name: 'Phrases', screen: '#sentences-screen', title: 'Phrases', ready: '.sentence-stats-grid' },
   { name: 'Practice', screen: '#practicemode-screen', title: 'Practice', ready: '.practice-mode-card' },
-  { name: 'Words', screen: '#wordbank-screen', title: 'Words', ready: '.word-card' },
+  { name: 'Journey', screen: '#journey-screen', title: 'Journey', ready: '#journey-start-btn' },
   { name: 'Me', screen: '#profile-screen', title: 'Lithuanian Learner', ready: '#push-section' },
 ];
 
@@ -33,6 +33,13 @@ test('Learn list reaches the sentence builder and scenarios, and back goes home'
   await expect(page.locator('#scenario-content h2')).toHaveText('Real-life scenarios');
   await expect(page.locator('#scenario-list .lesson-card').first()).toBeVisible();
   await noSideScroll(page);
+  await page.evaluate(() => App.navigateToScreen('home'));
+
+  await page.getByRole('button', { name: /Word bank/ }).click();
+  await expect(page.locator('#wordbank-screen h1')).toHaveText('Words');
+  await expect(page.locator('.word-card').first()).toBeVisible();
+  await page.locator('#wordbank-screen .back').click();
+  await expect(page.locator('#home-screen')).toBeVisible();
 });
 
 test('dark mode uses the dark palette', async ({ browser }) => {
@@ -50,7 +57,7 @@ test('the narrowest iPhone (320px) has no sideways scroll on any screen', async 
   const context = await browser.newContext({ viewport: { width: 320, height: 640 }, isMobile: true, hasTouch: true });
   const page = await context.newPage();
   await boot(page);
-  for (const s of ['home', 'sentences', 'practicemode', 'wordbank', 'profile', 'sentencebuilder', 'scenario']) {
+  for (const s of ['home', 'journey', 'sentences', 'practicemode', 'wordbank', 'profile', 'sentencebuilder', 'scenario']) {
     await page.evaluate((name) => App.navigateToScreen(name), s);
     await page.waitForTimeout(250);
     await noSideScroll(page, `on ${s}:`);

@@ -14,6 +14,12 @@ jobs:
           node-version: '22'
       - name: App tests
         run: npm test
+      - name: Version was bumped
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch --depth=1 origin "${{ github.base_ref }}"
+          git show "origin/${{ github.base_ref }}:version.js" > /tmp/base-version.js 2>/dev/null || echo "" > /tmp/base-version.js
+          node scripts/check-version-bump.mjs /tmp/base-version.js
       - name: Push server tests
         working-directory: push-worker
         run: npm install --no-audit --no-fund && npm test

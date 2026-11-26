@@ -187,3 +187,61 @@ runTest('lesson unlock requires previous lesson completion', () => {
   assert.strictEqual(StateLogic.isLessonUnlocked(completed, 1), true);
   assert.strictEqual(StateLogic.isLessonUnlocked(completed, 2), false);
 });
+
+// ---------- Journey (12-week plan)
+const { JOURNEY_WEEKS, JOURNEY_PHASES, JourneyLogic } = require('../journey');
+
+runTest('journey has 12 weeks in 3 phases, each with phrases, tasks and a speaking task', () => {
+  assert.strictEqual(JOURNEY_WEEKS.length, 12);
+  assert.deepStrictEqual(JOURNEY_PHASES.map((p) => p.weeks), [[1, 4], [5, 8], [9, 12]]);
+  const ids = new Set();
+  JOURNEY_WEEKS.forEach((w, i) => {
+    assert.strictEqual(w.week, i + 1);
+    assert.ok(w.phrases.length >= 5, `week ${w.week} phrases`);
+    assert.ok(w.canDo.length >= 3, `week ${w.week} can-do`);
+    assert.ok(w.tasks.some((t) => t.speaking), `week ${w.week} has speaking`);
+    w.tasks.forEach((t) => { assert.ok(!ids.has(t.id), `duplicate task id ${t.id}`); ids.add(t.id); });
+  });
+  assert.deepStrictEqual(JOURNEY_WEEKS.filter((w) => w.tasks.some((t) => t.checkpoint)).map((w) => w.week), [4, 8, 12]);
+});
+
+runTest('journey lesson tasks point at lessons that exist', () => {
+  const lessons = require('../vocabulary.json').lessons.map((l) => String(l.id));
+  JOURNEY_WEEKS.flatMap((w) => w.tasks).filter((t) => /^lesson:/.test(t.action || '')).forEach((t) => {
+    assert.ok(lessons.includes(t.action.split(':')[1]), `${t.id} -> ${t.action}`);
+  });
+});
+
+runTest('journey week follows the calendar from the start day', () => {
+  assert.strictEqual(JourneyLogic.calendarWeek(null, '2026-11-26'), 1);
+  assert.strictEqual(JourneyLogic.calendarWeek('2026-11-26', '2026-11-26'), 1);
+  assert.strictEqual(JourneyLogic.calendarWeek('2026-11-26', '2026-12-02'), 1);
+  assert.strictEqual(JourneyLogic.calendarWeek('2026-11-26', '2026-12-03'), 2);
+  assert.strictEqual(JourneyLogic.calendarWeek('2026-03-01', '2026-03-29'), 5, 'across a DST change');
+  assert.strictEqual(JourneyLogic.calendarWeek('2026-01-01', '2026-12-31'), 12, 'capped at 12');
+  assert.strictEqual(JourneyLogic.dayOfJourney('2026-11-26', '2026-12-03'), 8);
+  assert.strictEqual(JourneyLogic.phaseFor(6).name, 'Everyday life');
+});
+
+runTest('journey progress counts ticked tasks and completed lessons', () => {
+  const journey = { startedAt: '2026-11-26', done: {} };
+  assert.deepStrictEqual(JourneyLogic.weekProgress(1, journey, []), { done: 0, total: 5, complete: false });
+  JourneyLogic.toggleTask(journey, 'w1-letters', '2026-11-26');
+  assert.strictEqual(JourneyLogic.weekProgress(1, journey, [{ id: 1 }]).done, 2, 'lesson 1 done in the app counts');
+  JourneyLogic.toggleTask(journey, 'w1-letters');
+  assert.strictEqual(JourneyLogic.weekProgress(1, journey, []).done, 0, 'untick');
+  assert.strictEqual(JourneyLogic.overallProgress(journey, []).total, 60);
+});
+
+// ---------- Version
+runTest('version is the same in version.js, service-worker.js and package.json', () => {
+  const fs = require('fs');
+  const path = require('path');
+  const { APP_VERSION, APP_RELEASED } = require('../version');
+  assert.match(APP_VERSION, /^\d+\.\d+\.\d+$/);
+  assert.match(APP_RELEASED, /^\d{4}-\d{2}-\d{2}$/);
+  const sw = fs.readFileSync(path.join(__dirname, '..', 'service-worker.js'), 'utf8');
+  assert.ok(sw.includes(`const APP_VERSION = '${APP_VERSION}';`), 'service worker version');
+  assert.strictEqual(require('../package.json').version, APP_VERSION);
+  ['./journey.js', './version.js'].forEach((f) => assert.ok(sw.includes(`'${f}'`), `${f} is cached for offline`));
+});
