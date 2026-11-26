@@ -627,12 +627,12 @@ const App = {
     let deferredPrompt;
 
     window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-
-      // Show install prompt (Android / desktop Chrome only; iOS uses the Share menu)
+      // Show install prompt (Android / desktop Chrome only; iOS uses the Share menu).
+      // Without our own banner, leave the browser's install prompt alone.
       const installPrompt = document.getElementById('install-prompt');
       if (!installPrompt) return;
+      e.preventDefault();
+      deferredPrompt = e;
       installPrompt.classList.remove('hidden');
 
       // Install button

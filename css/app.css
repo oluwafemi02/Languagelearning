@@ -498,6 +498,6 @@ body:has(#wordbank-screen.active .learning-mode) .tabbar { display: none; }
 .scenario-back { padding-left: 0; margin-bottom: 4px; }
 .achievement-more { padding: 11px 14px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--ink-2); }
 .practice-options { display: grid; gap: 10px; margin-bottom: 16px; }
-.word-actions { display: flex; gap: 8px; margin-top: 8px; }
-.word-actions .btn { flex: none; min-height: 34px; padding: 6px 13px; font-size: 14px; border-radius: 999px; }
+.word-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.word-actions .btn { flex: 0 1 auto; max-width: 100%; min-height: 34px; padding: 6px 13px; font-size: 14px; border-radius: 999px; }
 .word-actions .btn-success { background: var(--pine-soft); color: var(--pine); }
